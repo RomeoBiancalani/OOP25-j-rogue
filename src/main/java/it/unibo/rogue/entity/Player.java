@@ -1,6 +1,6 @@
 package it.unibo.rogue.entity;
 
-import it.unibo.rogue.entity.items.Inventory;
+import it.unibo.rogue.entity.items.api.Inventory;
 
 public interface Player extends Entity {
 
