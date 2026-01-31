@@ -9,7 +9,8 @@ public enum Move {
     UPPER_LEFT(-1,-1),
     UPPER_RIGHT(1,-1),
     BOTTOM_LEFT(-1,1),
-    BOTTOM_RIGHT(1,1);
+    BOTTOM_RIGHT(1,1),
+    IDLE(0,0);
 
     private final int x;
     private final int y;
@@ -21,6 +22,14 @@ public enum Move {
     
     public Position applyToPosition(final Position p) {
         return new Position(p.x() + x, p.y() + y);
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 
 }
