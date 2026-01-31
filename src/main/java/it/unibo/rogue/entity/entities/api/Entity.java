@@ -1,4 +1,7 @@
-package it.unibo.rogue.entity;
+package it.unibo.rogue.entity.entities.api;
+
+import it.unibo.rogue.entity.Move;
+import it.unibo.rogue.entity.Position;
 
 public interface Entity {
 
@@ -19,5 +22,9 @@ public interface Entity {
      * @return the current level of the entity
      */
     int getLevel();
+
+    void doMove(Move move);
+
+    int getArmorClass();
 
 }
