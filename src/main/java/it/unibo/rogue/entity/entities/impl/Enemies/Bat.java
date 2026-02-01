@@ -5,28 +5,42 @@ import it.unibo.rogue.entity.Move;
 import it.unibo.rogue.entity.Position;
 import it.unibo.rogue.entity.entities.impl.AbstractEnemy;
 
+/**
+ * Rapresents a Bat enemy entity.
+ * <p>
+ * Bats are weak (low HP, low damage) but unpredictable enemies,
+ * they follows a probabilistic movement pattern
+ * </p>
+ */
 public class Bat extends AbstractEnemy{
 
-    private static final int VISIBILITY = 1;
     private static final int CHASE_PLAYER_PERCENT = 60;
 
+    /**
+     * Construct a new Bat at the specified starting position.
+     * Initializes base stats (level, HP, AC, visibility).
+     * 
+     * @param startPosition The initial position of the bat.
+     */
     public Bat(Position startPosition) {
-        super(startPosition, 1, Dice.roll(1,8), 3);
+        super(startPosition, 1, Dice.roll(1,8), 3, 1);
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Bat behavior: If not sleeping the bat has 60% chance to move towards
+     * the player, otherwise it doesn't move.
+     * </p>
+     */
 	@Override
 	public Move getNextMove(Position playerPosition) {
         if (!isSleeping()) {
             if (getRandom().nextInt(100) < CHASE_PLAYER_PERCENT) {
-                return moveTorward(playerPosition);
+                return moveToward(playerPosition);
             }
         }
         return Move.IDLE;
 	}
-
-    @Override
-    public boolean canSeePlayer(Position playerPosition) {
-        return getVisiblePositions(VISIBILITY).stream().anyMatch(p -> p.equals(playerPosition));
-    }
 
 }
