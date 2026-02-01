@@ -17,6 +17,12 @@ public class Bat extends AbstractEnemy {
 
     private static final int CHASE_PLAYER_PERCENT = 60;
 
+    private static final int BAT_LEVEL = 1;
+    private static final int BAT_AC = 3;
+    private static final int BAT_VISIBILITY = 1;
+    private static final int HP_NUM_DICE = 1;
+    private static final int HP_SIDES_DICE = 8;
+
     /**
      * Construct a new Bat at the specified starting position.
      * Initializes base stats (level, HP, AC, visibility).
@@ -24,7 +30,13 @@ public class Bat extends AbstractEnemy {
      * @param startPosition The initial position of the bat.
      */
     public Bat(final Position startPosition) {
-        super(startPosition, 1, Dice.roll(1, 8), 3, 1);
+        super(
+            startPosition, 
+            BAT_LEVEL, 
+            Dice.roll(HP_NUM_DICE, HP_SIDES_DICE), 
+            BAT_AC, 
+            BAT_VISIBILITY
+        );
     }
 
     /**

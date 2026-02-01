@@ -16,6 +16,12 @@ import it.unibo.rogue.entity.entities.impl.AbstractEnemy;
  */
 public class HobGoblin extends AbstractEnemy {
 
+    private static final int HG_LEVEL = 2;
+    private static final int HG_AC = 11;
+    private static final int HG_VISIBILITY = 2;
+    private static final int HP_NUM_DICE = 2;
+    private static final int HP_SIDES_DICE = 9;
+
     /**
      * Construct a new HobGoblin at the specified starting position.
      * Initializes base stats (level, HP, AC, visibility).
@@ -23,7 +29,13 @@ public class HobGoblin extends AbstractEnemy {
      * @param startPosition The initial position of the hobgoblin.
      */
     public HobGoblin(final Position startPosition) {
-        super(startPosition, 2, Dice.roll(2, 9), 11, 2);
+        super(
+            startPosition, 
+            HG_LEVEL, 
+            Dice.roll(HP_NUM_DICE, HP_SIDES_DICE), 
+            HG_AC, 
+            HG_VISIBILITY
+        );
     }
 
     /**
