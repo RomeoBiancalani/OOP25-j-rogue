@@ -1,5 +1,6 @@
 package it.unibo.rogue.entity.items.impl;
 
+import it.unibo.rogue.entity.entities.api.Player;
 import it.unibo.rogue.entity.items.api.Equipment;
 
 public class MeleeWeapon implements Equipment{
@@ -13,11 +14,19 @@ public class MeleeWeapon implements Equipment{
     public String getDescription() {
         return name + " (Danno " + damage + ")";
     }
+    
+    public int getDamage() {
+        return damage;
+    }
 
     @Override
-    public void equip() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'equip'");
+    public void equip(Player player) {
+        if(player == null) {
+        return;
+        } else {
+            player.equipWeapon(this);
+            System.out.println("Il player impugna: " + name);
+        }  
     }
     
 }

@@ -13,7 +13,7 @@ import it.unibo.rogue.entity.entities.api.Entity;
  */
 public abstract class AbstractEntity implements Entity {
 
-    private final int lifePoint;
+    private int lifePoint;
     private final int level;
     private final int armorClass;
     private Position currentPosition;

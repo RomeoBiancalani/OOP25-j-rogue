@@ -1,5 +1,6 @@
 package it.unibo.rogue.entity.items.impl;
 
+import it.unibo.rogue.entity.entities.api.Player;
 import it.unibo.rogue.entity.items.api.Consumable;
 
 public class Scrolls implements Consumable{
@@ -11,9 +12,8 @@ public class Scrolls implements Consumable{
     public String getDescription() {
         return name + " ";
     }
-
     @Override
-    public void consume() {
+    public void consume(Player target) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'consume'");
     }

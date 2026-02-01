@@ -43,4 +43,6 @@ public interface Player extends Entity {
      */
     void equipWeapon(Equipment weapon);
 
+    //void heal(int amount);
+
 }

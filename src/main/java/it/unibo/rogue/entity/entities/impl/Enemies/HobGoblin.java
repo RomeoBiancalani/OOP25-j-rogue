@@ -1,4 +1,4 @@
-package it.unibo.rogue.entity.entities.impl.enemies;
+package it.unibo.rogue.entity.entities.impl.Enemies;
 
 import it.unibo.rogue.entity.Dice;
 import it.unibo.rogue.entity.Move;
