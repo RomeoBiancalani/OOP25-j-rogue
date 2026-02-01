@@ -7,7 +7,14 @@ import java.util.Random;
  */
 public final class Dice {
 
-    private static final Random rand = new Random();
+    private static final Random RAND = new Random();
+
+    /**
+     * Private constructor to prevent instantion of this utility class.
+     */
+    private Dice() {
+        throw new UnsupportedOperationException("Utility class");
+    }
 
     /**
      * Simulates rolling a specified number of dice with a given number of sides.
@@ -17,14 +24,14 @@ public final class Dice {
      * @return The sum of all dice rolls.
      * @throws IllegalArgumentException if ndice or sides are less than 1.
      */
-    public static int roll(final int nDice, final int sides){
+    public static int roll(final int nDice, final int sides) {
         if (nDice < 1 || sides < 1) {
             throw new IllegalArgumentException("nDice and sides must be positive");
         }
 
         int total = 0;
         for (int i = 0; i < nDice; i++) {
-            total += rand.nextInt(sides) + 1;
+            total += RAND.nextInt(sides) + 1;
         }
         return total;
     }

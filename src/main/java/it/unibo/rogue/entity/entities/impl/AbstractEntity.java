@@ -6,15 +6,16 @@ import it.unibo.rogue.entity.entities.api.Entity;
 
 /**
  * Base implementation of the Entity interface.
+ * 
  * <p>
  * Provides shared internal state and logic for all game entities.
  * </p>
  */
-public abstract class AbstractEntity implements Entity{
+public abstract class AbstractEntity implements Entity {
 
-    private int lifePoint;
+    private final int lifePoint;
     private final int level;
-    private int armorClass;
+    private final int armorClass;
     private Position currentPosition;
 
     /**
@@ -45,26 +46,37 @@ public abstract class AbstractEntity implements Entity{
         this.currentPosition = startPosition;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Position getPosition() {
         return currentPosition;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isAlive() {
         return lifePoint > 0;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getLevel() {
         return level;
     }
 
     /**
+     * {@inheritDoc}
+     * 
      * @throws IllegalArgumentException if move is null.
      */
     @Override
-    public void doMove(Move move) {
+    public void doMove(final Move move) {
         if (move == null) {
             throw new IllegalArgumentException("Move cannot be null");
         }
@@ -72,6 +84,9 @@ public abstract class AbstractEntity implements Entity{
         currentPosition = move.applyToPosition(currentPosition);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getArmorClass() {
         return armorClass;

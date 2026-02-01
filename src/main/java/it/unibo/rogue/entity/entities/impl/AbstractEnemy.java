@@ -11,24 +11,25 @@ import it.unibo.rogue.entity.entities.api.Enemy;
 
 /**
  * Base implementation for all enemy entities.
+ * 
  * <p>
  * Provides internal state and logic for all game enemies.
  * </p>
  */
-public abstract class AbstractEnemy extends AbstractEntity implements Enemy{
-    
+public abstract class AbstractEnemy extends AbstractEntity implements Enemy {
+
     /**
      * The probability (1 out of 10) that an enemy spawns sleeping.
      */
     private static final int SLEEP_CHANCE = 10;
 
-    private static final Random rand = new Random();
+    private static final Random RAND = new Random();
 
     private final int visibility;
     private boolean sleeping;
 
     /**
-     * Constructos an AbstractEnemy with the specified attributes
+     * Constructos an AbstractEnemy with the specified attributes.
      * 
      * @param currentPosition The current position of the enemy.
      * @param level The level of the enemy.
@@ -47,31 +48,40 @@ public abstract class AbstractEnemy extends AbstractEntity implements Enemy{
             if (visibility < 0) {
                 throw new IllegalArgumentException("Visibility range cannot be negative");
             }
-            this.sleeping = computeSleeping();
             this.visibility = visibility;
+            this.sleeping = computeSleeping();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isSleeping() {
         return sleeping;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void wakeUp() {
         sleeping = false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean computeSleeping() {
-        return rand.nextInt(SLEEP_CHANCE) == 0;
+    public final boolean computeSleeping() {
+        return RAND.nextInt(SLEEP_CHANCE) == 0;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean canSeePlayer(Position playerPosition) {
-        if (playerPosition == null) {
-            return false;
-        }
-        return getVisiblePositions().stream().anyMatch(p -> p.equals(playerPosition));
+    public boolean canSeePlayer(final Position playerPosition) {
+        return playerPosition != null && getVisiblePositions().stream().anyMatch(p -> p.equals(playerPosition));
     }
 
     /**
@@ -81,8 +91,8 @@ public abstract class AbstractEnemy extends AbstractEntity implements Enemy{
      * @return A list of the visible positions.
      */
     protected List<Position> getVisiblePositions() {
-        List<Position> visible = new LinkedList<>();
-        Position currentPosition = super.getPosition();
+        final List<Position> visible = new LinkedList<>();
+        final Position currentPosition = super.getPosition();
         for (int j = currentPosition.y() - visibility; j <= currentPosition.y() + visibility; j++) {
             for (int i = currentPosition.x() - visibility; i <= currentPosition.x() + visibility; i++) {
                 visible.add(new Position(i, j));
@@ -97,7 +107,7 @@ public abstract class AbstractEnemy extends AbstractEntity implements Enemy{
      * @return The random number generator.
      */
     protected static Random getRandom() {
-        return rand;
+        return RAND;
     }
 
     /**
@@ -106,8 +116,8 @@ public abstract class AbstractEnemy extends AbstractEntity implements Enemy{
      * @return A random move.
      */
     protected Move randomMove() {
-        Move[] moves = Move.values();
-        return moves[rand.nextInt(moves.length)];
+        final Move[] moves = Move.values();
+        return moves[RAND.nextInt(moves.length)];
     }
 
     /**
@@ -116,16 +126,16 @@ public abstract class AbstractEnemy extends AbstractEntity implements Enemy{
      * @param targetPosition The target position to move towards.
      * @return The move direction towards the target position.
      */
-    protected Move moveToward(Position targetPosition) {
+    protected Move moveToward(final Position targetPosition) {
         if (targetPosition == null) {
             return Move.IDLE;
         }
 
-        Position from = getPosition();
-        int dx = Integer.compare(targetPosition.x(), from.x());
-        int dy = Integer.compare(targetPosition.y(), from.y());
+        final Position from = getPosition();
+        final int dx = Integer.compare(targetPosition.x(), from.x());
+        final int dy = Integer.compare(targetPosition.y(), from.y());
 
-        for (Move move : Move.values()) {
+        for (final Move move : Move.values()) {
             if (move.getX() == dx && move.getY() == dy) {
                 return move;
             }

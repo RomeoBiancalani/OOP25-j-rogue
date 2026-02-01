@@ -37,7 +37,7 @@ public interface Entity {
     int getLevel();
 
     /**
-     * Moves the entity in the specified direction
+     * Moves the entity in the specified direction.
      * 
      * @param move the move that the entity will perform.
      */

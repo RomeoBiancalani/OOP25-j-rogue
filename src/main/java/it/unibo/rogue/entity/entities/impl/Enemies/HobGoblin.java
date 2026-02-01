@@ -1,4 +1,4 @@
-package it.unibo.rogue.entity.entities.impl.Enemies;
+package it.unibo.rogue.entity.entities.impl.enemies;
 
 import it.unibo.rogue.entity.Dice;
 import it.unibo.rogue.entity.Move;
@@ -7,13 +7,14 @@ import it.unibo.rogue.entity.entities.impl.AbstractEnemy;
 
 /**
  * Rapresent a Hobgoblin enemy.
+ * 
  * <p>
  * Hobgoblins are standard enemies (moderate HP, moderate damage)
  * with standard behavior. 
  * If they can see the player they move towards to it.
  * </p>
  */
-public class HobGoblin extends AbstractEnemy{
+public class HobGoblin extends AbstractEnemy {
 
     /**
      * Construct a new HobGoblin at the specified starting position.
@@ -21,19 +22,20 @@ public class HobGoblin extends AbstractEnemy{
      * 
      * @param startPosition The initial position of the hobgoblin.
      */
-    public HobGoblin(Position starPosition) {
-        super(starPosition, 2, Dice.roll(2, 9), 11, 2);
+    public HobGoblin(final Position startPosition) {
+        super(startPosition, 2, Dice.roll(2, 9), 11, 2);
     }
 
     /**
      * {@inheritDoc}
+     * 
      * <p>
      * HobGoblin behavior: If is awake and can see the player,
      * it move towards to it.
      * </p>
      */
     @Override
-    public Move getNextMove(Position playerPosition) {
+    public Move getNextMove(final Position playerPosition) {
         if (isSleeping()) {
             return Move.IDLE;
         }

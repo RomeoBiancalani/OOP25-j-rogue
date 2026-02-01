@@ -5,15 +5,15 @@ package it.unibo.rogue.entity;
  */
 public enum Move {
 
-    UP(0, -1),
-    DOWN(0,1),
-    RIGHT(1,0),
-    LEFT(-1,0),
-    TOP_LEFT(-1,-1),
-    TOP_RIGHT(1,-1),
-    BOTTOM_LEFT(-1,1),
-    BOTTOM_RIGHT(1,1),
-    IDLE(0,0);
+    UP(0, -1), 
+    DOWN(0, 1), 
+    RIGHT(1, 0), 
+    LEFT(-1, 0), 
+    TOP_LEFT(-1, -1), 
+    TOP_RIGHT(1, -1), 
+    BOTTOM_LEFT(-1, 1), 
+    BOTTOM_RIGHT(1, 1), 
+    IDLE(0, 0);
 
     private final int x;
     private final int y;
@@ -24,11 +24,11 @@ public enum Move {
      * @param x The horrizontal offset.
      * @param y The vertical offset.
      */
-    Move(final int x,final int y){
+    Move(final int x, final int y) {
         this.x = x;
         this.y = y;
     }
-    
+
     /**
      * Calculate a new position by applying this move to a position.
      * 
