@@ -3,6 +3,7 @@ package it.unibo.rogue.controller;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import it.unibo.rogue.controller.api.MovementController;
 import it.unibo.rogue.entity.Move;
@@ -20,19 +21,22 @@ public class MovementControllerImpl implements MovementController {
     private final Player player;
     private final List<Enemy> enemies;
     private final Map<Position, Item> items;
+    private final Set<Position> wall;
 
     /**
      * Constructs a MovementController with the required game entities.
      * 
      * @param player The player entity.
      * @param enemies The list of current enemies in the level.
-     * @param items The list of position of the items in the level
-     * @throws NullPointerException if player or enemies is null.
+     * @param items The list of position of the items in the level.
+     * @param walls The set of position of the wall in the level.
+     * @throws NullPointerException if player, enemies, items or wall is null.
      */
-    public MovementControllerImpl(final Player player, final List<Enemy> enemies, final Map<Position, Item> items) {
+    public MovementControllerImpl(final Player player, final List<Enemy> enemies, final Map<Position, Item> items, final Set<Position> wall) {
         this.player = Objects.requireNonNull(player, "player cannot be null");
         this.enemies = Objects.requireNonNull(enemies, "enemies cannot be null");
         this.items = Objects.requireNonNull(items, "items cannot be null");
+        this.wall = Objects.requireNonNull(wall, "wall cannot be null");
     }
 
     /**
@@ -71,8 +75,7 @@ public class MovementControllerImpl implements MovementController {
             return true;
         }
         final Position position = move.applyToPosition(entity.getPosition());
-        return !isOccupiedbyEntity(position);
-        //TODO: aggiungere controllo per controllare che non ci si muova in un muro.
+        return !isOccupiedbyEntity(position) && !isWall(position);
     }
 
     /**
@@ -89,12 +92,22 @@ public class MovementControllerImpl implements MovementController {
     }
 
     /**
-     * Checks if position is currently occupied by an entity.
+     * Checks if position is currently occupied by an item.
      * 
      * @param position The position to check
      * @return true if an item is present at the position, false otherwise.
      */
     private boolean isOccupiedbyItem(final Position position) {
         return items.containsKey(position);
+    }
+
+    /**
+     * Checks if position is currently a wall.
+     * 
+     * @param position The position to check
+     * @return true if is a wall, false otherwise.
+     */
+    private boolean isWall(final Position position) {
+        return wall.contains(position);
     }
 }
