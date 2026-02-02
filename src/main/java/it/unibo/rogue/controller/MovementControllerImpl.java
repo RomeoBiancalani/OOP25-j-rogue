@@ -1,6 +1,7 @@
 package it.unibo.rogue.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import it.unibo.rogue.controller.api.MovementController;
@@ -9,6 +10,7 @@ import it.unibo.rogue.entity.Position;
 import it.unibo.rogue.entity.entities.api.Enemy;
 import it.unibo.rogue.entity.entities.api.Player;
 import it.unibo.rogue.entity.entities.api.Entity;
+import it.unibo.rogue.entity.items.api.Item;
 
 /**
  * Controller responsible for managing movement for all entities.
@@ -17,17 +19,20 @@ public class MovementControllerImpl implements MovementController {
 
     private final Player player;
     private final List<Enemy> enemies;
+    private final Map<Position, Item> items;
 
     /**
      * Constructs a MovementController with the required game entities.
      * 
      * @param player The player entity.
      * @param enemies The list of current enemies in the level.
+     * @param items The list of position of the items in the level
      * @throws NullPointerException if player or enemies is null.
      */
-    public MovementControllerImpl(final Player player, final List<Enemy> enemies) {
+    public MovementControllerImpl(final Player player, final List<Enemy> enemies, final Map<Position, Item> items) {
         this.player = Objects.requireNonNull(player, "player cannot be null");
         this.enemies = Objects.requireNonNull(enemies, "enemies cannot be null");
+        this.items = Objects.requireNonNull(items, "items cannot be null");
     }
 
     /**
@@ -37,6 +42,10 @@ public class MovementControllerImpl implements MovementController {
     public void executeTurn(final Move move) {
         if (isValidMove(player, move)) {
             player.doMove(move);
+            if (isOccupiedbyItem(player.getPosition())) {
+                player.pickUpItem(items.get(player.getPosition()));
+                items.remove(player.getPosition());
+            }
         }
 
         enemies.stream()
@@ -58,8 +67,11 @@ public class MovementControllerImpl implements MovementController {
      *         false otherwise.
      */
     private boolean isValidMove(final Entity entity, final Move move) {
+        if (move == Move.IDLE) {
+            return true;
+        }
         final Position position = move.applyToPosition(entity.getPosition());
-        return !isOccupied(position);
+        return !isOccupiedbyEntity(position);
         //TODO: aggiungere controllo per controllare che non ci si muova in un muro.
     }
 
@@ -67,13 +79,22 @@ public class MovementControllerImpl implements MovementController {
      * Checks if position is currently occupied by an entity.
      * 
      * @param position The position to check.
-     * @return true if an enemy is present at the position.
+     * @return true if an enemy is present at the position, false otherwise.
      */
-    private boolean isOccupied(final Position position) {
+    private boolean isOccupiedbyEntity(final Position position) {
         return position.equals(player.getPosition())
             || enemies.stream()
                       .filter(Enemy::isAlive)
                       .anyMatch(e -> e.getPosition().equals(position));
     }
 
+    /**
+     * Checks if position is currently occupied by an entity.
+     * 
+     * @param position The position to check
+     * @return true if an item is present at the position, false otherwise.
+     */
+    private boolean isOccupiedbyItem(final Position position) {
+        return items.containsKey(position);
+    }
 }

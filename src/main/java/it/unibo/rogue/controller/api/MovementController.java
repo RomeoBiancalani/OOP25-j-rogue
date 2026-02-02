@@ -5,6 +5,7 @@ import it.unibo.rogue.entity.Move;
 /**
  * MovementController is the main entry point for managing game turns.
  */
+@FunctionalInterface
 public interface MovementController {
 
     /**
