@@ -1,5 +1,6 @@
 package it.unibo.Jrogue.engine;
 
+import it.unibo.Jrogue.controller.GameController;
 import it.unibo.Jrogue.controller.InputHandler;
 import it.unibo.Jrogue.controller.MenuController;
 import javafx.scene.input.KeyEvent;
@@ -15,11 +16,12 @@ public class BaseController {
     /*These are all the Controller we need and made*/
     private InputHandler currentHandler;
     private InputHandler MenuController;
-    //private InputHandler GameController
+    private InputHandler GameController;
 
     public BaseController(GameState entity) {
         this.entity = entity;
         this.MenuController = new MenuController(this);
+        this.GameController= new GameController(this);
         this.currentHandler = MenuController;
     }
 
@@ -41,8 +43,8 @@ public class BaseController {
 
     public void startGame() {
         entity.setCurrentState(GameState.State.PLAYING);
-        //this.currentController = GameController;
-        //changeView(GameController.getView())
+        this.currentHandler = GameController;
+        changeView(GameController.getView());
     }
 
     public boolean toggleFullscreen() {
@@ -50,4 +52,12 @@ public class BaseController {
         primaryStage.setFullScreen(!isFull);
         return !isFull;
     }
+    /*Need this later for GameOver state*/
+    public void backToMainMenu() {
+        entity.setCurrentState(GameState.State.MAIN_MENU);
+        this.currentHandler = MenuController;
+        changeView(MenuController.getView());
+    }
+
+
 }

@@ -21,7 +21,7 @@ public class GameState {
 
     public void setCurrentState(State newState) {
         this.CurrentState = newState;
-        //Debug
+        /*Keeping this debug line because it's cool*/
         System.out.println("Game state changed in: " + this.CurrentState);
     }
 
