@@ -1,6 +1,6 @@
 package it.unibo.rogue.world.impl;
 
-import it.unibo.rogue.entity.Entity;
+import it.unibo.rogue.entity.entities.api.Entity;
 import it.unibo.rogue.entity.Position;
 import it.unibo.rogue.world.api.GameMap;
 import it.unibo.rogue.world.api.Hallway;
