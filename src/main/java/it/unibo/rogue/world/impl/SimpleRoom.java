@@ -99,18 +99,12 @@ public final class SimpleRoom implements Room {
             && pos.y() < topLeft.y() + height;
     }
 
-    /**
-     * Adds an item to this room.
-     * @param item the item to add
-     */
+    @Override
     public void addItem(final Item item) {
         items.add(item);
     }
 
-    /**
-     * Adds a trap to this room.
-     * @param trap the trap to add
-     */
+    @Override
     public void addTrap(final Trap trap) {
         traps.add(trap);
     }

@@ -1,12 +1,16 @@
 package it.unibo.rogue;
 
 import it.unibo.rogue.entity.Position;
+import it.unibo.rogue.entity.items.api.Item;
 import it.unibo.rogue.generation.api.GenerationConfig;
 import it.unibo.rogue.generation.api.LevelGenerator;
-import it.unibo.rogue.generation.impl.BSPLevelGenerator;
+import it.unibo.rogue.generation.api.SpawnConfig;
+import it.unibo.rogue.generation.impl.PopulatedLevelGenerator;
 import it.unibo.rogue.world.api.GameMap;
 import it.unibo.rogue.world.api.Level;
 import it.unibo.rogue.world.api.Tile;
+
+import java.util.Map;
 
 /**
  * Demo application for testing world generation.
@@ -62,7 +66,9 @@ public final class WorldGenerationDemo {
         System.out.println("Screen: " + screenWidth + "x" + screenHeight + " (tile size: " + tileSize + ")");
         System.out.println();
 
-        final LevelGenerator generator = new BSPLevelGenerator();
+        // Use debug spawn config for testing (higher spawn rates)
+        final SpawnConfig spawnConfig = SpawnConfig.debug();
+        final LevelGenerator generator = new PopulatedLevelGenerator(spawnConfig);
 
         final GenerationConfig config = GenerationConfig.withDefaults(
             DEFAULT_MAP_WIDTH,
@@ -81,6 +87,21 @@ public final class WorldGenerationDemo {
         map.getStairsDown().ifPresent(pos -> System.out.println("Stairs down: " + pos));
         System.out.println();
 
+        // Show entity/item statistics
+        System.out.println("=== Spawned Entities ===");
+        System.out.println("Enemies: " + map.getEnemies().size());
+        System.out.println("Items: " + map.getItems().size());
+        System.out.println();
+
+        // List items
+        if (!map.getItems().isEmpty()) {
+            System.out.println("Items placed:");
+            for (final Map.Entry<Position, Item> entry : map.getItems().entrySet()) {
+                System.out.println("  " + entry.getKey() + ": " + entry.getValue().getDescription());
+            }
+            System.out.println();
+        }
+
         printMap(map);
     }
 
@@ -97,6 +118,10 @@ public final class WorldGenerationDemo {
                     line.append('@');  // Player starting position
                 } else if (pos.equals(stairs)) {
                     line.append('>');  // Stairs down
+                } else if (hasEnemyAt(map, pos)) {
+                    line.append('E');  // Enemy
+                } else if (map.getItems().containsKey(pos)) {
+                    line.append('i');  // Item
                 } else {
                     final Tile tile = map.getTileAt(pos);
                     line.append(getTileChar(tile));
@@ -104,6 +129,11 @@ public final class WorldGenerationDemo {
             }
             System.out.println(line);
         }
+    }
+
+    private boolean hasEnemyAt(final GameMap map, final Position pos) {
+        return map.getEnemies().stream()
+            .anyMatch(e -> e.getPosition().equals(pos));
     }
 
     private char getTileChar(final Tile tile) {

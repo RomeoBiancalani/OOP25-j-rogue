@@ -1,17 +1,23 @@
 package it.unibo.rogue.world.impl;
 
-import it.unibo.rogue.entity.entities.api.Entity;
 import it.unibo.rogue.entity.Position;
+import it.unibo.rogue.entity.entities.api.Enemy;
+import it.unibo.rogue.entity.entities.api.Entity;
+import it.unibo.rogue.entity.entities.api.Player;
+import it.unibo.rogue.entity.items.api.Item;
 import it.unibo.rogue.world.api.GameMap;
 import it.unibo.rogue.world.api.Hallway;
 import it.unibo.rogue.world.api.Room;
 import it.unibo.rogue.world.api.Tile;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Simple implementation of a dungeon map.
@@ -27,6 +33,9 @@ public final class SimpleGameMap implements GameMap {
     private final Set<Position> explored;
     private final Position startingPosition;
     private final Position stairsDown;
+    private final Map<Position, Item> itemPositions;
+    private Player player;
+    private Set<Position> wallCache;
 
     /**
      * Creates a new game map.
@@ -51,6 +60,7 @@ public final class SimpleGameMap implements GameMap {
         this.explored = new HashSet<>();
         this.startingPosition = startingPosition;
         this.stairsDown = stairsDown;
+        this.itemPositions = new HashMap<>();
     }
 
     private Tile[][] copyTiles(final Tile[][] original) {
@@ -63,7 +73,7 @@ public final class SimpleGameMap implements GameMap {
 
     @Override
     public boolean hasEnemies() {
-        return entities.stream().anyMatch(e -> !(e instanceof it.unibo.rogue.entity.Player));
+        return entities.stream().anyMatch(e -> e instanceof Enemy);
     }
 
     @Override
@@ -140,39 +150,24 @@ public final class SimpleGameMap implements GameMap {
             .findFirst();
     }
 
-    /**
-     * Adds an entity to this map.
-     * @param entity the entity to add
-     */
+    @Override
     public void addEntity(final Entity entity) {
         entities.add(entity);
     }
 
-    /**
-     * Removes an entity from this map.
-     * @param entity the entity to remove
-     * @return true if the entity was removed
-     */
+    @Override
     public boolean removeEntity(final Entity entity) {
         return entities.remove(entity);
     }
 
-    /**
-     * Sets a tile at the given position.
-     * @param pos the position
-     * @param tile the new tile
-     */
+    @Override
     public void setTileAt(final Position pos, final Tile tile) {
         if (isInBounds(pos)) {
             tiles[pos.y()][pos.x()] = tile;
         }
     }
 
-    /**
-     * Explores all tiles within a radius of a position. (DEBUG Function)
-     * @param center the center position
-     * @param radius the radius in tiles
-     */
+    @Override
     public void exploreRadius(final Position center, final int radius) {
         // -radius ... +radius
         for (int dy = -radius; dy <= radius; dy++) {
@@ -180,6 +175,61 @@ public final class SimpleGameMap implements GameMap {
                 final Position pos = new Position(center.x() + dx, center.y() + dy);
                 if (isInBounds(pos)) {
                     explore(pos);
+                }
+            }
+        }
+    }
+
+    @Override
+    public Optional<Player> getPlayer() {
+        return Optional.ofNullable(player);
+    }
+
+    @Override
+    public List<Enemy> getEnemies() {
+        return entities.stream()
+            .filter(e -> e instanceof Enemy)
+            .map(e -> (Enemy) e)
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public Map<Position, Item> getItems() {
+        return Collections.unmodifiableMap(itemPositions);
+    }
+
+    @Override
+    public Set<Position> getWallPositions() {
+        if (wallCache == null) {
+            buildWallCache();
+        }
+        return Collections.unmodifiableSet(wallCache);
+    }
+
+    @Override
+    public void setPlayer(final Player player) {
+        this.player = player;
+    }
+
+    @Override
+    public void addItem(final Position pos, final Item item) {
+        itemPositions.put(pos, item);
+    }
+
+    @Override
+    public Optional<Item> removeItemAt(final Position pos) {
+        return Optional.ofNullable(itemPositions.remove(pos));
+    }
+
+    /**
+     * Builds the wall position cache by scanning all tiles.
+     */
+    private void buildWallCache() {
+        wallCache = new HashSet<>();
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                if (tiles[y][x] == Tile.WALL) {
+                    wallCache.add(new Position(x, y));
                 }
             }
         }

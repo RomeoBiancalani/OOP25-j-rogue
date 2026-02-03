@@ -16,7 +16,8 @@ public interface LevelGenerator {
     Level generate(GenerationConfig config);
 
     /**
-     * Sets the random seed for reproducible generation.
+     * Sets the random seed for reproducible generation. 
+     * (This can be used for debug but by default this.random will be Dice.getRandom())
      *
      * @param seed the seed value
      */

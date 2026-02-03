@@ -1,5 +1,6 @@
 package it.unibo.rogue.generation.impl;
 
+import it.unibo.rogue.entity.Dice;
 import it.unibo.rogue.entity.Position;
 import it.unibo.rogue.generation.api.BSPNode;
 import it.unibo.rogue.generation.api.GenerationConfig;
@@ -22,7 +23,7 @@ import java.util.Random;
  */
 public final class BSPLevelGenerator implements LevelGenerator {
 
-    // TODO: Check if parameters needs tweaking
+    // TODO: Parameters in GenerationConfig may need to be twisted for bigger screens
     private static final double ROOM_PADDING = 0.20;
     private static final double SPLIT_RATIO_MIN = 0.35;
     private static final double SPLIT_RATIO_MAX = 0.65;
@@ -33,7 +34,7 @@ public final class BSPLevelGenerator implements LevelGenerator {
      * Creates a new BSP level generator.
      */
     public BSPLevelGenerator() {
-        this.random = new Random();
+        this.random = Dice.getRandom();
     }
 
     @Override

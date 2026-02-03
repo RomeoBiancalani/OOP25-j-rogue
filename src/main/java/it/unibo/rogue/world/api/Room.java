@@ -69,4 +69,16 @@ public interface Room {
      * @return true if the position is inside the room
      */
     boolean contains(Position pos);
+
+    /**
+     * Adds an item to this room.
+     * @param item the item to add
+     */
+    void addItem(final Item item);
+
+    /**
+     * Adds a trap to this room.
+     * @param trap the trap to add
+     */
+    void addTrap(final Trap trap);
 }
