@@ -3,7 +3,6 @@ package it.unibo.rogue.entity.entities.impl;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 import it.unibo.rogue.entity.Dice;
 import it.unibo.rogue.entity.Move;

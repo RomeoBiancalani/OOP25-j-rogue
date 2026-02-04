@@ -17,7 +17,7 @@ import it.unibo.rogue.world.api.GameMap;
 public class MovementControllerImpl implements MovementController {
 
     private final GameMap gameMap;
-    private Player player;
+    private final Player player;
 
     /**
      * Constructs a MovementController with a GameMap containing all game state.
