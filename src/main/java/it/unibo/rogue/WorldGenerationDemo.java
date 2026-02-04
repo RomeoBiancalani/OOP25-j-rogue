@@ -1,14 +1,14 @@
 package it.unibo.rogue;
 
-import it.unibo.rogue.entity.Position;
+import it.unibo.rogue.commons.Position;
+import it.unibo.rogue.controller.generationController.api.GenerationConfig;
+import it.unibo.rogue.controller.generationController.api.LevelGenerator;
+import it.unibo.rogue.controller.generationController.api.SpawnConfig;
+import it.unibo.rogue.controller.generationController.impl.PopulatedLevelGenerator;
 import it.unibo.rogue.entity.items.api.Item;
-import it.unibo.rogue.generation.api.GenerationConfig;
-import it.unibo.rogue.generation.api.LevelGenerator;
-import it.unibo.rogue.generation.api.SpawnConfig;
-import it.unibo.rogue.generation.impl.PopulatedLevelGenerator;
-import it.unibo.rogue.world.api.GameMap;
-import it.unibo.rogue.world.api.Level;
-import it.unibo.rogue.world.api.Tile;
+import it.unibo.rogue.entity.world.api.GameMap;
+import it.unibo.rogue.entity.world.api.Level;
+import it.unibo.rogue.entity.world.api.Tile;
 
 import java.util.Map;
 

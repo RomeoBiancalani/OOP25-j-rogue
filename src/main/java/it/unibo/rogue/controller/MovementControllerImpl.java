@@ -2,13 +2,13 @@ package it.unibo.rogue.controller;
 
 import java.util.Objects;
 
+import it.unibo.rogue.commons.Move;
+import it.unibo.rogue.commons.Position;
 import it.unibo.rogue.controller.api.MovementController;
-import it.unibo.rogue.entity.Move;
-import it.unibo.rogue.entity.Position;
-import it.unibo.rogue.entity.entities.api.Enemy;
-import it.unibo.rogue.entity.entities.api.Entity;
-import it.unibo.rogue.entity.entities.api.Player;
-import it.unibo.rogue.world.api.GameMap;
+import it.unibo.rogue.entity.gameEntities.api.Enemy;
+import it.unibo.rogue.entity.gameEntities.api.Entity;
+import it.unibo.rogue.entity.gameEntities.api.Player;
+import it.unibo.rogue.entity.world.api.GameMap;
 
 /**
  * Controller responsible for managing movement for all entities.
@@ -17,7 +17,7 @@ import it.unibo.rogue.world.api.GameMap;
 public class MovementControllerImpl implements MovementController {
 
     private final GameMap gameMap;
-    private Player player;
+    private final Player player;
 
     /**
      * Constructs a MovementController with a GameMap containing all game state.
