@@ -7,20 +7,20 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
-public class MenuController implements InputHandler {
+public final class MenuController implements InputHandler {
 
-    private BaseController controller;
-    private MenuGUI menuView;
-    private OptionsGUI optionsView;
+    private final BaseController controller;
+    private final MenuGUI menuView;
+    private final OptionsGUI optionsView;
 
-    private boolean inOptions = false;
-    private int selectedMenuButton = 0;
-    private int selectedOptionsButton = 0;
+    private boolean inOptions;
+    private int selectedMenuButton ;
+    private int selectedOptionsButton;
 
-    private final int MENU_BUTTON_NUMBER = 3;
-    private final int OPTIONS_BUTTON_NUMBER = 2;
+    private final int menuButtonNumber = 3;
+    private final int optionsButtonNumber = 2;
 
-    public MenuController(BaseController controller) {
+    public MenuController(final BaseController controller) {
         this.controller = controller;
         this.menuView = new MenuGUI();
         this.optionsView = new OptionsGUI();
@@ -28,8 +28,8 @@ public class MenuController implements InputHandler {
     }
 
     @Override
-    public void handleInput(KeyEvent event) {
-        KeyCode code = event.getCode();
+    public void handleInput(final KeyEvent event) {
+        final KeyCode code = event.getCode();
         if (code == KeyCode.W) {
             navigateUp();
         } else if (code == KeyCode.S) {
@@ -39,6 +39,7 @@ public class MenuController implements InputHandler {
         }
     }
     /*We check if we are in Options first, the code may be redundant and unpleasant to look at so it may be fixed*/
+
     private void navigateUp() {
         if (!inOptions) {
             if (selectedMenuButton > 0) {
@@ -55,12 +56,12 @@ public class MenuController implements InputHandler {
 
     private void navigateDown() {
         if (!inOptions) {
-            if (selectedMenuButton < MENU_BUTTON_NUMBER - 1) {
+            if (selectedMenuButton < menuButtonNumber - 1) {
                 selectedMenuButton++;
                 menuView.updateSelection(selectedMenuButton);
             }
         } else {
-            if (selectedOptionsButton < OPTIONS_BUTTON_NUMBER - 1) {
+            if (selectedOptionsButton < optionsButtonNumber - 1) {
                 selectedOptionsButton++;
                 optionsView.updateSelection(selectedOptionsButton);
             }
@@ -83,7 +84,7 @@ public class MenuController implements InputHandler {
         } else {
             switch (selectedOptionsButton) {
                 case 0:
-                    boolean isFull = controller.toggleFullscreen();
+                    final boolean isFull = controller.toggleFullscreen();
                     optionsView.updateFullscreenText(isFull);
                     break;
                 case 1:

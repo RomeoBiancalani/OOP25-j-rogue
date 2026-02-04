@@ -5,23 +5,22 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
-public class GameController implements InputHandler{
-    private BaseController controller;
-    private Pane gameView;
+public class GameController implements InputHandler {
+    private final BaseController controller;
+    private final Pane gameView;
 
-
-    public GameController(BaseController controller){
-        this.controller= controller;
-        this.gameView= new Pane(); //Temporary Pane waiting for the team to make Game GUI
+    public GameController(final BaseController controller) {
+        this.controller = controller;
+        this.gameView = new Pane(); //Temporary Pane waiting for the team to make Game GUI
         this.gameView.setStyle("-fx-background-color: #ffffff;");
     }
 
     @Override
-    public void handleInput(KeyEvent event){
-        KeyCode code = event.getCode();
-        if (code == KeyCode.W){
+    public void handleInput(final KeyEvent event) {
+        final KeyCode code = event.getCode();
+        if (code == KeyCode.W)  {
             //moveUp();
-        } else if (code == KeyCode.A){
+        } else if (code == KeyCode.A) {
             //moveLeft();
         } else if (code == KeyCode.D) {
             //moveRight();
@@ -40,15 +39,10 @@ public class GameController implements InputHandler{
         } else if (code == KeyCode.ESCAPE) { //This is not an actual key that we keep, just to see if it works
             controller.backToMainMenu();
         }
-
-
     }
 
     @Override
-    public Pane getView(){
+    public Pane getView() {
         return this.gameView;
     }
-
-
-
 }

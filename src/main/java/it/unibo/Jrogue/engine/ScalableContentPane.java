@@ -14,11 +14,11 @@ import javafx.scene.transform.Scale;
 
 public class ScalableContentPane extends StackPane {
 
-    private final int WIDTH = 1920;
-    private final int HEIGHT = 1080;
+    private final int width = 1920;
+    private final int height = 1080;
     private Pane contentPane;
 
-    public ScalableContentPane(Pane content) {
+    public ScalableContentPane(final Pane content) {
         this.setStyle("-fx-background-color: #000000;");
         setContent(content);
 
@@ -26,29 +26,28 @@ public class ScalableContentPane extends StackPane {
         this.heightProperty().addListener((obs, oldVal, newVal) -> resize());
     }
 
-    public void setContent(Pane newContent) {
+    public final void setContent(final Pane newContent) {
         this.getChildren().clear();
         this.contentPane = newContent;
 
-        newContent.setPrefSize(WIDTH, HEIGHT);
-        newContent.setMinSize(WIDTH, HEIGHT);
-        newContent.setMaxSize(WIDTH, HEIGHT);
+        newContent.setPrefSize(width, height);
+        newContent.setMinSize(width, height);
+        newContent.setMaxSize(width, height);
         this.getChildren().add(newContent);
         resize();
     }
-
 
     private void resize() {
         if (contentPane == null) return;
         double windowWidth = getWidth();
         double windowHeight = getHeight();
-        double scaleX = windowWidth / WIDTH;
-        double scaleY = windowHeight / HEIGHT;
+        double scaleX = windowWidth / width;
+        double scaleY = windowHeight / height;
         double scaleFactor = Math.min(scaleX, scaleY);
         Scale scale = new Scale(scaleFactor, scaleFactor);
         //We zoom from the center
-        scale.setPivotX(WIDTH / 2.0);
-        scale.setPivotY(HEIGHT / 2.0);
+        scale.setPivotX(width / 2.0);
+        scale.setPivotY(height / 2.0);
 
         contentPane.getTransforms().setAll(scale);
     }

@@ -7,7 +7,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class BaseController {
+public final class BaseController {
 
     private GameState entity;
     private Stage primaryStage;
@@ -15,48 +15,48 @@ public class BaseController {
 
     /*These are all the Controller we need and made*/
     private InputHandler currentHandler;
-    private InputHandler MenuController;
-    private InputHandler GameController;
+    private InputHandler menuController;
+    private InputHandler gameController;
 
-    public BaseController(GameState entity) {
+    public BaseController( GameState entity) {
         this.entity = entity;
-        this.MenuController = new MenuController(this);
-        this.GameController= new GameController(this);
-        this.currentHandler = MenuController;
+        this.menuController = new MenuController(this);
+        this.gameController = new GameController(this);
+        this.currentHandler = menuController;
     }
 
-    public void setup(Stage stage, ScalableContentPane container) {
+    public void setup(final Stage stage, final ScalableContentPane container) {
         this.primaryStage = stage;
         this.scalingContainer = container;
-        changeView(MenuController.getView());
+        changeView(menuController.getView());
     }
 
-    public void handleGlobalKeyPress(KeyEvent event) {
+    public void handleGlobalKeyPress(final KeyEvent event) {
         if (currentHandler != null) {
             currentHandler.handleInput(event);
         }
     }
 
-    public void changeView(Pane newView) {
+    public void changeView(final Pane newView) {
         scalingContainer.setContent(newView);
     }
 
     public void startGame() {
         entity.setCurrentState(GameState.State.PLAYING);
-        this.currentHandler = GameController;
-        changeView(GameController.getView());
+        this.currentHandler = gameController;
+        changeView(gameController.getView());
     }
 
     public boolean toggleFullscreen() {
-        boolean isFull = primaryStage.isFullScreen();
+        final boolean isFull = primaryStage.isFullScreen();
         primaryStage.setFullScreen(!isFull);
         return !isFull;
     }
     /*Need this later for GameOver state*/
     public void backToMainMenu() {
         entity.setCurrentState(GameState.State.MAIN_MENU);
-        this.currentHandler = MenuController;
-        changeView(MenuController.getView());
+        this.currentHandler = menuController;
+        changeView(menuController.getView());
     }
 
 

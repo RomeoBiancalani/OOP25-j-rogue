@@ -9,20 +9,20 @@ public class GameState {
         GAME_OVER
     }
 
-    private State CurrentState;
+    private State currentState;
 
     public GameState() {
-        this.CurrentState = State.MAIN_MENU;
+        this.currentState = State.MAIN_MENU;
     }
 
     public State getCurrentState() {
-        return CurrentState;
+        return currentState;
     }
 
-    public void setCurrentState(State newState) {
-        this.CurrentState = newState;
+    public void setCurrentState(final State newState) {
+        this.currentState = newState;
         /*Keeping this debug line because it's cool*/
-        System.out.println("Game state changed in: " + this.CurrentState);
+        System.out.println("Game state changed in: " + this.currentState);
     }
 
 
