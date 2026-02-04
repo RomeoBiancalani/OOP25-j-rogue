@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import it.unibo.rogue.entity.Dice;
 import it.unibo.rogue.entity.Move;
 import it.unibo.rogue.entity.Position;
 import it.unibo.rogue.entity.entities.api.Enemy;
@@ -22,8 +23,6 @@ public abstract class AbstractEnemy extends AbstractEntity implements Enemy {
      * The probability (1 out of 10) that an enemy spawns sleeping.
      */
     private static final int SLEEP_CHANCE = 10;
-
-    private static final Random RAND = new Random();
 
     private final int visibility;
     private boolean sleeping;
@@ -73,7 +72,7 @@ public abstract class AbstractEnemy extends AbstractEntity implements Enemy {
      */
     @Override
     public final boolean computeSleeping() {
-        return RAND.nextInt(SLEEP_CHANCE) == 0;
+        return Dice.roll(1, SLEEP_CHANCE) == 1;
     }
 
     /**
@@ -102,12 +101,13 @@ public abstract class AbstractEnemy extends AbstractEntity implements Enemy {
     }
 
     /**
-     * Gets the random number generator use in this class.
+     * Gets the seeded random number generator from the Dice class.
+     * This function may be used by subclasses.
      * 
      * @return The random number generator.
      */
     protected static Random getRandom() {
-        return RAND;
+        return Dice.getRandom();
     }
 
     /**
@@ -117,7 +117,7 @@ public abstract class AbstractEnemy extends AbstractEntity implements Enemy {
      */
     protected Move randomMove() {
         final Move[] moves = Move.values();
-        return moves[RAND.nextInt(moves.length)];
+        return moves[Dice.getRandom().nextInt(moves.length)];
     }
 
     /**
