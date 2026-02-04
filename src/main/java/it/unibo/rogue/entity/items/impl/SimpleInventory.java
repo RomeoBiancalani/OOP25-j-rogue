@@ -7,36 +7,54 @@ import java.util.Optional;
 import it.unibo.rogue.entity.items.api.Inventory;
 import it.unibo.rogue.entity.items.api.Item;
 
-public class SimpleInventory implements Inventory{
+/**
+ * Implementation of the Inventory.
+ */
+public class SimpleInventory implements Inventory {
 
-    private final Map<Integer,Item> inventory = new HashMap<>();
+    private final Map<Integer, Item> inventory = new HashMap<>();
     private final int size;
-    public SimpleInventory(int size) {
+
+    /**
+     * Constructor of the SimpleInventory.
+     * 
+     * @param size size of the Inventory.
+     */
+    public SimpleInventory(final int size) {
         this.size = size;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isFull() {
         return inventory.size() >= size;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Optional<Item> getItem(int index) {
+    public Optional<Item> getItem(final int index) {
         return Optional.ofNullable(inventory.get(index));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public boolean addItem(Item item) {
-        if(isFull()) {
+    public boolean addItem(final Item item) {
+        if (isFull()) {
             return false;
         }
-        for(int i = 0; i < size; i++) {
-            if(!inventory.containsKey(i)) {
-            inventory.put(i, item);
-            return true;   
+        for (int i = 0; i < size; i++) {
+            if (!inventory.containsKey(i)) {
+                inventory.put(i, item);
+                return true;
             }
         }
-        return false;    
+        return false;
     }
-    
+
 }

@@ -5,79 +5,126 @@ import java.util.Random;
 import it.unibo.rogue.entity.items.api.Item;
 import it.unibo.rogue.entity.items.api.ItemFactory;
 
-public class ItemFactoryImpl implements ItemFactory{
-    private final Random random = new Random();
-    private final int BASE_DAMAGE_SWORD = 6;
-    private final int BASE_DAMAGE_DAGGER = 4;
-    private final int BASE_DAMAGE_AXE = 8;
-    private final int BASE_DEF_HEAVY = 3;
-    private final int BASE_DEF_LIGHT = 1;
+/**
+ * Implementation of the ItemFactory.
+ */
+public class ItemFactoryImpl implements ItemFactory {
 
+    private static final int BASE_DAMAGE_SWORD = 6;
+    private static final int BASE_DAMAGE_DAGGER = 4;
+    private static final int BASE_DAMAGE_AXE = 8;
+    private static final int BASE_DEF_HEAVY = 3;
+    private static final int BASE_DEF_LIGHT = 1;
+
+    private static final int SCALING_FACTOR = 2;
+    private static final int DAMAGE_VARIANCE_BOUND = 3;
+    private static final int PROTECTION_VARIANCE_BOUND = 2;
+
+    private static final int ROLL_MAX = 100;
+    private static final int CHANCE_NOTHING = 20;
+    private static final int CHANCE_POTION = 30;
+    private static final int CHANCE_DAGGER = 35;
+    private static final int CHANCE_SWORD = 40;
+    private static final int CHANCE_AXE = 45;
+    private static final int CHANCE_ARMOR = 50;
+    private static final int ARMOR_SELECTION = 70;
+
+    private final Random random = new Random();
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Item createStartingWeapon() {
         return new MeleeWeapon("Spada iniziale", BASE_DAMAGE_SWORD);
     }
 
-    private int calculateDamage(int baseDamage,int level) {
-        int scalingFactor = 2;
-        int growth = scalingFactor * level;
+    /**
+     * Calculates the damage of the item generated
+     * taking in consideration: level the player
+     * currently is, baseDamage of the weapon
+     * and a random variance.
+     *
+     * @param baseDamage base damage of the weapon.
+     *
+     * @param level the level the player currently is.
+     *
+     * @return the damage of the weapon generated.
+     */
+    private int calculateDamage(final int baseDamage, final int level) {
+        final int growth = SCALING_FACTOR * level;
 
-        int variance = random.nextInt(3) -1 ;
+        final int variance = this.random.nextInt(DAMAGE_VARIANCE_BOUND) - 1;
 
         return baseDamage + growth + variance;
     }
 
-    private int calculateProtection(int baseProtection, int level , boolean isHeavy) {
-        int growth;
-        if(isHeavy) {
+    /**
+     * Calculates the protection of the armor
+     * taking in consideration: level the player
+     * currently is, baseProtection of the armor
+     * and a random variance.
+     *
+     * @param baseProtection the base protection of the armor.
+     *
+     * @param level the level the player currently is.
+     *
+     * @param isHeavy true if the armor is heavy.
+     *
+     * @return the protection of the armor generated.
+     */
+    private int calculateProtection(final int baseProtection, final int level, final boolean isHeavy) {
+        final int growth;
+        if (isHeavy) {
             growth = level;
-        } else growth = level / 2;
-        
-        int variance = random.nextInt(2);
+        } else {
+            growth = level / 2;
+        }
+
+        final int variance = this.random.nextInt(PROTECTION_VARIANCE_BOUND);
         return baseProtection + growth + variance;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Item createRandomArmor(int level) {
-        int armorDice = random.nextInt(100);
+    public Item createRandomArmor(final int level) {
+        final int armorDice = this.random.nextInt(ROLL_MAX);
 
-        if(armorDice < 70) {
-            int def = calculateProtection(BASE_DEF_LIGHT,level,false);
+        if (armorDice < ARMOR_SELECTION) {
+            final int def = calculateProtection(BASE_DEF_LIGHT, level, false);
             return new Armor("Armatura di cuoio", def);
         } else {
-            int def = calculateProtection(BASE_DEF_HEAVY,level,true);
-         return new Armor("Armatura di ferro", def);   
-        }  
+            final int def = calculateProtection(BASE_DEF_HEAVY, level, true);
+         return new Armor("Armatura di ferro", def);
+        }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Optional<Item> createRandomItem(int level) {
-        int roll = random.nextInt(100);
+    public Optional<Item> createRandomItem(final int level) {
+        final int roll = random.nextInt(ROLL_MAX);
 
-        if(roll < 20) {
-        return Optional.empty();    
-        }
-        else if(roll <30) {
+        if (roll < CHANCE_NOTHING) {
+        return Optional.empty();
+        } else if (roll < CHANCE_POTION) {
             return Optional.of(new HealthPotion());
-        }
-        // possibility to get a dagger(5%)
-        else if(roll < 35) {
-            int dmg = calculateDamage(BASE_DAMAGE_DAGGER,level);
-            return Optional.of(new MeleeWeapon("pugnale",dmg));
-        }
-        // possibility to get a sword(5%)
-        else if(roll < 40) {
-            int dmg = calculateDamage(BASE_DAMAGE_SWORD,level);
-            return Optional.of(new MeleeWeapon("spada",dmg));
-        }
-        // possibility to get an axe(5%)
-        else if(roll < 45) {
-            int dmg = calculateDamage(BASE_DAMAGE_AXE,level);
-            return Optional.of(new MeleeWeapon("ascia",dmg));
-        } 
-        //possibility to get an armour(5%)
-        else if(roll < 50) {
+        } else if (roll < CHANCE_DAGGER) {
+            final int dmg = calculateDamage(BASE_DAMAGE_DAGGER, level);
+            return Optional.of(new MeleeWeapon("pugnale", dmg));
+        } else if (roll < CHANCE_SWORD) {
+            final int dmg = calculateDamage(BASE_DAMAGE_SWORD, level);
+            return Optional.of(new MeleeWeapon("spada", dmg));
+        } else if (roll < CHANCE_AXE) {
+            final int dmg = calculateDamage(BASE_DAMAGE_AXE, level);
+            return Optional.of(new MeleeWeapon("ascia", dmg));
+        } else if (roll < CHANCE_ARMOR) {
             return Optional.of(createRandomArmor(level));
-        } else return Optional.empty();
-    }   
+        } else {
+            return Optional.empty();
+        }
+    }
 }
