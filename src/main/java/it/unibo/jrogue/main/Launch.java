@@ -1,4 +1,4 @@
-package it.unibo.Jrogue.main;
+package it.unibo.jrogue.main;
 /*
 * This file can change if the JavaFX module check is fixed
 *
@@ -7,9 +7,9 @@ package it.unibo.Jrogue.main;
 
 
 
-import it.unibo.Jrogue.engine.BaseController;
-import it.unibo.Jrogue.engine.GameState;
-import it.unibo.Jrogue.engine.ScalableContentPane;
+import it.unibo.jrogue.engine.BaseController;
+import it.unibo.jrogue.engine.GameState;
+import it.unibo.jrogue.engine.ScalableContentPane;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;

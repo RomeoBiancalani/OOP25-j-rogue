@@ -1,4 +1,4 @@
-package it.unibo.Jrogue;
+package it.unibo.jrogue;
 
 /**
  * Rapresent a coordinate pair on the game grid.

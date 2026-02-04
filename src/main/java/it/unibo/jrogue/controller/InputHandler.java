@@ -1,4 +1,4 @@
-package it.unibo.Jrogue.controller;
+package it.unibo.jrogue.controller;
 
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;

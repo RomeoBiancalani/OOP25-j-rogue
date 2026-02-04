@@ -1,4 +1,4 @@
-package it.unibo.Jrogue.items.api;
+package it.unibo.jrogue.items.api;
 
 import java.util.Optional;
 

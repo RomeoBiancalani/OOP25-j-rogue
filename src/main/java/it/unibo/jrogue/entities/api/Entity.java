@@ -1,7 +1,7 @@
-package it.unibo.Jrogue.entities.api;
+package it.unibo.jrogue.entities.api;
 
-import it.unibo.Jrogue.Move;
-import it.unibo.Jrogue.Position;
+import it.unibo.jrogue.Move;
+import it.unibo.jrogue.Position;
 
 /**
  * Represents any intteractive object taht exist in the game world.

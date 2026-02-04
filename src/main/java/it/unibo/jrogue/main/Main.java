@@ -1,4 +1,4 @@
-package it.unibo.Jrogue.main;
+package it.unibo.jrogue.main;
 /*
 * This file is a "Fake" main to bypass JavaFX modules check
 * */

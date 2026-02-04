@@ -1,4 +1,4 @@
-package it.unibo.Jrogue.engine;
+package it.unibo.jrogue.engine;
 
 /*
 * The idea behind ScalableContentPane is that when the user resize the windowed GUI it scales the graphics correctly.

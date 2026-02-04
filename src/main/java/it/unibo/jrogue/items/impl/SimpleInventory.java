@@ -1,11 +1,11 @@
-package it.unibo.Jrogue.items.impl;
+package it.unibo.jrogue.items.impl;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import it.unibo.Jrogue.items.api.Inventory;
-import it.unibo.Jrogue.items.api.Item;
+import it.unibo.jrogue.items.api.Inventory;
+import it.unibo.jrogue.items.api.Item;
 
 public class SimpleInventory implements Inventory{
 

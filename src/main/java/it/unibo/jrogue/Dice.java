@@ -1,4 +1,4 @@
-package it.unibo.Jrogue;
+package it.unibo.jrogue;
 
 import java.util.Random;
 

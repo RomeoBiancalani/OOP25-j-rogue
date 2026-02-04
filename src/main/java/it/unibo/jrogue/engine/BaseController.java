@@ -1,11 +1,12 @@
-package it.unibo.Jrogue.engine;
+package it.unibo.jrogue.engine;
 
-import it.unibo.Jrogue.controller.GameController;
-import it.unibo.Jrogue.controller.InputHandler;
-import it.unibo.Jrogue.controller.MenuController;
+import it.unibo.jrogue.controller.GameController;
+import it.unibo.jrogue.controller.InputHandler;
+import it.unibo.jrogue.controller.MenuController;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import it.unibo.jrogue.controller.PauseGameController;
 
 public final class BaseController {
 
@@ -17,11 +18,14 @@ public final class BaseController {
     private InputHandler currentHandler;
     private InputHandler menuController;
     private InputHandler gameController;
+    private InputHandler pauseController;
+
 
     public BaseController( GameState entity) {
         this.entity = entity;
         this.menuController = new MenuController(this);
         this.gameController = new GameController(this);
+        this.pauseController = new PauseGameController(this);
         this.currentHandler = menuController;
     }
 
@@ -59,5 +63,14 @@ public final class BaseController {
         changeView(menuController.getView());
     }
 
+    public void pauseGame(){
+        this.currentHandler=pauseController;
+        changeView(pauseController.getView());
+    }
+
+    public void resumeGame(){
+        this.currentHandler=gameController;
+        changeView(gameController.getView());
+    }
 
 }

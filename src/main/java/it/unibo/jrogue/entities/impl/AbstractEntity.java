@@ -1,8 +1,8 @@
-package it.unibo.Jrogue.entities.impl;
+package it.unibo.jrogue.entities.impl;
 
-import it.unibo.Jrogue.Move;
-import it.unibo.Jrogue.Position;
-import it.unibo.Jrogue.entities.api.Entity;
+import it.unibo.jrogue.Move;
+import it.unibo.jrogue.Position;
+import it.unibo.jrogue.entities.api.Entity;
 
 /**
  * Base implementation of the Entity interface.

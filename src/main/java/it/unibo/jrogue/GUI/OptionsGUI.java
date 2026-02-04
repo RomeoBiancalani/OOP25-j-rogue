@@ -1,4 +1,4 @@
-package it.unibo.Jrogue.GUI;
+package it.unibo.jrogue.GUI;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

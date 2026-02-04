@@ -1,7 +1,7 @@
-package it.unibo.Jrogue.items.impl;
+package it.unibo.jrogue.items.impl;
 
-import it.unibo.Jrogue.entities.api.Player;
-import it.unibo.Jrogue.items.api.Consumable;
+import it.unibo.jrogue.entities.api.Player;
+import it.unibo.jrogue.items.api.Consumable;
 
 public class Scrolls implements Consumable{
     private final String name;

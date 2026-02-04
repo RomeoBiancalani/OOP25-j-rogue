@@ -1,6 +1,6 @@
-package it.unibo.Jrogue.items.api;
+package it.unibo.jrogue.items.api;
 
-import it.unibo.Jrogue.entities.api.Player;
+import it.unibo.jrogue.entities.api.Player;
 
 public interface Equipment extends Item {
     void equip(Player player);

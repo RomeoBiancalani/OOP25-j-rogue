@@ -1,6 +1,6 @@
-package it.unibo.Jrogue.controller;
+package it.unibo.jrogue.controller;
 
-import it.unibo.Jrogue.engine.BaseController;
+import it.unibo.jrogue.engine.BaseController;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -37,12 +37,12 @@ public class GameController implements InputHandler {
         } else if (code == KeyCode.SHIFT) {
             //useDistanceWeapon();
         } else if (code == KeyCode.ESCAPE) { //This is not an actual key that we keep, just to see if it works
-            controller.backToMainMenu();
+            controller.pauseGame();
         }
     }
 
     @Override
     public Pane getView() {
-        return this.gameView;
+        return this.gameView;//.getLayout();
     }
 }

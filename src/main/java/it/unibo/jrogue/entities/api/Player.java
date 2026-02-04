@@ -1,7 +1,7 @@
-package it.unibo.Jrogue.entities.api;
+package it.unibo.jrogue.entities.api;
 
-import it.unibo.Jrogue.items.api.Equipment;
-import it.unibo.Jrogue.items.api.Inventory;
+import it.unibo.jrogue.items.api.Equipment;
+import it.unibo.jrogue.items.api.Inventory;
 
 /**
  * Represent the human-controlled protagonist in the game world.

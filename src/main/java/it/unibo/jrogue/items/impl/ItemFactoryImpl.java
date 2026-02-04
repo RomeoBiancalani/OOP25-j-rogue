@@ -1,9 +1,9 @@
-package it.unibo.Jrogue.items.impl;
+package it.unibo.jrogue.items.impl;
 
 import java.util.Optional;
 import java.util.Random;
-import it.unibo.Jrogue.items.api.Item;
-import it.unibo.Jrogue.items.api.ItemFactory;
+import it.unibo.jrogue.items.api.Item;
+import it.unibo.jrogue.items.api.ItemFactory;
 
 public class ItemFactoryImpl implements ItemFactory{
     private final Random random = new Random();

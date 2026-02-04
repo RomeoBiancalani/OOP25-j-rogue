@@ -1,11 +1,11 @@
-package it.unibo.Jrogue.model;
+package it.unibo.jrogue.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import it.unibo.Jrogue.items.api.Inventory;
-import it.unibo.Jrogue.items.api.Item;
-import it.unibo.Jrogue.items.impl.HealthPotion;
-import it.unibo.Jrogue.items.impl.SimpleInventory;
+import it.unibo.jrogue.items.api.Inventory;
+import it.unibo.jrogue.items.api.Item;
+import it.unibo.jrogue.items.impl.HealthPotion;
+import it.unibo.jrogue.items.impl.SimpleInventory;
 import org.junit.jupiter.api.Test;
 
 

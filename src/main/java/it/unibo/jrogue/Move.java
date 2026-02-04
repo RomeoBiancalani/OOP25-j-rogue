@@ -1,4 +1,4 @@
-package it.unibo.Jrogue;
+package it.unibo.jrogue;
 
 /**
  * Represents the possible mmovement in the game grid.

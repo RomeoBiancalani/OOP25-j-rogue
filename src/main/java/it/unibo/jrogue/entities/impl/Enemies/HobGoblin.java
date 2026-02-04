@@ -1,9 +1,9 @@
-package it.unibo.Jrogue.entities.impl.Enemies;
+package it.unibo.jrogue.entities.impl.Enemies;
 
-import it.unibo.Jrogue.Dice;
-import it.unibo.Jrogue.Move;
-import it.unibo.Jrogue.Position;
-import it.unibo.Jrogue.entities.impl.AbstractEnemy;
+import it.unibo.jrogue.Dice;
+import it.unibo.jrogue.Move;
+import it.unibo.jrogue.Position;
+import it.unibo.jrogue.entities.impl.AbstractEnemy;
 
 /**
  * Rapresent a Hobgoblin enemy.

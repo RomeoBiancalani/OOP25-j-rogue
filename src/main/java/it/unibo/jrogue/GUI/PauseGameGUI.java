@@ -7,14 +7,14 @@ import javafx.scene.text.Font;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuGUI {
+public class PauseGameGUI {
 
-    private List<Button> buttonsMenu;
+    private List<Button> buttonsPause;
     private VBox rootLayout;
 
-    private final String[] BUTTONS_NAME = {"New Game", "Load Game","Options", "Exit"};
+    private final String[] BUTTONS_NAME = {"Save Game", "Back to Menu", "Return"};
 
-    public MenuGUI() {
+    public PauseGameGUI() {
         initGraphics();
     }
 
@@ -23,7 +23,7 @@ public class MenuGUI {
         rootLayout.setAlignment(Pos.CENTER);
         rootLayout.setStyle("-fx-background-color: rgb(0,0,0);");
 
-        buttonsMenu = new ArrayList<>();
+        buttonsPause = new ArrayList<>();
 
         for (String name : BUTTONS_NAME) {
             Button button = new Button(name);
@@ -31,23 +31,26 @@ public class MenuGUI {
             button.setMinWidth(400);
             button.setFocusTraversable(false);
 
-            buttonsMenu.add(button);
+            buttonsPause.add(button);
             rootLayout.getChildren().add(button);
         }
     }
 
     public void updateSelection(int selectIndex) {
-        for (int i = 0; i < buttonsMenu.size(); i++) {
-            Button button = buttonsMenu.get(i);
+        for (int i = 0; i < buttonsPause.size(); i++) {
+            Button button = buttonsPause.get(i);
             if (i == selectIndex) {
-                button.setText("> " + BUTTONS_NAME[i] + " <");
+                String text = button.getText().replace(">", "").replace("<", "").trim();
+                button.setText("> " + text + " <");
                 button.setStyle("-fx-base: #b6e7b8;");
             } else {
-                button.setText(BUTTONS_NAME[i]);
+                String text = button.getText().replace(">", "").replace("<", "").trim();
+                button.setText(text);
                 button.setStyle("");
             }
         }
     }
+
     public VBox getLayout() {
         return rootLayout;
     }

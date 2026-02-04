@@ -1,13 +1,13 @@
-package it.unibo.Jrogue.entities.impl;
+package it.unibo.jrogue.entities.impl;
 
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import it.unibo.Jrogue.Move;
-import it.unibo.Jrogue.Position;
-import it.unibo.Jrogue.entities.api.Enemy;
+import it.unibo.jrogue.Move;
+import it.unibo.jrogue.Position;
+import it.unibo.jrogue.entities.api.Enemy;
 
 /**
  * Base implementation for all enemy entities.

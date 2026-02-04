@@ -1,4 +1,4 @@
-package it.unibo.Jrogue.engine;
+package it.unibo.jrogue.engine;
 
 //Entity for Launch Menu
 public class GameState {
