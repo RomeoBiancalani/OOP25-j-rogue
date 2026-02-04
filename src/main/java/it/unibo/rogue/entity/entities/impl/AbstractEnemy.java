@@ -101,16 +101,6 @@ public abstract class AbstractEnemy extends AbstractEntity implements Enemy {
     }
 
     /**
-     * Gets the seeded random number generator from the Dice class.
-     * This function may be used by subclasses.
-     * 
-     * @return The random number generator.
-     */
-    protected static Random getRandom() {
-        return Dice.getRandom();
-    }
-
-    /**
      * Generates a random move.
      * 
      * @return A random move.

@@ -49,7 +49,7 @@ public class Bat extends AbstractEnemy {
      */
     @Override
     public Move getNextMove(final Position playerPosition) {
-        if (!isSleeping() && getRandom().nextInt(100) < CHASE_PLAYER_PERCENT) {
+        if (!isSleeping() && Dice.getRandom().nextInt(100) < CHASE_PLAYER_PERCENT) {
             return moveToward(playerPosition);
         }
         return Move.IDLE;
