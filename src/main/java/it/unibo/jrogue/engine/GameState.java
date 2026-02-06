@@ -1,8 +1,9 @@
 package it.unibo.jrogue.engine;
 
-//Entity for Launch Menu
-public class GameState {
+/*Handles the State of the game*/
 
+public final class GameState {
+    /*Possible states of the game*/
     public enum State {
         MAIN_MENU,
         PLAYING,
@@ -11,6 +12,8 @@ public class GameState {
 
     private State currentState;
 
+    /*Initialization State*/
+
     public GameState() {
         this.currentState = State.MAIN_MENU;
     }
@@ -18,13 +21,9 @@ public class GameState {
     public State getCurrentState() {
         return currentState;
     }
+    /*Setting the game State*/
 
     public void setCurrentState(final State newState) {
         this.currentState = newState;
-        /*Keeping this debug line because it's cool*/
-        System.out.println("Game state changed in: " + this.currentState);
     }
-
-
-
 }

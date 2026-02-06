@@ -12,11 +12,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.transform.Scale;
 
-public class ScalableContentPane extends StackPane {
+/*Scalable content Pane, resize the Pane when the user resize the application keeping the 16:9 ratio */
 
-    private final int width = 1920;
-    private final int height = 1080;
+public final class ScalableContentPane extends StackPane {
+
+    private static final int WIDTH = 1920;
+    private static final int HEIGHT = 1080;
     private Pane contentPane;
+
+    /*Initialization, creates black borders around the Pane*/
 
     public ScalableContentPane(final Pane content) {
         this.setStyle("-fx-background-color: #000000;");
@@ -26,29 +30,32 @@ public class ScalableContentPane extends StackPane {
         this.heightProperty().addListener((obs, oldVal, newVal) -> resize());
     }
 
-    public final void setContent(final Pane newContent) {
+    /*Set the new Pane to display*/
+
+    public void setContent(final Pane newContent) {
         this.getChildren().clear();
         this.contentPane = newContent;
 
-        newContent.setPrefSize(width, height);
-        newContent.setMinSize(width, height);
-        newContent.setMaxSize(width, height);
+        newContent.setPrefSize(WIDTH, HEIGHT);
+        newContent.setMinSize(WIDTH, HEIGHT);
+        newContent.setMaxSize(WIDTH, HEIGHT);
         this.getChildren().add(newContent);
         resize();
     }
+    /*Do the math for the resize and apply the zoom of the Pane*/
 
     private void resize() {
-        if (contentPane == null) return;
-        double windowWidth = getWidth();
-        double windowHeight = getHeight();
-        double scaleX = windowWidth / width;
-        double scaleY = windowHeight / height;
-        double scaleFactor = Math.min(scaleX, scaleY);
-        Scale scale = new Scale(scaleFactor, scaleFactor);
-        //We zoom from the center
-        scale.setPivotX(width / 2.0);
-        scale.setPivotY(height / 2.0);
-
+        if (contentPane == null) {
+            return;
+        }
+        final double windowWidth = getWidth();
+        final double windowHeight = getHeight();
+        final double scaleX = windowWidth / WIDTH;
+        final double scaleY = windowHeight / HEIGHT;
+        final double scaleFactor = Math.min(scaleX, scaleY);
+        final Scale scale = new Scale(scaleFactor, scaleFactor);
+        scale.setPivotX(WIDTH / 2.0);
+        scale.setPivotY(HEIGHT / 2.0);
         contentPane.getTransforms().setAll(scale);
     }
 }

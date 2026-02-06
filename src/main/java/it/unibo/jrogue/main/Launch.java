@@ -1,11 +1,9 @@
 package it.unibo.jrogue.main;
+
 /*
 * This file can change if the JavaFX module check is fixed
 *
 * */
-
-
-
 
 import it.unibo.jrogue.engine.BaseController;
 import it.unibo.jrogue.engine.GameState;
@@ -16,19 +14,19 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class Launch extends Application {
+public final class Launch extends Application {
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(final Stage primaryStage) {
         /*Initializing*/
-        GameState entity = new GameState();
-        BaseController controller = new BaseController(entity);
-        ScalableContentPane rootContainer = new ScalableContentPane(new Pane());
+        final GameState entity = new GameState();
+        final BaseController controller = new BaseController(entity);
+        final ScalableContentPane rootContainer = new ScalableContentPane(new Pane());
         controller.setup(primaryStage, rootContainer);
         /*By changing the values, when the software launch it opens at the selected resolution*/
-        Scene globalScene = new Scene(rootContainer, 1280, 720);
+        final Scene globalScene = new Scene(rootContainer, 1280, 720);
         /*The BaseController handle everything*/
-        globalScene.setOnKeyPressed(event -> controller.handleGlobalKeyPress(event));
+        globalScene.setOnKeyPressed(controller::handleGlobalKeyPress);
 
         /*Window settings*/
         primaryStage.setFullScreenExitHint("");
@@ -38,7 +36,7 @@ public class Launch extends Application {
         primaryStage.show();
     }
 
-    public static void Launcher(String[] args) {
+    public static void launcher(final String[] args) {
         launch(args);
     }
 }

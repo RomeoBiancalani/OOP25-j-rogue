@@ -1,16 +1,16 @@
 package it.unibo.jrogue.controller;
 
-import it.unibo.jrogue.GUI.MenuGUI;
+import it.unibo.jrogue.boundary.MenuGUI;
 import it.unibo.jrogue.engine.BaseController;
-import it.unibo.jrogue.GUI.PauseGameGUI;
-import it.unibo.jrogue.GUI.OptionsGUI;
+import it.unibo.jrogue.boundary.OptionsGUI;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
+/*Controller that handles the Main menu and Options menu, it may change considering how hardcoded it is right now*/
 public final class MenuController implements InputHandler {
-
     private final BaseController controller;
+
     private final MenuGUI menuView;
     private final OptionsGUI optionsView;
 
@@ -18,11 +18,11 @@ public final class MenuController implements InputHandler {
     private final MenusNavigator optionsNav;
     private MenusNavigator currentNavigator;
 
+    /*Initialize the controller*/
     public MenuController(final BaseController controller) {
         this.controller = controller;
         this.menuView = new MenuGUI();
         this.optionsView = new OptionsGUI();
-
         this.mainMenuNav = new MenusNavigator(4, menuView::updateSelection);
         this.optionsNav = new MenusNavigator(2, optionsView::updateSelection);
         this.currentNavigator = mainMenuNav;
@@ -40,10 +40,11 @@ public final class MenuController implements InputHandler {
             selectedChoice();
         }
     }
+    /*Execute the action based on the index of the menu*/
 
     private void selectedChoice() {
-        int selection = currentNavigator.getSelection();
-        if (currentNavigator == mainMenuNav) {
+        final int selection = currentNavigator.getSelection();
+        if (currentNavigator.equals(mainMenuNav)) {
             switch (selection) {
                 case 0:
                     controller.startGame();
@@ -57,9 +58,11 @@ public final class MenuController implements InputHandler {
                 case 3:
                     System.exit(0);
                     break;
+                default:
+                    break;
             }
         } else { /*If we are not in the menu we are in the options, it's a bit hardcoded, it could change if we realize
-                    that we need more than 2 boundaries*/
+                    that we need more than 2 boundaries in this menu*/
             switch (selection) {
                 case 0:
                     final boolean isFull = controller.toggleFullscreen();
@@ -68,15 +71,19 @@ public final class MenuController implements InputHandler {
                 case 1:
                     backToMenu();
                     break;
+                default:
+                    break;
             }
         }
     }
+    /*View for options*/
 
     private void goToOptions() {
         this.currentNavigator = optionsNav;
         controller.changeView(optionsView.getLayout());
         currentNavigator.update();
     }
+    /*Set Controller and View back to the Menu*/
 
     private void backToMenu() {
         this.currentNavigator = mainMenuNav;
@@ -90,7 +97,7 @@ public final class MenuController implements InputHandler {
 
     @Override
     public Pane getView() {
-        if (currentNavigator == optionsNav) {
+        if (currentNavigator.equals(optionsNav)) {
             return optionsView.getLayout();
         } else {
             return menuView.getLayout();

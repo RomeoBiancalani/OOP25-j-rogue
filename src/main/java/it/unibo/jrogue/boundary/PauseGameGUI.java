@@ -1,4 +1,4 @@
-package it.unibo.jrogue.GUI;
+package it.unibo.jrogue.boundary;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -6,52 +6,56 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import java.util.ArrayList;
 import java.util.List;
+/*Boundary for Pause menu when in game*/
 
-public class PauseGameGUI {
+public final class PauseGameGUI {
+    private final List<Button> buttonsPause;
+    private final VBox rootLayout;
 
-    private List<Button> buttonsPause;
-    private VBox rootLayout;
-
-    private final String[] BUTTONS_NAME = {"Save Game", "Back to Menu", "Return"};
+    private final String[] buttonsName = {"Save Game", "Back to Menu", "Return"};
+    /*Builder*/
 
     public PauseGameGUI() {
+        rootLayout = new VBox(10);
+        buttonsPause = new ArrayList<>();
         initGraphics();
     }
+    /*Initialize the graphics settings of the pause menu*/
 
     private void initGraphics() {
-        rootLayout = new VBox(10);
         rootLayout.setAlignment(Pos.CENTER);
         rootLayout.setStyle("-fx-background-color: rgb(0,0,0);");
 
-        buttonsPause = new ArrayList<>();
-
-        for (String name : BUTTONS_NAME) {
-            Button button = new Button(name);
+        for (final String name : buttonsName) {
+            final Button button = new Button(name);
             button.setFont(Font.font("Consolas", 35));
             button.setMinWidth(400);
             button.setFocusTraversable(false);
-
             buttonsPause.add(button);
             rootLayout.getChildren().add(button);
         }
     }
+    /*Update graphic based on button selected*/
 
-    public void updateSelection(int selectIndex) {
+    public void updateSelection(final int selectIndex) {
         for (int i = 0; i < buttonsPause.size(); i++) {
-            Button button = buttonsPause.get(i);
+            final Button button = buttonsPause.get(i);
             if (i == selectIndex) {
-                String text = button.getText().replace(">", "").replace("<", "").trim();
+                final String text = button.getText().replace(">", "").replace("<", "").trim();
                 button.setText("> " + text + " <");
                 button.setStyle("-fx-base: #b6e7b8;");
             } else {
-                String text = button.getText().replace(">", "").replace("<", "").trim();
+                final String text = button.getText().replace(">", "").replace("<", "").trim();
                 button.setText(text);
                 button.setStyle("");
             }
         }
     }
 
+    /*return the layout of the Pause menu*/
+
     public VBox getLayout() {
         return rootLayout;
     }
 }
+
