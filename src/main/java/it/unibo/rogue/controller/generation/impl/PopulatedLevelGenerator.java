@@ -1,10 +1,12 @@
-package it.unibo.rogue.controller.generationController.impl;
+package it.unibo.rogue.controller.generation.impl;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import it.unibo.rogue.commons.Dice;
-import it.unibo.rogue.controller.generationController.api.EntityPopulator;
-import it.unibo.rogue.controller.generationController.api.GenerationConfig;
-import it.unibo.rogue.controller.generationController.api.LevelGenerator;
-import it.unibo.rogue.controller.generationController.api.SpawnConfig;
+import it.unibo.rogue.controller.generation.api.EntityPopulator;
+import it.unibo.rogue.controller.generation.api.GenerationConfig;
+import it.unibo.rogue.controller.generation.api.LevelGenerator;
+import it.unibo.rogue.controller.generation.api.SpawnConfig;
 import it.unibo.rogue.entity.world.api.Level;
 
 /**
@@ -41,6 +43,8 @@ public final class PopulatedLevelGenerator implements LevelGenerator {
      * @param entityPopulator the populator for entities
      * @param spawnConfig the spawn configuration
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2",
+                        justification = "Dependency injection pattern - components stored as injected")
     public PopulatedLevelGenerator(final LevelGenerator structureGenerator,
                                    final EntityPopulator entityPopulator,
                                    final SpawnConfig spawnConfig) {

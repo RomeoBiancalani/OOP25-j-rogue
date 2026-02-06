@@ -1,4 +1,4 @@
-package it.unibo.rogue.controller.generationController.api;
+package it.unibo.rogue.controller.generation.api;
 
 /**
  * Configuration for entity and item spawning in dungeon rooms.
@@ -61,41 +61,95 @@ public record SpawnConfig(
     int goblinBaseWeight
 ) {
 
+    // Equipment rates
+    private static final double DEFAULT_AXE_RATE = 0.05;
+    private static final double DEFAULT_BOW_RATE = 0.05;
+    private static final double DEFAULT_ARMOR_RATE = 0.05;
+    private static final double DEFAULT_ARMOR1_RATIO = 0.70;
+
+    // Consumables
+    private static final double DEFAULT_FOOD_POTION_BASE_RATE = 0.10;
+    private static final double DEFAULT_FOOD_POTION_DECAY = 0.0025;
+    private static final double DEFAULT_GOLD_RATE = 0.20;
+    private static final double DEFAULT_ARROW_RATE = 0.10;
+
+    // Traps
+    private static final int DEFAULT_SPIKE_TRAP_MIN_LEVEL = 3;
+    private static final int DEFAULT_POISON_TRAP_MIN_LEVEL = 5;
+    private static final int DEFAULT_TELEPORT_TRAP_MIN_LEVEL = 8;
+    private static final double DEFAULT_TRAP_RATE = 0.15;
+
+    // Enemies
+    private static final double DEFAULT_ENEMY_SPAWN_RATE = 0.30;
+    private static final int DEFAULT_MAX_ENEMIES_PER_ROOM = 3;
+    private static final double DEFAULT_HP_SCALING_ALPHA = 0.4;
+    private static final double DEFAULT_DAMAGE_SCALING_BETA = 1.2;
+    private static final double DEFAULT_XP_SCALING_LAMBDA = 0.5;
+
+    // Enemy weights
+    private static final int DEFAULT_BAT_BASE_WEIGHT = 10;
+    private static final int DEFAULT_SNAKE_BASE_WEIGHT = 8;
+    private static final int DEFAULT_GOBLIN_BASE_WEIGHT = 5;
+
+    // Debug rates
+    private static final double DEBUG_EQUIPMENT_RATE = 0.10;
+    private static final double DEBUG_FOOD_POTION_RATE = 0.15;
+    private static final double DEBUG_TRAP_RATE = 0.20;
+    private static final double DEBUG_ENEMY_SPAWN_RATE = 0.50;
+    private static final int DEBUG_ENEMY_WEIGHT = 5;
+
+    // XP formula constants
+    private static final int XP_MULTIPLIER = 50;
+    private static final int XP_BASE = 100;
+
     /**
      * Creates a SpawnConfig with default values matching design specs.
+     *
      * @return default spawn configuration
      */
     public static SpawnConfig defaults() {
         return new SpawnConfig(
             // Equipment
-            0.05, 0.05, 0.05, 0.70,
+            DEFAULT_AXE_RATE, DEFAULT_BOW_RATE,
+            DEFAULT_ARMOR_RATE, DEFAULT_ARMOR1_RATIO,
             // Consumables
-            0.10, 0.0025, 0.20, 0.10,
+            DEFAULT_FOOD_POTION_BASE_RATE, DEFAULT_FOOD_POTION_DECAY,
+            DEFAULT_GOLD_RATE, DEFAULT_ARROW_RATE,
             // Traps
-            3, 5, 8, 0.15,
+            DEFAULT_SPIKE_TRAP_MIN_LEVEL, DEFAULT_POISON_TRAP_MIN_LEVEL,
+            DEFAULT_TELEPORT_TRAP_MIN_LEVEL, DEFAULT_TRAP_RATE,
             // Enemies
-            0.30, 3, 0.4, 1.2, 0.5,
+            DEFAULT_ENEMY_SPAWN_RATE, DEFAULT_MAX_ENEMIES_PER_ROOM,
+            DEFAULT_HP_SCALING_ALPHA, DEFAULT_DAMAGE_SCALING_BETA,
+            DEFAULT_XP_SCALING_LAMBDA,
             // Enemy weights
-            10, 8, 5
+            DEFAULT_BAT_BASE_WEIGHT, DEFAULT_SNAKE_BASE_WEIGHT,
+            DEFAULT_GOBLIN_BASE_WEIGHT
         );
     }
 
     /**
      * Creates a SpawnConfig with slightly higher rates for debugging/testing.
+     *
      * @return debug spawn configuration with moderately increased rates
      */
     public static SpawnConfig debug() {
         return new SpawnConfig(
             // Equipment - slightly higher for testing
-            0.10, 0.10, 0.10, 0.70,
+            DEBUG_EQUIPMENT_RATE, DEBUG_EQUIPMENT_RATE,
+            DEBUG_EQUIPMENT_RATE, DEFAULT_ARMOR1_RATIO,
             // Consumables - moderate
-            0.15, 0.0, 0.20, 0.10,
+            DEBUG_FOOD_POTION_RATE, 0.0,
+            DEFAULT_GOLD_RATE, DEFAULT_ARROW_RATE,
             // Traps - available from level 1
-            1, 1, 1, 0.20,
+            1, 1, 1, DEBUG_TRAP_RATE,
             // Enemies - moderate spawn rate
-            0.50, 3, 0.4, 1.2, 0.5,
+            DEBUG_ENEMY_SPAWN_RATE, DEFAULT_MAX_ENEMIES_PER_ROOM,
+            DEFAULT_HP_SCALING_ALPHA, DEFAULT_DAMAGE_SCALING_BETA,
+            DEFAULT_XP_SCALING_LAMBDA,
             // Enemy weights - equal for testing
-            5, 5, 5
+            DEBUG_ENEMY_WEIGHT, DEBUG_ENEMY_WEIGHT,
+            DEBUG_ENEMY_WEIGHT
         );
     }
 
@@ -131,7 +185,8 @@ public record SpawnConfig(
      * @return XP needed for next level
      */
     public int xpForNextLevel(final int currentLevel) {
-        return 50 * currentLevel * currentLevel - 50 * currentLevel + 100;
+        return XP_MULTIPLIER * currentLevel * currentLevel
+               - XP_MULTIPLIER * currentLevel + XP_BASE;
     }
 
     /**
@@ -170,9 +225,8 @@ public record SpawnConfig(
     public int getEnemyWeight(final int enemyType, final int level) {
         return switch (enemyType) {
             case 0 -> batBaseWeight;  // Bat doesn't scale up
-            case 1 -> snakeBaseWeight + (level - 1);
+            case 1 -> snakeBaseWeight + level - 1;
             case 2 -> goblinBaseWeight + 2 * (level - 1);
-            // case 3 -> iceGolemBaseWeight + 3 * (level - 1); // TODO: Understand if to be implemented
             default -> throw new IllegalArgumentException("Unknown enemy type: " + enemyType);
         };
     }

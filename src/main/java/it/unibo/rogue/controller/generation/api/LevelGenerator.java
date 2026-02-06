@@ -1,4 +1,4 @@
-package it.unibo.rogue.controller.generationController.api;
+package it.unibo.rogue.controller.generation.api;
 
 import it.unibo.rogue.entity.world.api.Level;
 

@@ -1,9 +1,9 @@
-package it.unibo.rogue.entity.gameEntities.impl.enemies;
+package it.unibo.rogue.entity.entities.impl.enemies;
 
 import it.unibo.rogue.commons.Dice;
 import it.unibo.rogue.commons.Move;
 import it.unibo.rogue.commons.Position;
-import it.unibo.rogue.entity.gameEntities.impl.AbstractEnemy;
+import it.unibo.rogue.entity.entities.impl.AbstractEnemy;
 
 /**
  * Rapresent a Hobgoblin enemy.

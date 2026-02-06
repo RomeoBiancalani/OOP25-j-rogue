@@ -18,6 +18,7 @@ public final class SimpleHallway implements Hallway {
 
     /**
      * Creates a new hallway.
+     *
      * @param path the positions forming the hallway
      * @param connectedRooms the rooms this hallway connects
      */
@@ -27,6 +28,7 @@ public final class SimpleHallway implements Hallway {
 
     /**
      * Creates a new hallway with hidden flag.
+     *
      * @param path the positions forming the hallway
      * @param connectedRooms the rooms this hallway connects
      * @param hidden whether the hallway is hidden

@@ -1,5 +1,7 @@
 package it.unibo.rogue.commons;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.util.Random;
 
 /**
@@ -31,6 +33,8 @@ public final class Dice {
      *
      * @return the Random instance
      */
+    @SuppressFBWarnings(value = "MS_EXPOSE_REP",
+                        justification = "Shared Random instance is intentional for deterministic generation when seed is set")
     public static Random getRandom() {
         return RAND;
     }

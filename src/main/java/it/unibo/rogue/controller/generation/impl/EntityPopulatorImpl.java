@@ -1,20 +1,17 @@
-package it.unibo.rogue.controller.generationController.impl;
+package it.unibo.rogue.controller.generation.impl;
 
 import it.unibo.rogue.commons.Dice;
 import it.unibo.rogue.commons.Position;
-import it.unibo.rogue.controller.generationController.api.EntityPopulator;
-import it.unibo.rogue.controller.generationController.api.SpawnConfig;
-import it.unibo.rogue.entity.gameEntities.api.Enemy;
-import it.unibo.rogue.entity.gameEntities.impl.enemies.Bat;
-import it.unibo.rogue.entity.gameEntities.impl.enemies.HobGoblin;
+import it.unibo.rogue.controller.generation.api.EntityPopulator;
+import it.unibo.rogue.controller.generation.api.SpawnConfig;
+import it.unibo.rogue.entity.entities.api.Enemy;
+import it.unibo.rogue.entity.entities.impl.enemies.Bat;
 import it.unibo.rogue.entity.items.api.Item;
 import it.unibo.rogue.entity.items.impl.HealthPotion;
 import it.unibo.rogue.entity.items.impl.MeleeWeapon;
 import it.unibo.rogue.entity.world.api.GameMap;
 import it.unibo.rogue.entity.world.api.Room;
 import it.unibo.rogue.entity.world.api.Tile;
-import it.unibo.rogue.entity.world.impl.SimpleGameMap;
-import it.unibo.rogue.entity.world.impl.SimpleRoom;
 import it.unibo.rogue.entity.world.impl.SimpleTrap;
 
 import java.util.ArrayList;
@@ -96,6 +93,10 @@ public final class EntityPopulatorImpl implements EntityPopulator {
 
     /**
      * Gets all floor positions within a room.
+     *
+     * @param map the game map
+     * @param room the room to get floor positions from
+     * @return list of floor positions
      */
     private List<Position> getFloorPositions(final GameMap map, final Room room) {
         final List<Position> positions = new ArrayList<>();
@@ -115,6 +116,11 @@ public final class EntityPopulatorImpl implements EntityPopulator {
 
     /**
      * Spawns equipment in a room based on configuration.
+     *
+     * @param map the game map
+     * @param room the room to spawn equipment in
+     * @param positions available positions for spawning
+     * @param config spawn configuration
      */
     private void spawnEquipment(final GameMap map, final Room room,
                                 final List<Position> positions, final SpawnConfig config) {
@@ -137,6 +143,12 @@ public final class EntityPopulatorImpl implements EntityPopulator {
 
     /**
      * Spawns consumable items based on configuration.
+     *
+     * @param map the game map
+     * @param room the room to spawn consumables in
+     * @param positions available positions for spawning
+     * @param levelNumber the dungeon level
+     * @param config spawn configuration
      */
     private void spawnConsumables(final GameMap map, final Room room,
                                   final List<Position> positions,
@@ -157,6 +169,12 @@ public final class EntityPopulatorImpl implements EntityPopulator {
 
     /**
      * Spawns traps based on level requirements.
+     *
+     * @param map the game map
+     * @param room the room to spawn traps in
+     * @param positions available positions for spawning
+     * @param levelNumber the dungeon level
+     * @param config spawn configuration
      */
     private void spawnTraps(final GameMap map, final Room room,
                             final List<Position> positions,
@@ -198,6 +216,11 @@ public final class EntityPopulatorImpl implements EntityPopulator {
 
     /**
      * Spawns enemies using weighted selection based on level.
+     *
+     * @param map the game map
+     * @param positions available positions for spawning
+     * @param levelNumber the dungeon level
+     * @param config spawn configuration
      */
     private void spawnEnemies(final GameMap map, final List<Position> positions,
                               final int levelNumber, final SpawnConfig config) {
@@ -220,6 +243,11 @@ public final class EntityPopulatorImpl implements EntityPopulator {
     /**
      * Creates an enemy using weighted random selection.
      * Stronger enemies become more likely at deeper levels.
+     *
+     * @param pos the position for the enemy
+     * @param level the dungeon level
+     * @param config spawn configuration
+     * @return the created enemy
      */
     private Enemy createWeightedEnemy(final Position pos, final int level, final SpawnConfig config) {
         // Calculate weights for each enemy type
@@ -239,8 +267,8 @@ public final class EntityPopulatorImpl implements EntityPopulator {
 
         roll -= snakeWeight;
         if (roll < 0) {
-            // TODO: Snake
-            // return new Snake(pos);
+            // TODO: Snake - for now return Bat as placeholder
+            return new Bat(pos);
         }
 
         return new Bat(pos);
@@ -258,6 +286,9 @@ public final class EntityPopulatorImpl implements EntityPopulator {
 
     /**
      * Picks and removes a random position from the list.
+     *
+     * @param positions the list of available positions
+     * @return the selected position
      */
     private Position pickRandomPosition(final List<Position> positions) {
         final int index = random.nextInt(positions.size());
@@ -266,6 +297,9 @@ public final class EntityPopulatorImpl implements EntityPopulator {
 
     /**
      * Adds an item to a room (for room-level tracking).
+     *
+     * @param room the room to add item to
+     * @param item the item to add
      */
     private void addItemToRoom(final Room room, final Item item) {
         room.addItem(item);
@@ -273,6 +307,9 @@ public final class EntityPopulatorImpl implements EntityPopulator {
 
     /**
      * Adds a trap to a room.
+     *
+     * @param room the room to add trap to
+     * @param trap the trap to add
      */
     private void addTrapToRoom(final Room room, final SimpleTrap trap) {
         room.addTrap(trap);

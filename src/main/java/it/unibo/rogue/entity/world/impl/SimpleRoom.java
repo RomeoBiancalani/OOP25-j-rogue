@@ -23,6 +23,7 @@ public final class SimpleRoom implements Room {
 
     /**
      * Creates a new room.
+     *
      * @param topLeft the top-left corner position
      * @param width the room width
      * @param height the room height
@@ -33,6 +34,7 @@ public final class SimpleRoom implements Room {
 
     /**
      * Creates a new room with hidden flag.
+     *
      * @param topLeft the top-left corner position
      * @param width the room width
      * @param height the room height

@@ -1,4 +1,4 @@
-package it.unibo.rogue.entity.gameEntities.api;
+package it.unibo.rogue.entity.entities.api;
 
 import it.unibo.rogue.commons.Move;
 import it.unibo.rogue.commons.Position;

@@ -2,11 +2,22 @@ package it.unibo.rogue.entity.items.impl;
 
 import it.unibo.rogue.entity.items.api.Consumable;
 
-public class Scrolls implements Consumable{
+/**
+ * A scroll that can be consumed for various effects.
+ */
+public final class Scrolls implements Consumable {
+
     private final String name;
-    Scrolls(String name) {
+
+    /**
+     * Creates a new scroll with the given name.
+     *
+     * @param name the scroll name
+     */
+    Scrolls(final String name) {
         this.name = name;
     }
+
     @Override
     public String getDescription() {
         return name + " ";
@@ -17,5 +28,4 @@ public class Scrolls implements Consumable{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'consume'");
     }
-    
 }

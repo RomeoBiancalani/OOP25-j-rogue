@@ -18,6 +18,7 @@ public final class SimpleDungeon implements Dungeon {
 
     /**
      * Creates a new dungeon with the given levels.
+     *
      * @param levels the levels in this dungeon
      */
     public SimpleDungeon(final List<Level> levels) {
@@ -60,6 +61,7 @@ public final class SimpleDungeon implements Dungeon {
 
     /**
      * Adds points to the score.
+     *
      * @param amount the amount to add
      */
     public void addPoints(final int amount) {
@@ -68,6 +70,7 @@ public final class SimpleDungeon implements Dungeon {
 
     /**
      * Adds a new level to the dungeon.
+     *
      * @param level the level to add
      */
     public void addLevel(final Level level) {

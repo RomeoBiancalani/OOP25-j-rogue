@@ -15,6 +15,7 @@ public final class SimpleTrap implements Trap {
 
     /**
      * Creates a new trap.
+     *
      * @param position the trap position
      * @param damage the damage dealt when triggered
      */
@@ -54,6 +55,7 @@ public final class SimpleTrap implements Trap {
 
     /**
      * Returns the damage this trap deals.
+     *
      * @return the damage amount
      */
     public int getDamage() {

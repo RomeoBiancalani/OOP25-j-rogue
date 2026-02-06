@@ -1,7 +1,9 @@
-package it.unibo.rogue.controller.generationController.impl;
+package it.unibo.rogue.controller.generation.impl;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import it.unibo.rogue.commons.Position;
-import it.unibo.rogue.controller.generationController.api.BSPNode;
+import it.unibo.rogue.controller.generation.api.BSPNode;
 import it.unibo.rogue.entity.world.api.Room;
 
 import java.util.Optional;
@@ -107,6 +109,8 @@ public final class BSPNodeImpl implements BSPNode {
      *
      * @param room the room to place in this partition
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2",
+                        justification = "Room is intentionally stored for modification during generation")
     public void setRoom(final Room room) {
         this.room = room;
     }

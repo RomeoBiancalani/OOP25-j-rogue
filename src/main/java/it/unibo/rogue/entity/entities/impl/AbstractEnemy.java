@@ -1,4 +1,4 @@
-package it.unibo.rogue.entity.gameEntities.impl;
+package it.unibo.rogue.entity.entities.impl;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -8,7 +8,7 @@ import java.util.Random;
 import it.unibo.rogue.commons.Dice;
 import it.unibo.rogue.commons.Move;
 import it.unibo.rogue.commons.Position;
-import it.unibo.rogue.entity.gameEntities.api.Enemy;
+import it.unibo.rogue.entity.entities.api.Enemy;
 
 /**
  * Base implementation for all enemy entities.

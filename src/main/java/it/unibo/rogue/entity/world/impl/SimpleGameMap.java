@@ -1,9 +1,9 @@
 package it.unibo.rogue.entity.world.impl;
 
 import it.unibo.rogue.commons.Position;
-import it.unibo.rogue.entity.gameEntities.api.Enemy;
-import it.unibo.rogue.entity.gameEntities.api.Entity;
-import it.unibo.rogue.entity.gameEntities.api.Player;
+import it.unibo.rogue.entity.entities.api.Enemy;
+import it.unibo.rogue.entity.entities.api.Entity;
+import it.unibo.rogue.entity.entities.api.Player;
 import it.unibo.rogue.entity.items.api.Item;
 import it.unibo.rogue.entity.world.api.GameMap;
 import it.unibo.rogue.entity.world.api.Hallway;
@@ -40,6 +40,7 @@ public final class SimpleGameMap implements GameMap {
 
     /**
      * Creates a new game map.
+     *
      * @param tiles the 2D tile array [y][x]
      * @param rooms the rooms in this map
      * @param hallways the hallways connecting rooms

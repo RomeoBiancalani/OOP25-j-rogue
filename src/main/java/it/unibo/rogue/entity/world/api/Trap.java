@@ -9,6 +9,7 @@ public interface Trap {
 
     /**
      * Checks if the trap is still active.
+     *
      * @return true if the trap is active
      */
     boolean isActive();
@@ -20,12 +21,14 @@ public interface Trap {
 
     /**
      * Returns the position of this trap.
+     *
      * @return the trap position
      */
     Position getPosition();
 
     /**
      * Checks if the trap has been discovered by the player.
+     *
      * @return true if the trap is discovered
      */
     boolean isDiscovered();

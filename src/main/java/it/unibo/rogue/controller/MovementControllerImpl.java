@@ -5,9 +5,9 @@ import java.util.Objects;
 import it.unibo.rogue.commons.Move;
 import it.unibo.rogue.commons.Position;
 import it.unibo.rogue.controller.api.MovementController;
-import it.unibo.rogue.entity.gameEntities.api.Enemy;
-import it.unibo.rogue.entity.gameEntities.api.Entity;
-import it.unibo.rogue.entity.gameEntities.api.Player;
+import it.unibo.rogue.entity.entities.api.Enemy;
+import it.unibo.rogue.entity.entities.api.Entity;
+import it.unibo.rogue.entity.entities.api.Player;
 import it.unibo.rogue.entity.world.api.GameMap;
 
 /**

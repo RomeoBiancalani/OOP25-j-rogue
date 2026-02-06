@@ -45,6 +45,7 @@ public enum Tile {
 
     /**
      * Returns the ASCII symbol representing this tile.
+     *
      * @return the character symbol
      */
     public char getSymbol() {

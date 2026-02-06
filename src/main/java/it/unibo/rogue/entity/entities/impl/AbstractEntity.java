@@ -1,8 +1,8 @@
-package it.unibo.rogue.entity.gameEntities.impl;
+package it.unibo.rogue.entity.entities.impl;
 
 import it.unibo.rogue.commons.Move;
 import it.unibo.rogue.commons.Position;
-import it.unibo.rogue.entity.gameEntities.api.Entity;
+import it.unibo.rogue.entity.entities.api.Entity;
 
 /**
  * Base implementation of the Entity interface.

@@ -1,10 +1,10 @@
-package it.unibo.rogue.controller.generationController.impl;
+package it.unibo.rogue.controller.generation.impl;
 
 import it.unibo.rogue.commons.Dice;
 import it.unibo.rogue.commons.Position;
-import it.unibo.rogue.controller.generationController.api.BSPNode;
-import it.unibo.rogue.controller.generationController.api.GenerationConfig;
-import it.unibo.rogue.controller.generationController.api.LevelGenerator;
+import it.unibo.rogue.controller.generation.api.BSPNode;
+import it.unibo.rogue.controller.generation.api.GenerationConfig;
+import it.unibo.rogue.controller.generation.api.LevelGenerator;
 import it.unibo.rogue.entity.world.api.Hallway;
 import it.unibo.rogue.entity.world.api.Level;
 import it.unibo.rogue.entity.world.api.Room;
@@ -28,6 +28,7 @@ public final class BSPLevelGenerator implements LevelGenerator {
     private static final double ROOM_PADDING = 0.20;
     private static final double SPLIT_RATIO_MIN = 0.35;
     private static final double SPLIT_RATIO_MAX = 0.65;
+    private static final double ASPECT_RATIO_THRESHOLD = 1.25;
 
     private Random random;
 
@@ -104,9 +105,9 @@ public final class BSPLevelGenerator implements LevelGenerator {
         final boolean horizontal;
         if (canSplitHorizontal && canSplitVertical) {
             // Prefer splitting the longer dimension
-            if ((double) width / height >= 1.25) {
+            if ((double) width / height >= ASPECT_RATIO_THRESHOLD) {
                 horizontal = false;
-            } else if ((double) height / width >= 1.25) {
+            } else if ((double) height / width >= ASPECT_RATIO_THRESHOLD) {
                 horizontal = true;
             } else {
                 horizontal = random.nextBoolean();
@@ -319,11 +320,9 @@ public final class BSPLevelGenerator implements LevelGenerator {
         // Carve out hallways
         for (final Hallway hallway : hallways) {
             for (final Position pos : hallway.getPath()) {
-                if (isInBounds(pos.x(), pos.y(), config)) {
-                    // Only change to corridor if not already floor (to avoid overwriting rooms)
-                    if (tiles[pos.y()][pos.x()] == Tile.WALL) {
-                        tiles[pos.y()][pos.x()] = Tile.CORRIDOR;
-                    }
+                // Only change to corridor if not already floor (to avoid overwriting rooms)
+                if (isInBounds(pos.x(), pos.y(), config) && tiles[pos.y()][pos.x()] == Tile.WALL) {
+                    tiles[pos.y()][pos.x()] = Tile.CORRIDOR;
                 }
             }
         }

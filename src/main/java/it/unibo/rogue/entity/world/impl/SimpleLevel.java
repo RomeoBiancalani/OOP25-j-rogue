@@ -1,5 +1,7 @@
 package it.unibo.rogue.entity.world.impl;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import it.unibo.rogue.entity.world.api.GameMap;
 import it.unibo.rogue.entity.world.api.Level;
 
@@ -14,6 +16,7 @@ public final class SimpleLevel implements Level {
 
     /**
      * Creates a new level.
+     *
      * @param map the game map for this level
      * @param levelNumber the level number (1-indexed)
      */
@@ -23,10 +26,13 @@ public final class SimpleLevel implements Level {
 
     /**
      * Creates a new level with custom difficulty.
+     *
      * @param map the game map for this level
      * @param levelNumber the level number (1-indexed)
      * @param difficulty the difficulty modifier
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2",
+                        justification = "GameMap is intentionally mutable for gameplay")
     public SimpleLevel(final GameMap map, final int levelNumber, final int difficulty) {
         this.map = map;
         this.levelNumber = levelNumber;
@@ -34,6 +40,8 @@ public final class SimpleLevel implements Level {
     }
 
     @Override
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP",
+                        justification = "GameMap reference sharing is intentional")
     public GameMap getMap() {
         return map;
     }
