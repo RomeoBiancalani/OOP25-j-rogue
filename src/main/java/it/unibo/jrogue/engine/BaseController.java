@@ -1,12 +1,9 @@
 package it.unibo.jrogue.engine;
 
-import it.unibo.jrogue.controller.GameController;
-import it.unibo.jrogue.controller.InputHandler;
-import it.unibo.jrogue.controller.MenuController;
+import it.unibo.jrogue.controller.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import it.unibo.jrogue.controller.PauseGameController;
 
 /*BaseController class handle every controller the software utilize
 * and some useful utility methods */
@@ -22,6 +19,7 @@ public final class BaseController {
     private final InputHandler menuController;
     private final InputHandler gameController;
     private final InputHandler pauseController;
+    private final InputHandler inventoryController;
 
     /*
     * Controllers initialization
@@ -31,6 +29,7 @@ public final class BaseController {
         this.menuController = new MenuController(this);
         this.gameController = new GameController(this);
         this.pauseController = new PauseGameController(this);
+        this.inventoryController = new InventoryController(this);
         this.currentController = menuController;
     }
     /*Setting up the stage and container in order to be viewable */
@@ -79,6 +78,13 @@ public final class BaseController {
         this.currentController = pauseController;
         changeView(pauseController.getView());
     }
+    /*Opening the Inventory while in game*/
+
+    public void openInventory(){
+        this.currentController = inventoryController;
+        changeView(inventoryController.getView());
+    }
+
     /*Change controller and view when in Pause to get back to the game*/
 
     public void resumeGame() {

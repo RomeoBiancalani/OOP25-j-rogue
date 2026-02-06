@@ -7,6 +7,7 @@ import javafx.scene.layout.Pane;
 import it.unibo.jrogue.boundary.PauseGameGUI;
 
 /*Controller that handles the Pause menu when in game*/
+
 public final class PauseGameController implements InputHandler {
     private final BaseController controller;
     private final PauseGameGUI pauseView;
@@ -14,6 +15,7 @@ public final class PauseGameController implements InputHandler {
     private final MenusNavigator currentNavigator;
 
     /*Initializing the controller*/
+
     public PauseGameController(final BaseController controller) {
         this.controller = controller;
         this.pauseView = new PauseGameGUI();

@@ -29,7 +29,7 @@ public final class GameController implements InputHandler {
         } else if (code == KeyCode.S) {
             //moveDown();
         } else if (code == KeyCode.Q) {
-            //openInventory();
+            controller.openInventory();
         } else if (code == KeyCode.E) {
             //nextLevel(); This method take action when the player want to interact with a stair for the next level
         } else if (code == KeyCode.SPACE) {
