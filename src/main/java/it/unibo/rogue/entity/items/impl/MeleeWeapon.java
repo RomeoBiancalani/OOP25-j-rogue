@@ -14,11 +14,19 @@ public class MeleeWeapon implements Equipment {
     /**
      * Constructor for MeleeWeapon.
      * 
-     * @param name the name of the weapon.
+     * @param name   the name of the weapon.
      * 
      * @param damage the damage of the weapon.
      */
     public MeleeWeapon(final String name, final int damage) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("L'arma deve avere un nome valido");
+        }
+
+        if (damage <= 0) {
+            throw new IllegalArgumentException("Il danno non può essere negativo o zero");
+        }
+
         this.name = name;
         this.damage = damage;
     }
@@ -29,6 +37,15 @@ public class MeleeWeapon implements Equipment {
     @Override
     public String getDescription() {
         return name + " (Danno " + damage + ")";
+    }
+
+    /**
+     * Provides the name of the weapon.
+     * 
+     * @return the name of the weapon.
+     */
+    public String getName() {
+        return name;
     }
 
     /**
@@ -47,6 +64,6 @@ public class MeleeWeapon implements Equipment {
     public void equip(final Player player) {
         if (player != null) {
             player.equipWeapon(this);
-        } 
+        }
     }
 }

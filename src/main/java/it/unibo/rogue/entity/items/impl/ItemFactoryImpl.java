@@ -21,13 +21,14 @@ public class ItemFactoryImpl implements ItemFactory {
     private static final int PROTECTION_VARIANCE_BOUND = 2;
 
     private static final int ROLL_MAX = 100;
-    private static final int CHANCE_NOTHING = 20;
+    private static final int CHANCE_RESOURCE = 20;
     private static final int CHANCE_POTION = 30;
     private static final int CHANCE_DAGGER = 35;
     private static final int CHANCE_SWORD = 40;
     private static final int CHANCE_AXE = 45;
     private static final int CHANCE_ARMOR = 50;
     private static final int ARMOR_SELECTION = 70;
+    private static final int GOLD_AMOUNT = 10;
 
     private final Random random = new Random();
 
@@ -108,8 +109,8 @@ public class ItemFactoryImpl implements ItemFactory {
     public Optional<Item> createRandomItem(final int level) {
         final int roll = random.nextInt(ROLL_MAX);
 
-        if (roll < CHANCE_NOTHING) {
-        return Optional.empty();
+        if (roll < CHANCE_RESOURCE) {
+        return Optional.of(new Gold(GOLD_AMOUNT));
         } else if (roll < CHANCE_POTION) {
             return Optional.of(new HealthPotion());
         } else if (roll < CHANCE_DAGGER) {

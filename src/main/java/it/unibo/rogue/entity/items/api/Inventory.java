@@ -28,8 +28,15 @@ public interface Inventory {
      * 
      * @param item the item that we want to add.
      * 
-     * @return true if the item has been added.
+     * @throws IllegalStateException if the inventory is full.
      */
-    boolean addItem(Item item);
+    void addItem(Item item);
+
+    /**
+     * Returns the size of the inventory.
+     * 
+     * @return returns the size of the inventory.
+     */
+    int getSize();
 }
 

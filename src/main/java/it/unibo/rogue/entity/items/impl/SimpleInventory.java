@@ -21,6 +21,9 @@ public class SimpleInventory implements Inventory {
      * @param size size of the Inventory.
      */
     public SimpleInventory(final int size) {
+        if (size <= 0) {
+            throw new IllegalArgumentException("L'inventario deve avere dimensione positiva");
+        }
         this.size = size;
     }
 
@@ -44,17 +47,26 @@ public class SimpleInventory implements Inventory {
      * {@inheritDoc}
      */
     @Override
-    public boolean addItem(final Item item) {
+    public void addItem(final Item item) {
         if (isFull()) {
-            return false;
+            throw new IllegalStateException("L'inventario è pieno non si può aggiungere altro");
+
         }
+
         for (int i = 0; i < size; i++) {
             if (!inventory.containsKey(i)) {
                 inventory.put(i, item);
-                return true;
+                return;
             }
         }
-        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getSize() {
+        return this.size;
     }
 
 }

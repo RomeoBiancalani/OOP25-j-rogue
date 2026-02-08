@@ -13,11 +13,19 @@ public final class Armor implements Equipment {
     /**
      * The constructor of armor.
      *
-     * @param name the name of the armor.
+     * @param name       the name of the armor.
      *
      * @param protection the protection of the armor.
      */
     public Armor(final String name, final int protection) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("L'armatura deve avere un nome valido");
+        }
+
+        if (protection < 0) {
+            throw new IllegalArgumentException("La difesa non può essere negativa");
+        }
+
         this.name = name;
         this.protection = protection;
     }
@@ -31,12 +39,21 @@ public final class Armor implements Equipment {
     }
 
     /**
+     * Provides with the name of the armor.
+     * 
+     * @return the name of the armor.
+     */
+    public String getName() {
+        return this.name;
+    }
+
+    /**
      * Provides with the protection stat of the armor.
      *
      * @return the protection value.
      */
     public int getProtection() {
-        return protection;
+        return this.protection;
     }
 
     /**
