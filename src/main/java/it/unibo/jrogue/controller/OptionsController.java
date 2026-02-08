@@ -1,29 +1,29 @@
 package it.unibo.jrogue.controller;
 
+import it.unibo.jrogue.boundary.OptionsGUI;
 import it.unibo.jrogue.engine.BaseController;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
-import it.unibo.jrogue.boundary.PauseGameGUI;
 
 /**
- * Controller that handles the Pause menu when in game*/
+ * Controller that handles the options menu
+ */
+public final class OptionsController implements InputHandler {
 
-public final class PauseGameController implements InputHandler {
-    private static final int BUTTONS_NUMBER = 4;
+    private static final int OPTIONS_ITEMS = 2;
     private final BaseController controller;
-    private final PauseGameGUI pauseView;
+    private final OptionsGUI optionsView;
     private int currentIndex;
 
     /**
-     * Initialize the controller
+     * Initialize the Options controller.
      *
-     * @param controller which is the BaseController we communicate with
+     * @param controller which is the BaseController
      */
-
-    public PauseGameController(final BaseController controller) {
+    public OptionsController(final BaseController controller) {
         this.controller = controller;
-        this.pauseView = new PauseGameGUI();
+        this.optionsView = new OptionsGUI();
         this.currentIndex = 0;
         updateGraphics();
     }
@@ -37,10 +37,6 @@ public final class PauseGameController implements InputHandler {
             moveDown();
         } else if (code == KeyCode.ENTER) {
             selectedChoice();
-        } else if (code == KeyCode.ESCAPE){
-            currentIndex = 0;
-            updateGraphics();
-            controller.resumeGame();
         }
     }
     /**
@@ -58,35 +54,25 @@ public final class PauseGameController implements InputHandler {
      * */
 
     private void moveDown() {
-        if (currentIndex < BUTTONS_NUMBER - 1) {
+        if (currentIndex < OPTIONS_ITEMS - 1) {
             currentIndex++;
             updateGraphics();
         }
     }
-
     /**
-     * Executing actions based on the selected index of the menu
+     * Execute the action based on the index of the menu
      */
 
     private void selectedChoice() {
         switch (currentIndex) {
             case 0:
-                //saveGame();
+                final boolean isFull = controller.toggleFullscreen();
+                optionsView.updateFullscreenText(isFull);
                 break;
             case 1:
                 currentIndex = 0;
                 updateGraphics();
-                controller.goToOptions();
-                break;
-            case 2:
-                currentIndex = 0;
-                updateGraphics();
-                controller.backToMainMenu();
-                break;
-            case 3:
-                currentIndex = 0;
-                updateGraphics();
-                controller.resumeGame();
+                controller.goBack();
                 break;
             default:
                 break;
@@ -97,11 +83,11 @@ public final class PauseGameController implements InputHandler {
      * */
 
     private void updateGraphics() {
-        pauseView.updateSelection(currentIndex);
+        optionsView.updateSelection(currentIndex);
     }
 
     @Override
     public Pane getView() {
-        return this.pauseView.getLayout();
+        return optionsView.getLayout();
     }
 }

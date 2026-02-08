@@ -17,7 +17,7 @@ public final class PauseGameGUI {
     private final List<Button> buttonsPause;
     private final VBox rootLayout;
 
-    private final String[] buttonsName = {"Save Game", "Back to Menu", "Return"};
+    private final String[] buttonsName = {"Save Game", "Options", "Back to Menu", "Return"};
 
     public PauseGameGUI() {
         rootLayout = new VBox(BUTTONS_SPACING);

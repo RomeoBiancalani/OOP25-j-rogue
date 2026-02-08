@@ -16,6 +16,7 @@ public final class BaseController {
 
     private InputHandler currentController;
     private final InputHandler menuController;
+    private final InputHandler optionsController;
     private final InputHandler gameController;
     private final InputHandler pauseController;
     private final InputHandler inventoryController;
@@ -28,6 +29,7 @@ public final class BaseController {
     public BaseController(final GameState entity) {
         this.entity = entity;
         this.menuController = new MenuController(this);
+        this.optionsController = new OptionsController(this);
         this.gameController = new GameController(this);
         this.pauseController = new PauseGameController(this);
         this.inventoryController = new InventoryController(this);
@@ -91,6 +93,28 @@ public final class BaseController {
         entity.setCurrentState(GameState.State.MAIN_MENU);
         this.currentController = menuController;
         changeView(menuController.getView());
+    }
+    /**
+     * Gives the possibility to get back to main menu or get back to pause menu
+     * */
+
+    public void goBack() {
+        if(entity.getCurrentState() == GameState.State.PLAYING){
+            this.currentController = pauseController;
+            changeView(pauseController.getView());
+        }else {
+            entity.setCurrentState(GameState.State.MAIN_MENU);
+            this.currentController = menuController;
+            changeView(menuController.getView());
+        }
+    }
+    /**
+     * Change controller and view to open options menu
+     * */
+
+    public void goToOptions(){
+        this.currentController = optionsController;
+        changeView(optionsController.getView());
     }
     /**
      * Change controller and view to open Pause while in game*/
