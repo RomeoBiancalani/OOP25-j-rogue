@@ -7,7 +7,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
-/*Controller that handles the Main menu and Options menu, it may change considering how hardcoded it is right now*/
+/**
+ * Controller that handles the Main menu and Options menu, it may change considering how hardcoded it is right now*/
 public final class MenuController implements InputHandler {
     private final BaseController controller;
 
@@ -18,7 +19,10 @@ public final class MenuController implements InputHandler {
     private final MenusNavigator optionsNav;
     private MenusNavigator currentNavigator;
 
-    /*Initialize the controller*/
+    /**
+     * Initialize the controller
+     *
+     * @param controller which is the BaseController we communicate with*/
     public MenuController(final BaseController controller) {
         this.controller = controller;
         this.menuView = new MenuGUI();
@@ -33,14 +37,15 @@ public final class MenuController implements InputHandler {
     public void handleInput(final KeyEvent event) {
         final KeyCode code = event.getCode();
         if (code == KeyCode.W) {
-            currentNavigator.navigateUp();   // Non serve più if/else!
+            currentNavigator.navigateUp();
         } else if (code == KeyCode.S) {
-            currentNavigator.navigateDown(); // Non serve più if/else!
+            currentNavigator.navigateDown();
         } else if (code == KeyCode.ENTER) {
             selectedChoice();
         }
     }
-    /*Execute the action based on the index of the menu*/
+    /**
+     * Execute the action based on the index of the menu*/
 
     private void selectedChoice() {
         final int selection = currentNavigator.getSelection();
@@ -61,8 +66,9 @@ public final class MenuController implements InputHandler {
                 default:
                     break;
             }
-        } else { /*If we are not in the menu we are in the options, it's a bit hardcoded, it could change if we realize
-                    that we need more than 2 boundaries in this menu*/
+        } else { /**
+         * If we are not in the menu we are in the options, it's a bit hardcoded, it could change if we realize
+         * that we need more than 2 boundaries in this menu*/
             switch (selection) {
                 case 0:
                     final boolean isFull = controller.toggleFullscreen();
@@ -76,14 +82,16 @@ public final class MenuController implements InputHandler {
             }
         }
     }
-    /*View for options*/
+    /**
+     * View for options*/
 
     private void goToOptions() {
         this.currentNavigator = optionsNav;
         controller.changeView(optionsView.getLayout());
         currentNavigator.update();
     }
-    /*Set Controller and View back to the Menu*/
+    /**
+     * Set Controller and View back to the Menu*/
 
     private void backToMenu() {
         this.currentNavigator = mainMenuNav;

@@ -1,9 +1,10 @@
 package it.unibo.jrogue.engine;
 
-/*Handles the State of the game*/
+/**Handles the State of the game*/
 
 public final class GameState {
-    /*Possible states of the game*/
+    /**
+     * Possible states of the game*/
     public enum State {
         MAIN_MENU,
         PLAYING,
@@ -12,7 +13,8 @@ public final class GameState {
 
     private State currentState;
 
-    /*Initialization State*/
+    /**
+     * Initialization State*/
 
     public GameState() {
         this.currentState = State.MAIN_MENU;
@@ -21,7 +23,8 @@ public final class GameState {
     public State getCurrentState() {
         return currentState;
     }
-    /*Setting the game State*/
+    /**
+     * Setting the game State*/
 
     public void setCurrentState(final State newState) {
         this.currentState = newState;

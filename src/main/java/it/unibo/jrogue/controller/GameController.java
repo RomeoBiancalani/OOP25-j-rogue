@@ -5,12 +5,17 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
-/*Controller that handles the actions the player can perform during the game*/
+/**
+ * Controller that handles the actions the player can perform during the game*/
 public final class GameController implements InputHandler {
     private final BaseController controller;
     private final Pane gameView;
 
-    /*Initialize the controller, a temp Pane is added waiting for the actual Pane to be made*/
+    /**
+     * Initialize the controller, a temp Pane is added waiting for the actual Pane to be made
+     *
+     * @param controller which is the BaseController we communicate with*/
+
     public GameController(final BaseController controller) {
         this.controller = controller;
         this.gameView = new Pane(); //Temporary Pane waiting for the team to make Game GUI

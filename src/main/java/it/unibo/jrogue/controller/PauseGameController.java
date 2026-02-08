@@ -6,7 +6,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import it.unibo.jrogue.boundary.PauseGameGUI;
 
-/*Controller that handles the Pause menu when in game*/
+/**
+ * Controller that handles the Pause menu when in game*/
 
 public final class PauseGameController implements InputHandler {
     private final BaseController controller;
@@ -14,10 +15,12 @@ public final class PauseGameController implements InputHandler {
     private final MenusNavigator pauseGameNav;
     private final MenusNavigator currentNavigator;
 
-    /*Initializing the controller*/
+    /**
+     * Initialize the controller
+     *
+     * @param controller which is the BaseController we communicate with*/
 
-    public PauseGameController(final BaseController controller) {
-        this.controller = controller;
+    public PauseGameController(final BaseController controller) {this.controller = controller;
         this.pauseView = new PauseGameGUI();
         this.pauseGameNav = new MenusNavigator(3, pauseView::updateSelection);
         this.currentNavigator = this.pauseGameNav;
@@ -35,7 +38,8 @@ public final class PauseGameController implements InputHandler {
             selectedChoice();
         }
     }
-    /*Executing actions based on the selected index of the menu*/
+    /**
+     * Executing actions based on the selected index of the menu*/
 
     private void selectedChoice() {
         final int selection = currentNavigator.getSelection();
