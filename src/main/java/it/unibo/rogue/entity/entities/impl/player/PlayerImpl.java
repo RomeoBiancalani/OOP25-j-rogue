@@ -13,6 +13,7 @@ import it.unibo.rogue.entity.items.api.Equipment;
 import it.unibo.rogue.entity.items.api.Inventory;
 import it.unibo.rogue.entity.items.impl.Armor;
 import it.unibo.rogue.entity.items.impl.MeleeWeapon;
+import it.unibo.rogue.entity.items.impl.Ring;
 import it.unibo.rogue.entity.items.impl.SimpleInventory;
 
 /**
@@ -29,7 +30,7 @@ public class PlayerImpl extends AbstractEntity implements Player {
     private final Inventory inventory;
     private Optional<Armor> armor;
     private Optional<MeleeWeapon> weapon;
-    private Optional<Equipment> ring;
+    private Optional<Ring> ring;
 
     /**
      * Construct a player with the specified attributes.
@@ -127,7 +128,7 @@ public class PlayerImpl extends AbstractEntity implements Player {
      * {@inheritDoc}
      */
     @Override
-    public void equipRing(final Equipment ringToEquip) {
+    public void equipRing(final Ring ringToEquip) {
         this.ring = Optional.ofNullable(ringToEquip);
     }
 
@@ -137,7 +138,7 @@ public class PlayerImpl extends AbstractEntity implements Player {
     @Override
     public void useRing() {
         if (ring.isPresent()) {
-            //ring.get().activateEffect(this);
+            this.heal(ring.get().getHealingFactor());
         }
     }
 

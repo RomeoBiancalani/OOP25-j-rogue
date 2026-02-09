@@ -73,7 +73,7 @@ public class Ring implements Equipment {
     @Override
     public void equip(final Player player) {
         if (player != null) {
-            player.equipArmor(this); // cambiare poi in equipRing()
+            player.equipRing(this);
         }
     }
 

@@ -4,6 +4,7 @@ import it.unibo.rogue.entity.items.api.Equipment;
 import it.unibo.rogue.entity.items.api.Inventory;
 import it.unibo.rogue.entity.items.impl.Armor;
 import it.unibo.rogue.entity.items.impl.MeleeWeapon;
+import it.unibo.rogue.entity.items.impl.Ring;
 
 /**
  * Represent the human-controlled protagonist in the game world.
@@ -51,7 +52,7 @@ public interface Player extends Entity {
      * 
      * @param ring the ring to be equipped.
      */
-    void equipRing(Equipment ring);
+    void equipRing(Ring ring);
 
     /**
      * Use the equipped ring.
