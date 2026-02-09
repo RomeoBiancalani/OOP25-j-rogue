@@ -28,7 +28,6 @@ public final class BSPLevelGenerator implements LevelGenerator {
     private static final double SPLIT_RATIO_MAX = 0.65;
     private static final double ASPECT_RATIO_THRESHOLD = 1.25;
 
-
     /**
      * Creates a new BSP level generator.
      */
