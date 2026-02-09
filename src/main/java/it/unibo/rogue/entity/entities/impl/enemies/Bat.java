@@ -1,9 +1,9 @@
 package it.unibo.rogue.entity.entities.impl.enemies;
 
-import it.unibo.rogue.entity.Dice;
+import it.unibo.rogue.commons.Dice;
+import it.unibo.rogue.commons.Move;
+import it.unibo.rogue.commons.Position;
 import it.unibo.rogue.entity.GameRandom;
-import it.unibo.rogue.entity.Move;
-import it.unibo.rogue.entity.Position;
 import it.unibo.rogue.entity.entities.impl.AbstractEnemy;
 
 /**

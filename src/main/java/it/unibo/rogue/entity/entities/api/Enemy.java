@@ -1,7 +1,7 @@
 package it.unibo.rogue.entity.entities.api;
 
-import it.unibo.rogue.entity.Move;
-import it.unibo.rogue.entity.Position;
+import it.unibo.rogue.commons.Move;
+import it.unibo.rogue.commons.Position;
 
 /**
  * Defines the contract for all enemy entities in the game.

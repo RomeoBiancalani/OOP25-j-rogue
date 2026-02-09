@@ -1,6 +1,6 @@
 package it.unibo.rogue.controller.api;
 
-import it.unibo.rogue.entity.Move;
+import it.unibo.rogue.commons.Move;
 
 /**
  * MovementController is the main entry point for managing game turns.

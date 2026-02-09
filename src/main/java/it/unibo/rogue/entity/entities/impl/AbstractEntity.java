@@ -1,7 +1,7 @@
 package it.unibo.rogue.entity.entities.impl;
 
-import it.unibo.rogue.entity.Move;
-import it.unibo.rogue.entity.Position;
+import it.unibo.rogue.commons.Move;
+import it.unibo.rogue.commons.Position;
 import it.unibo.rogue.entity.entities.api.Entity;
 
 /**

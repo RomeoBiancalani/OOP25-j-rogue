@@ -1,14 +1,14 @@
 package it.unibo.rogue;
 
-import it.unibo.rogue.entity.Position;
+import it.unibo.rogue.commons.Position;
+import it.unibo.rogue.controller.generation.api.GenerationConfig;
+import it.unibo.rogue.controller.generation.api.LevelGenerator;
+import it.unibo.rogue.controller.generation.api.SpawnConfig;
+import it.unibo.rogue.controller.generation.impl.PopulatedLevelGenerator;
 import it.unibo.rogue.entity.items.api.Item;
-import it.unibo.rogue.generation.api.GenerationConfig;
-import it.unibo.rogue.generation.api.LevelGenerator;
-import it.unibo.rogue.generation.api.SpawnConfig;
-import it.unibo.rogue.generation.impl.PopulatedLevelGenerator;
-import it.unibo.rogue.world.api.GameMap;
-import it.unibo.rogue.world.api.Level;
-import it.unibo.rogue.world.api.Tile;
+import it.unibo.rogue.entity.world.api.GameMap;
+import it.unibo.rogue.entity.world.api.Level;
+import it.unibo.rogue.entity.world.api.Tile;
 
 import java.util.Map;
 
@@ -16,12 +16,11 @@ import java.util.Map;
  * Demo application for testing world generation.
  * Prints the generated dungeon map to the console.
  * ./gradlew run -Pmain=it.unibo.rogue.WorldGenerationDemo --args="12349876"
- *
  * Usage: java WorldGenerationDemo [seed] [screenWidth] [screenHeight] [tileSize]
- *
  * Parameters are optional and will use defaults if not provided.
  * Screen dimensions are stored for future JavaFX integration.
  */
+@SuppressWarnings("PMD.SystemPrintln")
 public final class WorldGenerationDemo {
 
     private static final int DEFAULT_MAP_WIDTH = 80;
@@ -151,6 +150,7 @@ public final class WorldGenerationDemo {
 
     /**
      * Returns the configured screen width.
+     * 
      * @return screen width in pixels
      */
     public int getScreenWidth() {
@@ -159,6 +159,7 @@ public final class WorldGenerationDemo {
 
     /**
      * Returns the configured screen height.
+     * 
      * @return screen height in pixels
      */
     public int getScreenHeight() {
@@ -167,6 +168,7 @@ public final class WorldGenerationDemo {
 
     /**
      * Returns the configured tile size.
+     * 
      * @return tile size in pixels
      */
     public int getTileSize() {
@@ -175,6 +177,7 @@ public final class WorldGenerationDemo {
 
     /**
      * Returns the seed used for generation.
+     * 
      * @return the seed
      */
     public long getSeed() {
