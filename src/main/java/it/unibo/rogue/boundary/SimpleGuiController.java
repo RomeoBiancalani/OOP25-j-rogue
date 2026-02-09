@@ -40,6 +40,7 @@ public class SimpleGuiController extends Application {
     public void start(final Stage stage) throws Exception {
         this.manager = new InventoryManagerImpl(cols * rows);
         final GridPane gp = new GridPane();
+        gp.setStyle("-fx-background-color: #000000; -fx-padding: 20; -fx-alignment: center;");
         gp.setGridLinesVisible(true);
         gp.setHgap(10);
         gp.setVgap(10);
@@ -105,7 +106,7 @@ public class SimpleGuiController extends Application {
 
                 final Rectangle bg = new Rectangle(60, 60);
 
-                bg.setFill(Color.ALICEBLUE);
+                bg.setFill(Color.rgb(50, 50, 50));
 
                 if (r == selectedRow && c == selectedCol) {
                     bg.setStroke(Color.RED);
@@ -137,6 +138,16 @@ public class SimpleGuiController extends Application {
      */
     private String getIconForItem(final Item item) {
         if (item instanceof MeleeWeapon) {
+            MeleeWeapon weapon = (MeleeWeapon) item;
+            String name = weapon.getName().toLowerCase();
+
+            if(name.contains("ascia")) {
+                return "ascia";
+            } else if (name.contains("pugnale")) {
+                return "pugnale";
+            } else if ( name.contains("spada")) {
+                return "spada";
+            }
             return "S";
         }
 

@@ -39,7 +39,7 @@ public final class Armor implements Equipment {
     }
 
     /**
-     * Provides with the name of the armor.
+     * Provides the name of the armor.
      * 
      * @return the name of the armor.
      */
