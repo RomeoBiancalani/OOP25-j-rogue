@@ -3,11 +3,11 @@ package it.unibo.rogue.entity.entities.impl;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 import it.unibo.rogue.commons.Dice;
 import it.unibo.rogue.commons.Move;
 import it.unibo.rogue.commons.Position;
+import it.unibo.rogue.entity.GameRandom;
 import it.unibo.rogue.entity.entities.api.Enemy;
 
 /**
@@ -101,23 +101,13 @@ public abstract class AbstractEnemy extends AbstractEntity implements Enemy {
     }
 
     /**
-     * Gets the seeded random number generator from the Dice class.
-     * This function may be used by subclasses.
-     * 
-     * @return The random number generator.
-     */
-    protected static Random getRandom() {
-        return Dice.getRandom();
-    }
-
-    /**
      * Generates a random move.
      * 
      * @return A random move.
      */
     protected Move randomMove() {
         final Move[] moves = Move.values();
-        return moves[Dice.getRandom().nextInt(moves.length)];
+        return moves[GameRandom.nextInt(moves.length)];
     }
 
     /**

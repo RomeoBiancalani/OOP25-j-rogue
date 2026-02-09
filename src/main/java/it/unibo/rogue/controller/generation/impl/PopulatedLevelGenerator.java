@@ -2,11 +2,11 @@ package it.unibo.rogue.controller.generation.impl;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-import it.unibo.rogue.commons.Dice;
 import it.unibo.rogue.controller.generation.api.EntityPopulator;
 import it.unibo.rogue.controller.generation.api.GenerationConfig;
 import it.unibo.rogue.controller.generation.api.LevelGenerator;
 import it.unibo.rogue.controller.generation.api.SpawnConfig;
+import it.unibo.rogue.entity.GameRandom;
 import it.unibo.rogue.entity.world.api.Level;
 
 /**
@@ -62,7 +62,7 @@ public final class PopulatedLevelGenerator implements LevelGenerator {
     @Override
     public Level generate(final GenerationConfig config) {
         // Seed all random sources for deterministic generation
-        Dice.setSeed(config.seed());
+        GameRandom.setSeed(config.seed());
 
         // Generate dungeon structure
         final Level level = structureGenerator.generate(config);

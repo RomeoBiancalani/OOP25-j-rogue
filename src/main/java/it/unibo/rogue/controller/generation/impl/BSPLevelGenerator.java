@@ -1,10 +1,10 @@
 package it.unibo.rogue.controller.generation.impl;
 
-import it.unibo.rogue.commons.Dice;
 import it.unibo.rogue.commons.Position;
 import it.unibo.rogue.controller.generation.api.BSPNode;
 import it.unibo.rogue.controller.generation.api.GenerationConfig;
 import it.unibo.rogue.controller.generation.api.LevelGenerator;
+import it.unibo.rogue.entity.GameRandom;
 import it.unibo.rogue.entity.world.api.Hallway;
 import it.unibo.rogue.entity.world.api.Level;
 import it.unibo.rogue.entity.world.api.Room;
@@ -13,10 +13,8 @@ import it.unibo.rogue.entity.world.impl.SimpleGameMap;
 import it.unibo.rogue.entity.world.impl.SimpleHallway;
 import it.unibo.rogue.entity.world.impl.SimpleLevel;
 import it.unibo.rogue.entity.world.impl.SimpleRoom;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * BSP-based dungeon level generator.
@@ -30,23 +28,20 @@ public final class BSPLevelGenerator implements LevelGenerator {
     private static final double SPLIT_RATIO_MAX = 0.65;
     private static final double ASPECT_RATIO_THRESHOLD = 1.25;
 
-    private Random random;
-
     /**
      * Creates a new BSP level generator.
      */
     public BSPLevelGenerator() {
-        this.random = Dice.getRandom();
     }
 
     @Override
     public void setSeed(final long seed) {
-        this.random = new Random(seed);
+        GameRandom.setSeed(seed);
     }
 
     @Override
     public Level generate(final GenerationConfig config) {
-        random.setSeed(config.seed());
+        GameRandom.setSeed(config.seed());
 
         // Step 1: Create the BSP tree
         final BSPNodeImpl root = createBSPTree(
@@ -110,7 +105,7 @@ public final class BSPLevelGenerator implements LevelGenerator {
             } else if ((double) height / width >= ASPECT_RATIO_THRESHOLD) {
                 horizontal = true;
             } else {
-                horizontal = random.nextBoolean();
+                horizontal = GameRandom.nextBoolean();
             }
         } else {
             horizontal = canSplitHorizontal;
@@ -132,7 +127,7 @@ public final class BSPLevelGenerator implements LevelGenerator {
             final int minSize) {
 
         final int splitRange = (int) ((SPLIT_RATIO_MAX - SPLIT_RATIO_MIN) * height);
-        final int splitOffset = (int) (SPLIT_RATIO_MIN * height) + (splitRange > 0 ? random.nextInt(splitRange) : 0);
+        final int splitOffset = (int) (SPLIT_RATIO_MIN * height) + (splitRange > 0 ? GameRandom.nextInt(splitRange) : 0);
         final int splitY = Math.max(minSize, Math.min(height - minSize, splitOffset));
 
         final BSPNodeImpl left = createBSPTree(
@@ -155,7 +150,7 @@ public final class BSPLevelGenerator implements LevelGenerator {
             final int minSize) {
 
         final int splitRange = (int) ((SPLIT_RATIO_MAX - SPLIT_RATIO_MIN) * width);
-        final int splitOffset = (int) (SPLIT_RATIO_MIN * width) + (splitRange > 0 ? random.nextInt(splitRange) : 0);
+        final int splitOffset = (int) (SPLIT_RATIO_MIN * width) + (splitRange > 0 ? GameRandom.nextInt(splitRange) : 0);
         final int splitX = Math.max(minSize, Math.min(width - minSize, splitOffset));
 
         final BSPNodeImpl left = createBSPTree(
@@ -210,11 +205,11 @@ public final class BSPLevelGenerator implements LevelGenerator {
         final int minW = config.minRoomSize();
         final int minH = config.minRoomSize();
 
-        final int roomW = minW + (maxW > minW ? random.nextInt(maxW - minW + 1) : 0);
-        final int roomH = minH + (maxH > minH ? random.nextInt(maxH - minH + 1) : 0);
+        final int roomW = minW + (maxW > minW ? GameRandom.nextInt(maxW - minW + 1) : 0);
+        final int roomH = minH + (maxH > minH ? GameRandom.nextInt(maxH - minH + 1) : 0);
 
-        final int offsetX = padding + (availableWidth > roomW ? random.nextInt(availableWidth - roomW + 1) : 0);
-        final int offsetY = padding + (availableHeight > roomH ? random.nextInt(availableHeight - roomH + 1) : 0);
+        final int offsetX = padding + (availableWidth > roomW ? GameRandom.nextInt(availableWidth - roomW + 1) : 0);
+        final int offsetY = padding + (availableHeight > roomH ? GameRandom.nextInt(availableHeight - roomH + 1) : 0);
 
         final Position roomTopLeft = new Position(
             node.getTopLeft().x() + offsetX,
@@ -252,7 +247,7 @@ public final class BSPLevelGenerator implements LevelGenerator {
 
         // Return one room to propagate up the tree
         if (leftRoom != null && rightRoom != null) {
-            return random.nextBoolean() ? leftRoom : rightRoom;
+            return GameRandom.nextBoolean() ? leftRoom : rightRoom;
         }
         return leftRoom != null ? leftRoom : rightRoom;
     }
@@ -263,7 +258,7 @@ public final class BSPLevelGenerator implements LevelGenerator {
         final List<Position> path = new ArrayList<>();
 
         // Create L-shaped corridor
-        if (random.nextBoolean()) {
+        if (GameRandom.nextBoolean()) {
             // Horizontal first, then vertical
             carveHorizontalLine(path, center1.y(), center1.x(), center2.x());
             carveVerticalLine(path, center2.x(), center1.y(), center2.y());

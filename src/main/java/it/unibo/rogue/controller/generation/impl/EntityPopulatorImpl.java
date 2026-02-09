@@ -1,9 +1,9 @@
 package it.unibo.rogue.controller.generation.impl;
 
-import it.unibo.rogue.commons.Dice;
 import it.unibo.rogue.commons.Position;
 import it.unibo.rogue.controller.generation.api.EntityPopulator;
 import it.unibo.rogue.controller.generation.api.SpawnConfig;
+import it.unibo.rogue.entity.GameRandom;
 import it.unibo.rogue.entity.entities.api.Enemy;
 import it.unibo.rogue.entity.entities.impl.enemies.Bat;
 import it.unibo.rogue.entity.items.api.Item;
@@ -16,7 +16,6 @@ import it.unibo.rogue.entity.world.impl.SimpleTrap;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Implementation of EntityPopulator that populates rooms with
@@ -39,13 +38,10 @@ public final class EntityPopulatorImpl implements EntityPopulator {
      */
     private static final int TELEPORT_TRAP_DAMAGE = 0;
 
-    private Random random;
-
     /**
      * Creates a new EntityPopulator.
      */
     public EntityPopulatorImpl() {
-        this.random = Dice.getRandom();
     }
 
     @Override
@@ -60,7 +56,7 @@ public final class EntityPopulatorImpl implements EntityPopulator {
 
     @Override
     public void setSeed(final long seed) {
-        this.random = new Random(seed);
+        GameRandom.setSeed(seed);
     }
 
     /**
@@ -200,7 +196,7 @@ public final class EntityPopulatorImpl implements EntityPopulator {
         }
 
         // Pick random trap type and spawn
-        final TrapType type = availableTraps.get(random.nextInt(availableTraps.size()));
+        final TrapType type = availableTraps.get(GameRandom.nextInt(availableTraps.size()));
         final Position pos = pickRandomPosition(positions);
         final int damage = switch (type) {
             case SPIKE -> SPIKE_TRAP_DAMAGE;
@@ -257,7 +253,7 @@ public final class EntityPopulatorImpl implements EntityPopulator {
         // final int golemWeight = config.getEnemyWeight(3, level);
 
         final int totalWeight = batWeight + snakeWeight + goblinWeight;
-        int roll = random.nextInt(totalWeight);
+        int roll = GameRandom.nextInt(totalWeight);
 
         // Select enemy based on weight
         roll -= batWeight;
@@ -281,7 +277,7 @@ public final class EntityPopulatorImpl implements EntityPopulator {
      * @return true if the roll succeeds
      */
     private boolean rollChance(final double probability) {
-        return random.nextDouble() < probability;
+        return GameRandom.nextDouble() < probability;
     }
 
     /**
@@ -291,7 +287,7 @@ public final class EntityPopulatorImpl implements EntityPopulator {
      * @return the selected position
      */
     private Position pickRandomPosition(final List<Position> positions) {
-        final int index = random.nextInt(positions.size());
+        final int index = GameRandom.nextInt(positions.size());
         return positions.remove(index);
     }
 
