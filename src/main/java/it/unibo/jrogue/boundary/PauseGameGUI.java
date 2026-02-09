@@ -11,7 +11,7 @@ import java.util.List;
  * Boundary for Pause menu when in game.
  * */
 
-public final class PauseGameGUI implements MenuGUI{
+public final class PauseGameGUI implements MenuGUI {
     private static final int BUTTONS_WIDTH = 400;
     private static final int FONT_SIZE = 35;
     private static final int BUTTONS_SPACING = 10;

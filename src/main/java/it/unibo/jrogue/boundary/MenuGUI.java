@@ -10,7 +10,7 @@ public interface MenuGUI {
      * Configure the elements of the Menu, which includes the background image.
      * */
 
-    public void initGraphics();
+    void initGraphics();
 
     /**
      * Update the view of the buttons based on the selected button.
@@ -18,7 +18,7 @@ public interface MenuGUI {
      * @param selectIndex stands for the index selected in the Menu.
      * */
 
-    public void updateSelection(final int selectIndex);
+    public void updateSelection( int selectIndex);
 
     /**
      * getter for the layout.
@@ -26,6 +26,6 @@ public interface MenuGUI {
      * @return rootLayout which contain the GUI elements
      * */
 
-    public VBox getLayout();
+    VBox getLayout();
 
 }
