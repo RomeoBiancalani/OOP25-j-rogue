@@ -1,29 +1,29 @@
 package it.unibo.jrogue.controller;
 
-import it.unibo.jrogue.boundary.MenuGUI;
+import it.unibo.jrogue.boundary.MainMenuGUI;
 import it.unibo.jrogue.engine.BaseController;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
 /**
- * Controller that handles the Main menu and Options menu, it may change considering how hardcoded it is right now*/
+ * Controller that handles the Main menu and Options menu, it may change considering how hardcoded it is right now.
+ * */
 public final class MenuController implements InputHandler {
     private static final int BUTTONS_NUMBER = 4;
     private final BaseController controller;
-    private final MenuGUI menuView;
+    private final MainMenuGUI menuView;
     private int currentIndex;
 
-
     /**
-     * Initialize the controller
+     * Initialize the controller.
      *
      * @param controller which is the BaseController we communicate with
      */
 
     public MenuController(final BaseController controller) {
         this.controller = controller;
-        this.menuView = new MenuGUI();
+        this.menuView = new MainMenuGUI();
         this.currentIndex = 0;
         updateGraphics();
     }
@@ -40,7 +40,7 @@ public final class MenuController implements InputHandler {
         }
     }
     /**
-     * Move upward inside the menu
+     * Move upward inside the menu.
      * */
 
     private void moveUp() {
@@ -50,7 +50,7 @@ public final class MenuController implements InputHandler {
         }
     }
     /**
-     * Move downward inside the menu
+     * Move downward inside the menu.
      * */
 
     private void moveDown() {
@@ -61,7 +61,7 @@ public final class MenuController implements InputHandler {
     }
 
     /**
-     * Execute the action based on the index of the menu
+     * Execute the action based on the index of the menu.
      */
 
     private void selectedChoice() {
@@ -85,7 +85,7 @@ public final class MenuController implements InputHandler {
         }
     }
     /**
-     * Update the graphics based on index
+     * Update the graphics based on index.
      * */
 
     private void updateGraphics() {

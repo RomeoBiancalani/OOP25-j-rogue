@@ -8,23 +8,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Boundary for Pause menu when in game.
- * */
-
-public final class PauseGameGUI implements MenuGUI{
+ * Boundary for the MainMenu.*/
+public final class MainMenuGUI implements MenuGUI {
     private static final int BUTTONS_WIDTH = 400;
     private static final int FONT_SIZE = 35;
     private static final int BUTTONS_SPACING = 10;
-    private final List<Button> buttonsPause;
+
+    private static final String[] BUTTONS_NAME = {"New Game", "Load Game", "Options", "Exit"};
+    private final List<Button> buttonsMenu;
     private final VBox rootLayout;
-    private final String[] buttonsName = {"Save Game", "Options", "Back to Menu", "Return"};
     /**
-     * Initializing Pause GUI.
+     * GUI initialization.
      * */
 
-    public PauseGameGUI() {
+    public MainMenuGUI() {
         rootLayout = new VBox(BUTTONS_SPACING);
-        buttonsPause = new ArrayList<>();
+        buttonsMenu = new ArrayList<>();
         initGraphics();
     }
 
@@ -32,28 +31,25 @@ public final class PauseGameGUI implements MenuGUI{
     public void initGraphics() {
         rootLayout.setAlignment(Pos.CENTER);
         rootLayout.setStyle("-fx-background-color: rgb(0,0,0);");
-
-        for (final String name : buttonsName) {
+        for (final String name : BUTTONS_NAME) {
             final Button button = new Button(name);
             button.setFont(Font.font("Consolas", FONT_SIZE));
             button.setMinWidth(BUTTONS_WIDTH);
             button.setFocusTraversable(false);
-            buttonsPause.add(button);
+            buttonsMenu.add(button);
             rootLayout.getChildren().add(button);
         }
     }
 
     @Override
     public void updateSelection(final int selectIndex) {
-        for (int i = 0; i < buttonsPause.size(); i++) {
-            final Button button = buttonsPause.get(i);
+        for (int i = 0; i < buttonsMenu.size(); i++) {
+            final Button button = buttonsMenu.get(i);
             if (i == selectIndex) {
-                final String text = button.getText().replace(">", "").replace("<", "").trim();
-                button.setText("> " + text + " <");
+                button.setText("> " + BUTTONS_NAME[i] + " <");
                 button.setStyle("-fx-base: #e4ea5f;");
             } else {
-                final String text = button.getText().replace(">", "").replace("<", "").trim();
-                button.setText(text);
+                button.setText(BUTTONS_NAME[i]);
                 button.setStyle("");
             }
         }
@@ -64,4 +60,3 @@ public final class PauseGameGUI implements MenuGUI{
         return rootLayout;
     }
 }
-

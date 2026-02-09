@@ -8,8 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Boundary for the Options Menu*/
-public final class OptionsGUI {
+ * Boundary for the Options Menu.
+ * */
+public final class OptionsGUI implements MenuGUI {
     private static final int BUTTONS_WIDTH = 400;
     private static final int FONT_SIZE = 35;
     private static final int BUTTONS_SPACING = 10;
@@ -17,16 +18,18 @@ public final class OptionsGUI {
     private final List<Button> buttonsOptions;
     private final VBox rootLayout;
     private final String[] optionsName = {"Fullscreen: OFF", "Back"};
+    /**
+    * Initializing Options GUI.
+    * */
 
     public OptionsGUI() {
         rootLayout = new VBox(BUTTONS_SPACING);
         buttonsOptions = new ArrayList<>();
         initGraphics();
     }
-    /**
-     * Initialize Options menu visuals*/
 
-    private void initGraphics() {
+    @Override
+    public void initGraphics() {
         rootLayout.setAlignment(Pos.CENTER);
         rootLayout.setStyle("-fx-background-color: rgb(0,0,0);");
 
@@ -39,19 +42,15 @@ public final class OptionsGUI {
             rootLayout.getChildren().add(button);
         }
     }
-    /**
-     * Update the view of the buttons based on the selected button
-     *
-     * @param selectIndex stands for the index selected in the Menu.
-     * */
 
+    @Override
     public void updateSelection(final int selectIndex) {
         for (int i = 0; i < buttonsOptions.size(); i++) {
             final Button button = buttonsOptions.get(i);
             if (i == selectIndex) {
                 final String text = button.getText().replace(">", "").replace("<", "").trim();
                 button.setText("> " + text + " <");
-                button.setStyle("-fx-base: #b6e7b8;");
+                button.setStyle("-fx-base: #e4ea5f;");
             } else {
                 final String text = button.getText().replace(">", "").replace("<", "").trim();
                 button.setText(text);
@@ -60,7 +59,7 @@ public final class OptionsGUI {
         }
     }
     /**
-     * Update the graphics when fullscreen button is toggled
+     * Update the graphics when fullscreen button is toggled.
      *
      * @param isFull which indicates whether the fullscreen is already on or off*/
 
@@ -71,12 +70,7 @@ public final class OptionsGUI {
         updateSelection(0);
     }
 
-    /**
-     * getter for the layout
-     *
-     * @return rootLayout which contain the GUI elements
-     * */
-
+    @Override
     public VBox getLayout() {
         return rootLayout;
     }

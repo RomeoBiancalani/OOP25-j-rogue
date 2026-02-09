@@ -7,7 +7,8 @@ import javafx.scene.layout.Pane;
 import it.unibo.jrogue.boundary.PauseGameGUI;
 
 /**
- * Controller that handles the Pause menu when in game*/
+ * Controller that handles the Pause menu when in game.
+ * */
 
 public final class PauseGameController implements InputHandler {
     private static final int BUTTONS_NUMBER = 4;
@@ -16,7 +17,7 @@ public final class PauseGameController implements InputHandler {
     private int currentIndex;
 
     /**
-     * Initialize the controller
+     * Initialize the controller.
      *
      * @param controller which is the BaseController we communicate with
      */
@@ -37,14 +38,14 @@ public final class PauseGameController implements InputHandler {
             moveDown();
         } else if (code == KeyCode.ENTER) {
             selectedChoice();
-        } else if (code == KeyCode.ESCAPE){
+        } else if (code == KeyCode.ESCAPE) {
             currentIndex = 0;
             updateGraphics();
             controller.resumeGame();
         }
     }
     /**
-     * Move upward inside the menu
+     * Move upward inside the menu.
      * */
 
     private void moveUp() {
@@ -54,7 +55,7 @@ public final class PauseGameController implements InputHandler {
         }
     }
     /**
-     * Move downward inside the menu
+     * Move downward inside the menu.
      * */
 
     private void moveDown() {
@@ -65,7 +66,7 @@ public final class PauseGameController implements InputHandler {
     }
 
     /**
-     * Executing actions based on the selected index of the menu
+     * Executing actions based on the selected index of the menu.
      */
 
     private void selectedChoice() {
@@ -93,7 +94,7 @@ public final class PauseGameController implements InputHandler {
         }
     }
     /**
-     * Update the graphics based on index
+     * Update the graphics based on index.
      * */
 
     private void updateGraphics() {

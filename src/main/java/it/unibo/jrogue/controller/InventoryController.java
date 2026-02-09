@@ -6,14 +6,15 @@ import it.unibo.jrogue.engine.BaseController;
 import javafx.scene.input.KeyCode;
 
 /**
- * Controller for the inventory*/
+ * Controller for the inventory.
+ * */
 
 public final class InventoryController implements InputHandler {
     private final BaseController controller;
     private final Pane inventoryView;
 
     /**
-     * Initialize the controller
+     * Initialize the controller.
      *
      * @param controller which is the BaseController we communicate with*/
 

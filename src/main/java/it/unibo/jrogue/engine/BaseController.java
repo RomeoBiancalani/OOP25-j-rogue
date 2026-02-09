@@ -6,8 +6,10 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
- * BaseController class handle every controller the software utilize
-* and some useful utility methods */
+ *  BaseController class handle every controller the software utilize
+ * and some useful utility methods.
+ * */
+
 public final class BaseController {
 
     private final GameState entity;
@@ -22,7 +24,7 @@ public final class BaseController {
     private final InputHandler inventoryController;
 
     /**
-    * Controllers initialization
+    * Controllers initialization.
      *
      * @param entity which is the game entity
     * */
@@ -36,7 +38,7 @@ public final class BaseController {
         this.currentController = menuController;
     }
     /**
-     * Setting up the stage and container in order to be viewable
+     * Setting up the stage and container in order to be viewable.
      *
      * @param stage which is the main container for the software
      *
@@ -49,7 +51,7 @@ public final class BaseController {
         changeView(menuController.getView());
     }
     /**
-     * Giving to the current controller the handling of the KeyEvents
+     * Giving to the current controller the handling of the KeyEvents.
      *
      * @param event which is a KeyEvent
      * */
@@ -60,7 +62,7 @@ public final class BaseController {
         }
     }
     /**
-     * Changing the current Pane to display
+     * Changing the current Pane to display.
      *
      * @param newView which is the new Pane that must be viewed
      * */
@@ -69,7 +71,8 @@ public final class BaseController {
         scalingContainer.setContent(newView);
     }
     /**
-     * Initialize the game with both the controller and view*/
+     * Initialize the game with both the controller and view.
+     * */
 
     public void startGame() {
         entity.setCurrentState(GameState.State.PLAYING);
@@ -77,7 +80,7 @@ public final class BaseController {
         changeView(gameController.getView());
     }
     /**
-     * Activate fullscreen mode on the stage
+     * Activate fullscreen mode on the stage.
      *
      * @return !isFull which is the opposite of the previous status*/
 
@@ -87,7 +90,8 @@ public final class BaseController {
         return !isFull;
     }
     /**
-     * Change controllers and view to get back to main menu*/
+     * Change controllers and view to get back to main menu.
+     * */
 
     public void backToMainMenu() {
         entity.setCurrentState(GameState.State.MAIN_MENU);
@@ -95,44 +99,47 @@ public final class BaseController {
         changeView(menuController.getView());
     }
     /**
-     * Gives the possibility to get back to main menu or get back to pause menu
+     * Gives the possibility to get back to main menu or get back to pause menu.
      * */
 
     public void goBack() {
-        if(entity.getCurrentState() == GameState.State.PLAYING){
+        if (entity.getCurrentState() == GameState.State.PLAYING) {
             this.currentController = pauseController;
             changeView(pauseController.getView());
-        }else {
+        } else {
             entity.setCurrentState(GameState.State.MAIN_MENU);
             this.currentController = menuController;
             changeView(menuController.getView());
         }
     }
     /**
-     * Change controller and view to open options menu
+     * Change controller and view to open options menu.
      * */
 
-    public void goToOptions(){
+    public void goToOptions() {
         this.currentController = optionsController;
         changeView(optionsController.getView());
     }
     /**
-     * Change controller and view to open Pause while in game*/
+     * Change controller and view to open Pause while in game.
+     * */
 
     public void pauseGame() {
         this.currentController = pauseController;
         changeView(pauseController.getView());
     }
     /**
-     * Opening the Inventory while in game*/
+     * Opening the Inventory while in game.
+     * */
 
-    public void openInventory(){
+    public void openInventory() {
         this.currentController = inventoryController;
         changeView(inventoryController.getView());
     }
 
     /**
-     * Change controller and view when in Pause to get back to the game*/
+     * Change controller and view when in Pause to get back to the game.
+     * */
 
     public void resumeGame() {
         this.currentController = gameController;

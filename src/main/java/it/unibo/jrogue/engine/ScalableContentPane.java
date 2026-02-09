@@ -1,19 +1,17 @@
 package it.unibo.jrogue.engine;
 
-/**
-* The idea behind ScalableContentPane is that when the user resize the windowed GUI it scales the graphics correctly.
-* In order to do so the Pane can zoom in or zoom out keeping the 16:9 pixel ratio, while the window changing size fills
-* the space between the Pane and the Window. To see it more clearly it is possible to change color in
-* ScalaleContentPane.setStyle.
-*
-* */
-
+/// The idea behind ScalableContentPane is that when the user resize the windowed GUI it scales the graphics correctly.
+/// In order to do so the Pane can zoom in or zoom out keeping the 16:9 pixel ratio, while the window changing size fills
+/// the space between the Pane and the Window. To see it more clearly it is possible to change color in
+/// ScalaleContentPane.setStyle.
+///
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.transform.Scale;
 
 /**
- * Scalable content Pane, resize the Pane when the user resize the application keeping the 16:9 ratio */
+ * Scalable content Pane, resize the Pane when the user resize the application keeping the 16:9 ratio.
+ * */
 
 public final class ScalableContentPane extends StackPane {
 
@@ -22,7 +20,7 @@ public final class ScalableContentPane extends StackPane {
     private Pane contentPane;
 
     /**
-     * Initialization, creates black borders around the Pane
+     * Initialization, creates black borders around the Pane.
      *
      * @param content which is the content of the Pane that we want to resize and scale */
 
@@ -35,7 +33,7 @@ public final class ScalableContentPane extends StackPane {
     }
 
     /**
-     * Set the new Pane to display
+     * Set the new Pane to display.
      *
      * @param newContent which is the Pane that we force to scale its graphics*/
 
@@ -50,7 +48,8 @@ public final class ScalableContentPane extends StackPane {
         resize();
     }
     /**
-     * Do the math for the resize and apply the zoom to the Pane*/
+     * Do the math for the resize and apply the zoom to the Pane.
+     * */
 
     private void resize() {
         if (contentPane == null) {

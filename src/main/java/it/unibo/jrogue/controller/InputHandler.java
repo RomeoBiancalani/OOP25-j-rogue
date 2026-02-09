@@ -4,11 +4,12 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
 /**
- * Interface for every Controller with base method required*/
+ * Interface for every Controller with base method required.
+ * */
 public interface InputHandler {
     /**
      * Takes a key event to associate to a function,
-     * specific methods are needed to perform actions
+     * specific methods are needed to perform actions.
      *
      * @param  event which is a keyboard key
      */

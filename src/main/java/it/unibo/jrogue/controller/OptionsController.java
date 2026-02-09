@@ -7,7 +7,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
 /**
- * Controller that handles the options menu
+ * Controller that handles the options menu.
  */
 public final class OptionsController implements InputHandler {
 
@@ -40,7 +40,7 @@ public final class OptionsController implements InputHandler {
         }
     }
     /**
-     * Move upward inside the menu
+     * Move upward inside the menu.
      * */
 
     private void moveUp() {
@@ -50,7 +50,7 @@ public final class OptionsController implements InputHandler {
         }
     }
     /**
-     * Move downward inside the menu
+     * Move downward inside the menu.
      * */
 
     private void moveDown() {
@@ -60,7 +60,7 @@ public final class OptionsController implements InputHandler {
         }
     }
     /**
-     * Execute the action based on the index of the menu
+     * Execute the action based on the index of the menu.
      */
 
     private void selectedChoice() {
@@ -79,7 +79,7 @@ public final class OptionsController implements InputHandler {
         }
     }
     /**
-     * Update the graphics based on index
+     * Update the graphics based on index.
      * */
 
     private void updateGraphics() {
