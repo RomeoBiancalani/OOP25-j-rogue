@@ -2,6 +2,8 @@ package it.unibo.rogue.entity.entities.api;
 
 import it.unibo.rogue.entity.items.api.Equipment;
 import it.unibo.rogue.entity.items.api.Inventory;
+import it.unibo.rogue.entity.items.impl.Armor;
+import it.unibo.rogue.entity.items.impl.MeleeWeapon;
 
 /**
  * Represent the human-controlled protagonist in the game world.
@@ -26,6 +28,7 @@ public interface Player extends Entity {
      * Equip the specified equipment for the player.
      * 
      * @param equipment The equipment to be equipped.
+     * @throws NullPointerException if equipment is null.
      */
     void equip(Equipment equipment);
 
@@ -34,15 +37,33 @@ public interface Player extends Entity {
      * 
      * @param armor The armor to be equipped.
      */
-    void equipArmor(Equipment armor);
+    void equipArmor(Armor armor);
 
     /**
      * Equip the specified weapon for the player.
      * 
      * @param weapon the weapon to be equipped.
      */
-    void equipWeapon(Equipment weapon);
+    void equipWeapon(MeleeWeapon weapon);
 
-    //void heal(int amount);
+    /**
+     * Equip the specified ring for the player.
+     * 
+     * @param ring the ring to be equipped.
+     */
+    void equipRing(Equipment ring);
+
+    /**
+     * Use the equipped ring.
+     */
+    void useRing();
+
+    /**
+     * Collect the specified amount of xp and checks for level up.
+     * 
+     * @param amount the amount of xp to collect.
+     * @throws IllegalArgumentException if amount is negative
+     */
+    void collectXP(int amount);
 
 }

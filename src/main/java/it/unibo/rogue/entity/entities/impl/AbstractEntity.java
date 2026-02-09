@@ -13,8 +13,11 @@ import it.unibo.rogue.entity.entities.api.Entity;
  */
 public abstract class AbstractEntity implements Entity {
 
-    private final int lifePoint;
-    private final int level;
+    private static final int HP_INCREMENT_PER_LEVEL = 3;
+
+    private int maxLifePoint;
+    private int lifePoint;
+    private int level;
     private final int armorClass;
     private Position currentPosition;
 
@@ -40,6 +43,7 @@ public abstract class AbstractEntity implements Entity {
             throw new IllegalArgumentException("Starting position cannot be null");
         }
 
+        this.maxLifePoint = lifePoint;
         this.lifePoint = lifePoint;
         this.level = level;
         this.armorClass = armorClass;
@@ -66,14 +70,20 @@ public abstract class AbstractEntity implements Entity {
      * {@inheritDoc}
      */
     @Override
+    public int getMaxLifePoint() {
+        return maxLifePoint;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public int getLevel() {
         return level;
     }
 
     /**
      * {@inheritDoc}
-     * 
-     * @throws IllegalArgumentException if move is null.
      */
     @Override
     public void doMove(final Move move) {
@@ -90,6 +100,38 @@ public abstract class AbstractEntity implements Entity {
     @Override
     public int getArmorClass() {
         return armorClass;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void heal(final int amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("Heal amount cannot be negative");
+        }
+        lifePoint = Math.min(this.lifePoint + amount, maxLifePoint);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void damage(final int amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("Heal amount cannot be negative");
+        }
+        lifePoint = lifePoint - amount;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void levelUp() {
+        this.level++;
+        this.maxLifePoint += HP_INCREMENT_PER_LEVEL;
+        this.lifePoint += HP_INCREMENT_PER_LEVEL;
     }
 
 }
