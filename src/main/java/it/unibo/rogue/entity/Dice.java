@@ -1,38 +1,15 @@
 package it.unibo.rogue.entity;
 
-import java.util.Random;
-
 /**
  * Utility class to simulate dice rolls.
  */
 public final class Dice {
-
-    private static final Random RAND = new Random();
 
     /**
      * Private constructor to prevent instantion of this utility class.
      */
     private Dice() {
         throw new UnsupportedOperationException("Utility class");
-    }
-
-    /**
-     * Sets the seed for the random number generator.
-     * This enables deterministic dice rolls for reproducible level generation.
-     *
-     * @param seed the seed value for random generation
-     */
-    public static void setSeed(final long seed) {
-        RAND.setSeed(seed);
-    }
-
-    /**
-     * Returns the Random instance used by this class.
-     *
-     * @return the Random instance
-     */
-    public static Random getRandom() {
-        return RAND;
     }
 
     /**
@@ -50,7 +27,7 @@ public final class Dice {
 
         int total = 0;
         for (int i = 0; i < nDice; i++) {
-            total += RAND.nextInt(sides) + 1;
+            total += GameRandom.nextInt(sides) + 1;
         }
         return total;
     }

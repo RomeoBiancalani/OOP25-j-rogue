@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import it.unibo.rogue.entity.Dice;
+import it.unibo.rogue.entity.GameRandom;
 import it.unibo.rogue.entity.Move;
 import it.unibo.rogue.entity.Position;
 import it.unibo.rogue.entity.entities.api.Enemy;
@@ -106,7 +107,7 @@ public abstract class AbstractEnemy extends AbstractEntity implements Enemy {
      */
     protected Move randomMove() {
         final Move[] moves = Move.values();
-        return moves[Dice.getRandom().nextInt(moves.length)];
+        return moves[GameRandom.nextInt(moves.length)];
     }
 
     /**

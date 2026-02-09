@@ -1,6 +1,7 @@
 package it.unibo.rogue.entity.entities.impl.enemies;
 
 import it.unibo.rogue.entity.Dice;
+import it.unibo.rogue.entity.GameRandom;
 import it.unibo.rogue.entity.Move;
 import it.unibo.rogue.entity.Position;
 import it.unibo.rogue.entity.entities.impl.AbstractEnemy;
@@ -49,7 +50,7 @@ public class Bat extends AbstractEnemy {
      */
     @Override
     public Move getNextMove(final Position playerPosition) {
-        if (!isSleeping() && Dice.getRandom().nextInt(100) < CHASE_PLAYER_PERCENT) {
+        if (!isSleeping() && GameRandom.nextInt(100) < CHASE_PLAYER_PERCENT) {
             return moveToward(playerPosition);
         }
         return Move.IDLE;

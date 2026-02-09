@@ -1,6 +1,6 @@
 package it.unibo.rogue.generation.impl;
 
-import it.unibo.rogue.entity.Dice;
+import it.unibo.rogue.entity.GameRandom;
 import it.unibo.rogue.generation.api.EntityPopulator;
 import it.unibo.rogue.generation.api.GenerationConfig;
 import it.unibo.rogue.generation.api.LevelGenerator;
@@ -58,7 +58,7 @@ public final class PopulatedLevelGenerator implements LevelGenerator {
     @Override
     public Level generate(final GenerationConfig config) {
         // Seed all random sources for deterministic generation
-        Dice.setSeed(config.seed());
+        GameRandom.setSeed(config.seed());
 
         // Generate dungeon structure
         final Level level = structureGenerator.generate(config);
