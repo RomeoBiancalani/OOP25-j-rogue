@@ -20,7 +20,7 @@ class WeaponTest {
         final String expectedName = "spada";
         final MeleeWeapon weapon = new MeleeWeapon(expectedName, EXPECTED_ATT);
 
-        assertEquals(EXPECTED_ATT, weapon.getDamage(), "L'attacco dovrebbe essere 10");
+        assertEquals(EXPECTED_ATT, weapon.getBonus(), "L'attacco dovrebbe essere 10");
         assertEquals(expectedName, weapon.getName(), "Il nome dovrebbe essere 'spada' ");
     }
 

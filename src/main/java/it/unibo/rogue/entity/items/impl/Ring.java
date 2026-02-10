@@ -1,5 +1,7 @@
 package it.unibo.rogue.entity.items.impl;
 
+import java.util.Objects;
+
 import it.unibo.rogue.entity.entities.api.Player;
 import it.unibo.rogue.entity.items.api.Equipment;
 
@@ -52,11 +54,11 @@ public class Ring implements Equipment {
     }
 
     /**
-     * Provides the healing factor of the armor.
+     * Provides the healing factor of the ring.
      * 
-     * @return the healing factor of the armor.
+     * @return the healing factor of the ring.
      */
-    public int getHealingFactor() {
+    public int getBonus() {
         return this.healingFactor;
     }
 
@@ -73,8 +75,17 @@ public class Ring implements Equipment {
     @Override
     public void equip(final Player player) {
         if (player != null) {
-            player.equipRing(this);
+            player.equip(this);
         }
     }
 
+    /**
+     * {@inhheritDoc}
+     * 
+     * @throws NullPointerException if player is null
+     */
+    @Override
+    public void unequip(Player player) {
+        Objects.requireNonNull(player).remove(this);
+    }
 }

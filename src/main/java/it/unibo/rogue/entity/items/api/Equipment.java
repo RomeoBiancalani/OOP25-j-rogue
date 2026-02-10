@@ -10,9 +10,21 @@ import it.unibo.rogue.entity.entities.api.Player;
 public interface Equipment extends Item {
 
     /**
-     * Equips the item.
+     * Equips the specified item.
      * 
      * @param player the player who equips the item.
      */
     void equip(Player player);
+
+    /**
+     * Unequip the specified item.
+     * 
+     * @param player the player who unequips the item.
+     */
+    void unequip(Player player);
+
+    /**
+     * Get the bonus of the specified item.
+     */
+    int getBonus();
 }

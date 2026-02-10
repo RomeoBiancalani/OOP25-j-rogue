@@ -20,7 +20,7 @@ class ArmorTest {
         final String expectedName = "Armatura di acciaio";
         final Armor armor = new Armor(expectedName, EXPECTED_DEF);
 
-        assertEquals(EXPECTED_DEF, armor.getProtection(), "La difesa dovrebbe essere 10");
+        assertEquals(EXPECTED_DEF, armor.getBonus(), "La difesa dovrebbe essere 10");
         assertEquals(expectedName, armor.getName(), "il nome non corrisponde");
     }
 

@@ -1,5 +1,7 @@
 package it.unibo.rogue.entity.items.impl;
 
+import java.util.Objects;
+
 import it.unibo.rogue.entity.entities.api.Player;
 import it.unibo.rogue.entity.items.api.Equipment;
 
@@ -48,11 +50,12 @@ public final class Armor implements Equipment {
     }
 
     /**
-     * Provides with the protection stat of the armor.
+     * Provides the protection value of the armor.
      *
      * @return the protection value.
      */
-    public int getProtection() {
+    @Override
+    public int getBonus() {
         return this.protection;
     }
 
@@ -62,7 +65,17 @@ public final class Armor implements Equipment {
     @Override
     public void equip(final Player player) {
         if (player != null) {
-            player.equipArmor(this);
+            player.equip(this);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @throws NullPointerException if player is null
+     */
+    @Override
+    public void unequip(final Player player) {
+        Objects.requireNonNull(player).remove(this);
     }
 }

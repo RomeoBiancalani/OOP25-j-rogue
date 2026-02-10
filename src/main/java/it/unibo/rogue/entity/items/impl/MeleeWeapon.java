@@ -1,5 +1,7 @@
 package it.unibo.rogue.entity.items.impl;
 
+import java.util.Objects;
+
 import it.unibo.rogue.entity.entities.api.Player;
 import it.unibo.rogue.entity.items.api.Equipment;
 
@@ -53,7 +55,8 @@ public class MeleeWeapon implements Equipment {
      * 
      * @return the damage value of the weapon.
      */
-    public int getDamage() {
+    @Override
+    public int getBonus() {
         return damage;
     }
 
@@ -63,7 +66,17 @@ public class MeleeWeapon implements Equipment {
     @Override
     public void equip(final Player player) {
         if (player != null) {
-            player.equipWeapon(this);
+            player.equip(this);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @throws NullPointerException if player is null.
+     */
+    @Override
+    public void unequip(Player player) {
+        Objects.requireNonNull(player).remove(this);
     }
 }

@@ -39,6 +39,7 @@ public class PlayerImpl extends AbstractEntity implements Player {
      * @param level         The initial level.
      * @param armorClass    The base armor class.
      * @param startPosition The starting position on the map
+     * 
      * @throws IllegalArgumentException if lifePoint or level isn't positive.
      * @throws IllegalArgumentException if startPosition is null.
      */
@@ -47,6 +48,7 @@ public class PlayerImpl extends AbstractEntity implements Player {
         inventory = new SimpleInventory(INVENTORY_SIZE);
         armor = Optional.empty();
         weapon = Optional.empty();
+        ring = Optional.empty();
         xp = 0;
     }
 
@@ -54,7 +56,7 @@ public class PlayerImpl extends AbstractEntity implements Player {
      * {@inheritDoc}
      * 
      * <p>
-     * If the player has a equipped ring his effect will activate.
+     * If the player has a equipped ring its effect will activate.
      * </p>
      */
     @Override
@@ -83,7 +85,7 @@ public class PlayerImpl extends AbstractEntity implements Player {
     public int getArmorClass() {
         int armorClassBonus = 0;
         if (armor.isPresent()) {
-            armorClassBonus = armor.get().getProtection();
+            armorClassBonus = armor.get().getBonus();
         }
         return super.getArmorClass() + armorClassBonus;
     }
@@ -95,7 +97,7 @@ public class PlayerImpl extends AbstractEntity implements Player {
     public int getHitBonus() {
         int maxDamage = BASE_DAMAGE;
         if (weapon.isPresent()) {
-            maxDamage += weapon.get().getDamage();
+            maxDamage += weapon.get().getBonus();
         }
         return Dice.roll(getLevel(), maxDamage);
     }
@@ -105,50 +107,133 @@ public class PlayerImpl extends AbstractEntity implements Player {
      */
     @Override
     public void equip(final Equipment equipment) {
-        Objects.requireNonNull(equipment, "Cannot equip null item").equip(this);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void equipArmor(final Armor armorToEquip) {
-        this.armor = Optional.ofNullable(armorToEquip);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void equipWeapon(final MeleeWeapon weaponToEquip) {
-        this.weapon = Optional.ofNullable(weaponToEquip);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void equipRing(final Ring ringToEquip) {
-        this.ring = Optional.ofNullable(ringToEquip);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void useRing() {
-        if (ring.isPresent()) {
-            this.heal(ring.get().getHealingFactor());
+        if (equipment.getClass().equals(Armor.class)) {
+            this.equipArmor((Armor) equipment);
+        } else if (equipment.getClass().equals(MeleeWeapon.class)) {
+            this.equipWeapon((MeleeWeapon) equipment);
+        } else if (equipment.getClass().equals(Ring.class)) {
+            this.equipRing((Ring) equipment);
         }
     }
 
     /**
      * {@inheritDoc}
+     * 
+     * @throws NullPointerException if equipment is null.
+     */
+    @Override
+    public void remove(final Equipment equipment) {
+        Objects.requireNonNull(equipment, "Cannot unequip null item");
+        if (!isEquipped(equipment)) {
+            throw new IllegalArgumentException("You couldn't unequip an item that is not the equipped");
+        }
+        if (equipment.getClass().equals(Armor.class)) {
+            this.removeArmor();
+        } else if (equipment.getClass().equals(MeleeWeapon.class)) {
+            this.removeWeapon();
+        } else if (equipment.getClass().equals(Ring.class)) {
+            this.removeRing();
+        }
+    }
+
+    private boolean isEquipped(final Equipment equipment) {
+        Objects.requireNonNull(equipment, "Equipment to check must be not null");
+        return equipment.equals(armor.orElse(null)) ||
+               equipment.equals(weapon.orElse(null)) ||
+               equipment.equals(ring.orElse(null));
+    }
+
+    /**
+     * Equip the specified armor for the player.
+     * 
+     * @param armor The armor to be equipped.
+     * @throws IllegalArgumentException if armor is null.
+     */
+    private void equipArmor(final Armor armorToEquip) {
+        Objects.requireNonNull(armorToEquip, "Armor to equip must be not null");
+        this.armor = Optional.of(armorToEquip);
+    }
+
+    /**
+     * Remove the current equipped armor.
+     * 
+     * @throws IllegalStateException if player don't have a current equipped armor.
+     */
+    private void removeArmor() {
+        if (this.armor.isEmpty()) {
+            throw new IllegalStateException("You couldn't unequip armor if you don't have an equipped armor");
+        }
+        this.armor = Optional.empty();
+    }
+
+    /**
+     * Equip the specified weapon for the player.
+     * 
+     * @param weapon the weapon to be equipped.
+     * @throws IllegalArgumentException if weapon is null.
+     */
+    private void equipWeapon(final MeleeWeapon weaponToEquip) {
+        Objects.requireNonNull(weaponToEquip);
+        this.weapon = Optional.of(weaponToEquip);
+    }
+
+    
+    /**
+     * Remove the current equipped weapon.
+     * 
+     * @throws IllegalStateException if player don't have a current equipped weapon.
+     */
+    private void removeWeapon() {
+        if (this.weapon.isEmpty()) {
+            throw new IllegalStateException("You couldn't unequip weapon if you don't have an equipped weapon");
+        }
+        this.weapon = Optional.empty();
+    }
+
+    /**
+     * Equip the specified ring for the player.
+     * 
+     * @param ring the ring to be equipped.
+     * @throws IllegalArgumentException if weapon is null.
+     */
+    private void equipRing(final Ring ringToEquip) {
+        Objects.requireNonNull(ringToEquip);
+        this.ring = Optional.of(ringToEquip);
+    }
+
+    /**
+     * Remove the current equipped ring.
+     * 
+     * @throws IllegalStateException if player don't have a current equipped ring.
+     */
+    private void removeRing() {
+        if (this.ring.isEmpty()) {
+            throw new IllegalStateException("You couldn't unequip ring if you don't have an equipped ring");
+        }
+        this.ring = Optional.empty();
+    }
+
+    
+    /**
+     * Use the equipped ring.
+     */
+    private void useRing() {
+        if (ring.isPresent()) {
+            this.heal(ring.get().getBonus());
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @throws NullPointerException if amount is null.
+     * @throws IllegalArgumentException if amount is negative.
      */
     @Override
     public void collectXP(final int amount) {
+        Objects.requireNonNull(amount, "Experience amount must be not null");
         if (amount < 0) {
-            throw new IllegalArgumentException("Experience amount cannot be null");
+            throw new IllegalArgumentException("Experience amount cannot be negative");
         }
         this.xp = xp + amount;
         while (xp >= XP_TO_LEVEL_UP) {

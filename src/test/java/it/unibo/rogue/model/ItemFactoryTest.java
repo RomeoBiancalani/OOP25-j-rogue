@@ -44,7 +44,7 @@ class ItemFactoryTest {
 
         final MeleeWeapon weapon = (MeleeWeapon) item;
         assertEquals("Spada iniziale", weapon.getName(), "Il nome della prima arma dovrebbe essere 'Spada iniziale'");
-        assertEquals(EXPECTED_DMG, weapon.getDamage(), "Il danno base della spada iniziale dovrebbe essere 6");
+        assertEquals(EXPECTED_DMG, weapon.getBonus(), "Il danno base della spada iniziale dovrebbe essere 6");
     }
 
     @Test
@@ -54,7 +54,7 @@ class ItemFactoryTest {
 
             assertTrue(item instanceof Armor, "Deve essere un'armatura");
             final Armor armor = (Armor) item;
-            assertTrue(armor.getProtection() > 0, "L'armatura deve di base");
+            assertTrue(armor.getBonus() > 0, "L'armatura deve di base");
 
         }
     }
@@ -81,7 +81,7 @@ class ItemFactoryTest {
         for (int i = 0; i < 1000; i++) {
             final Optional<Item> result = factory.createRandomItem(level);
             if (result.isPresent() && result.get() instanceof MeleeWeapon) {
-                return ((MeleeWeapon) result.get()).getDamage();
+                return ((MeleeWeapon) result.get()).getBonus();
             }
         }
         return -1;
