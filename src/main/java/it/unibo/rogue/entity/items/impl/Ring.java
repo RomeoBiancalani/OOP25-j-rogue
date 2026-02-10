@@ -80,12 +80,12 @@ public class Ring implements Equipment {
     }
 
     /**
-     * {@inhheritDoc}
+     * {@inheritDoc}
      * 
-     * @throws NullPointerException if player is null
+     * @throws NullPointerException if player is null.
      */
     @Override
-    public void unequip(Player player) {
+    public void unequip(final Player player) {
         Objects.requireNonNull(player).remove(this);
     }
 }

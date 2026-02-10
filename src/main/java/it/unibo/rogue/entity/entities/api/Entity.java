@@ -30,6 +30,13 @@ public interface Entity {
     int getMaxLifePoint();
 
     /**
+     * Return the current life point of the entity.
+     * 
+     * @return The current life point of the entity.
+     */
+    int getLifePoint();
+
+    /**
      * Get the armor class of the entity.
      * 
      * @return the armor class of the entity.

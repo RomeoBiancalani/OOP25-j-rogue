@@ -26,7 +26,6 @@ public interface Player extends Entity {
      * Equip the specified equipment for the player.
      * 
      * @param equipment The equipment to be equipped.
-     * @throws NullPointerException if equipment is null.
      */
     void equip(Equipment equipment);
 
@@ -34,10 +33,8 @@ public interface Player extends Entity {
      * Unequip the specified equipment for the player.
      * 
      * @param equipment The equipment to be removed.
-     * @throws NullPointerException if equipment is null.
      */
     void remove(Equipment equipment);
-
 
     /**
      * Collect the specified amount of xp and checks for level up.

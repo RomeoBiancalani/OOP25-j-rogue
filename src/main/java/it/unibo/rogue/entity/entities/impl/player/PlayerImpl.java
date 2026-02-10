@@ -99,20 +99,22 @@ public class PlayerImpl extends AbstractEntity implements Player {
         if (weapon.isPresent()) {
             maxDamage += weapon.get().getBonus();
         }
-        return Dice.roll(getLevel(), maxDamage);
+        return Dice.roll(1, maxDamage);
     }
 
     /**
      * {@inheritDoc}
+     * 
+     * @throws NullPointerException if equipment is null.
      */
     @Override
     public void equip(final Equipment equipment) {
-        if (equipment.getClass().equals(Armor.class)) {
-            this.equipArmor((Armor) equipment);
-        } else if (equipment.getClass().equals(MeleeWeapon.class)) {
-            this.equipWeapon((MeleeWeapon) equipment);
-        } else if (equipment.getClass().equals(Ring.class)) {
-            this.equipRing((Ring) equipment);
+        if (equipment instanceof Armor armor) {
+            this.equipArmor(armor);
+        } else if (equipment instanceof MeleeWeapon weapon) {
+            this.equipWeapon(weapon);
+        } else if (equipment instanceof Ring ring) {
+            this.equipRing(ring);
         }
     }
 
@@ -120,6 +122,7 @@ public class PlayerImpl extends AbstractEntity implements Player {
      * {@inheritDoc}
      * 
      * @throws NullPointerException if equipment is null.
+     * @throws IllegalArgumentException if equipment to remove is not the current equipped equipment.
      */
     @Override
     public void remove(final Equipment equipment) {
@@ -138,15 +141,15 @@ public class PlayerImpl extends AbstractEntity implements Player {
 
     private boolean isEquipped(final Equipment equipment) {
         Objects.requireNonNull(equipment, "Equipment to check must be not null");
-        return equipment.equals(armor.orElse(null)) ||
-               equipment.equals(weapon.orElse(null)) ||
-               equipment.equals(ring.orElse(null));
+        return equipment.equals(armor.orElse(null)) 
+            || equipment.equals(weapon.orElse(null)) 
+            || equipment.equals(ring.orElse(null));
     }
 
     /**
      * Equip the specified armor for the player.
      * 
-     * @param armor The armor to be equipped.
+     * @param armorToEquip The armor to be equipped.
      * @throws IllegalArgumentException if armor is null.
      */
     private void equipArmor(final Armor armorToEquip) {
@@ -169,7 +172,7 @@ public class PlayerImpl extends AbstractEntity implements Player {
     /**
      * Equip the specified weapon for the player.
      * 
-     * @param weapon the weapon to be equipped.
+     * @param weaponToEquip the weapon to be equipped.
      * @throws IllegalArgumentException if weapon is null.
      */
     private void equipWeapon(final MeleeWeapon weaponToEquip) {
@@ -177,7 +180,6 @@ public class PlayerImpl extends AbstractEntity implements Player {
         this.weapon = Optional.of(weaponToEquip);
     }
 
-    
     /**
      * Remove the current equipped weapon.
      * 
@@ -193,7 +195,7 @@ public class PlayerImpl extends AbstractEntity implements Player {
     /**
      * Equip the specified ring for the player.
      * 
-     * @param ring the ring to be equipped.
+     * @param ringToEquip the ring to be equipped.
      * @throws IllegalArgumentException if weapon is null.
      */
     private void equipRing(final Ring ringToEquip) {
@@ -213,7 +215,6 @@ public class PlayerImpl extends AbstractEntity implements Player {
         this.ring = Optional.empty();
     }
 
-    
     /**
      * Use the equipped ring.
      */

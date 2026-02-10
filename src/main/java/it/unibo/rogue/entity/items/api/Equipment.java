@@ -25,6 +25,8 @@ public interface Equipment extends Item {
 
     /**
      * Get the bonus of the specified item.
+     * 
+     * @return bonus of the equipment.
      */
     int getBonus();
 }

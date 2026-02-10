@@ -76,7 +76,7 @@ public class MeleeWeapon implements Equipment {
      * @throws NullPointerException if player is null.
      */
     @Override
-    public void unequip(Player player) {
+    public void unequip(final Player player) {
         Objects.requireNonNull(player).remove(this);
     }
 }

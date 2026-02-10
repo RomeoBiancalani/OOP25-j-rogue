@@ -1,5 +1,7 @@
 package it.unibo.rogue.entity.entities.impl;
 
+import java.util.Objects;
+
 import it.unibo.rogue.entity.Move;
 import it.unibo.rogue.entity.Position;
 import it.unibo.rogue.entity.entities.api.Entity;
@@ -78,6 +80,14 @@ public abstract class AbstractEntity implements Entity {
      * {@inheritDoc}
      */
     @Override
+    public int getLifePoint() {
+        return lifePoint;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public int getLevel() {
         return level;
     }
@@ -110,6 +120,9 @@ public abstract class AbstractEntity implements Entity {
         if (amount < 0) {
             throw new IllegalArgumentException("Heal amount cannot be negative");
         }
+        if (!isAlive()) {
+            throw new IllegalStateException("Can't heal a dead player");
+        }
         lifePoint = Math.min(this.lifePoint + amount, maxLifePoint);
     }
 
@@ -118,8 +131,12 @@ public abstract class AbstractEntity implements Entity {
      */
     @Override
     public void damage(final int amount) {
+        Objects.requireNonNull(amount);
         if (amount < 0) {
             throw new IllegalArgumentException("Heal amount cannot be negative");
+        }
+        if (!isAlive()) {
+            throw new IllegalStateException("Can't damage a dead player");
         }
         lifePoint = lifePoint - amount;
     }
