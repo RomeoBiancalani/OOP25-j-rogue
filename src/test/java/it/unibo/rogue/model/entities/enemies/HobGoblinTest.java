@@ -13,7 +13,7 @@ import it.unibo.rogue.entity.Position;
 import it.unibo.rogue.entity.entities.impl.enemies.HobGoblin;
 
 /**
- * 
+ * TestClass for HobGoblin test.
  */
 class HobGoblinTest {
     private static final Position START_POS = new Position(2, 2);
