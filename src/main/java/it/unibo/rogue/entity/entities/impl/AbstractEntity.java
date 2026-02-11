@@ -41,9 +41,7 @@ public abstract class AbstractEntity implements Entity {
         if (lifePoint <= 0 || level <= 0) {
             throw new IllegalArgumentException("Life points and level must be positive");
         }
-        if (startPosition == null) {
-            throw new IllegalArgumentException("Starting position cannot be null");
-        }
+        Objects.requireNonNull(startPosition, "Starting position cannot be null");
 
         this.maxLifePoint = lifePoint;
         this.lifePoint = lifePoint;

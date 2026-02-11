@@ -109,12 +109,13 @@ public class PlayerImpl extends AbstractEntity implements Player {
      */
     @Override
     public void equip(final Equipment equipment) {
-        if (equipment instanceof Armor armor) {
-            this.equipArmor(armor);
-        } else if (equipment instanceof MeleeWeapon weapon) {
-            this.equipWeapon(weapon);
-        } else if (equipment instanceof Ring ring) {
-            this.equipRing(ring);
+        Objects.requireNonNull(equipment);
+        if (equipment instanceof Armor newArmor) {
+            this.equipArmor(newArmor);
+        } else if (equipment instanceof MeleeWeapon newWeapon) {
+            this.equipWeapon(newWeapon);
+        } else if (equipment instanceof Ring newRing) {
+            this.equipRing(newRing);
         }
     }
 

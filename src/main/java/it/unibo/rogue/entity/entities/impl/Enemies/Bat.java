@@ -28,6 +28,7 @@ public class Bat extends AbstractEnemy {
      * Initializes base stats (level, HP, AC, visibility).
      * 
      * @param startPosition The initial position of the bat.
+     * @throws NullPointerException if start position is null
      */
     public Bat(final Position startPosition) {
         super(
@@ -49,6 +50,9 @@ public class Bat extends AbstractEnemy {
      */
     @Override
     public Move getNextMove(final Position playerPosition) {
+        if (!canSeePlayer(playerPosition)) {
+            return Move.IDLE;
+        }
         if (!isSleeping() && getRandom().nextInt(100) < CHASE_PLAYER_PERCENT) {
             return moveToward(playerPosition);
         }
