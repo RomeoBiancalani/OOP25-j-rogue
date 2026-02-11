@@ -19,6 +19,11 @@ public class Food implements Consumable {
     public String getDescription() {
         return "Food have healing properties, get healed by: " + HEALING_AMOUNT + " HP";
     }
+    /**
+     * Getter for item amount
+     *
+     * @return consumableAmount
+     * */
 
     public int getConsumableAmount(){
         return consumableAmount;

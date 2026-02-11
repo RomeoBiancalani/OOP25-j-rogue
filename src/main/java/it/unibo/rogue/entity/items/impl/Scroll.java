@@ -31,4 +31,13 @@ public class Scroll implements Consumable {
     public String getDescription(){
         return "It may help you discover the first ring effect";
     }
+    /**
+     * Getter for item amount
+     *
+     * @return consumableAmount
+     * */
+
+    public int getConsumableAmount(){
+        return consumableAmount;
+    }
 }

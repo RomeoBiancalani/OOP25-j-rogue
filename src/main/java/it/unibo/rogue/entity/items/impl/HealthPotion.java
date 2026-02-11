@@ -23,5 +23,14 @@ public class HealthPotion implements Consumable {
     public String getDescription(){
         return "Healing potion, use it to regenerate a considerable amount of HP";
     }
+    /**
+     * Getter for item amount
+     *
+     * @return consumableAmount
+     * */
+
+    public int getConsumableAmount(){
+        return consumableAmount;
+    }
 }
 
