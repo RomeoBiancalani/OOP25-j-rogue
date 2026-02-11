@@ -48,7 +48,7 @@ public class HobGoblin extends AbstractEnemy {
      */
     @Override
     public Move getNextMove(final Position playerPosition) {
-        if (isSleeping()) {
+        if (isSleeping() || !canSeePlayer(playerPosition)) {
             return Move.IDLE;
         }
         return moveToward(playerPosition);
