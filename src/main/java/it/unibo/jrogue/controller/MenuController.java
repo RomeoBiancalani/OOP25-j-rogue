@@ -78,7 +78,7 @@ public final class MenuController implements InputHandler {
                 controller.goToOptions();
                 break;
             case 3:
-                System.exit(0);
+                javafx.application.Platform.exit();
                 break;
             default:
                 break;

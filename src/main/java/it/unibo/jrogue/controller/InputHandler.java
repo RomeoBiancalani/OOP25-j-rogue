@@ -16,8 +16,8 @@ public interface InputHandler {
 
     void handleInput(KeyEvent event);
     /**
-    * @return a Pane for the GUI
-    * */
+     * @return a Pane for the GUI
+     * */
 
     Pane getView();
 }

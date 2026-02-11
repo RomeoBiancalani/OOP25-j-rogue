@@ -30,6 +30,9 @@ public final class Launch extends Application {
         primaryStage.show();
     }
 
+    /**
+     * Launch the software.
+     * */
     public static void launcher(final String[] args) {
         launch(args);
     }

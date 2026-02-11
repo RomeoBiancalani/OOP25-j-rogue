@@ -18,7 +18,7 @@ public interface MenuGUI {
      * @param selectIndex stands for the index selected in the Menu.
      * */
 
-    public void updateSelection( int selectIndex);
+    void updateSelection(int selectIndex);
 
     /**
      * getter for the layout.

@@ -1,6 +1,11 @@
 package it.unibo.jrogue.engine;
 
-import it.unibo.jrogue.controller.*;
+import it.unibo.jrogue.controller.GameController;
+import it.unibo.jrogue.controller.InputHandler;
+import it.unibo.jrogue.controller.InventoryController;
+import it.unibo.jrogue.controller.MenuController;
+import it.unibo.jrogue.controller.OptionsController;
+import it.unibo.jrogue.controller.PauseGameController;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -24,10 +29,10 @@ public final class BaseController {
     private final InputHandler inventoryController;
 
     /**
-    * Controllers initialization.
+     * Controllers initialization.
      *
      * @param entity which is the game entity
-    * */
+     * */
     public BaseController(final GameState entity) {
         this.entity = entity;
         this.menuController = new MenuController(this);

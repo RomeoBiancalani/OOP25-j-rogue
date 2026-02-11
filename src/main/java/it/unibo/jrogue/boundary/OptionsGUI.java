@@ -19,8 +19,8 @@ public final class OptionsGUI implements MenuGUI {
     private final VBox rootLayout;
     private final String[] optionsName = {"Fullscreen: OFF", "Back"};
     /**
-    * Initializing Options GUI.
-    * */
+     * Initializing Options GUI.
+     * */
 
     public OptionsGUI() {
         rootLayout = new VBox(BUTTONS_SPACING);

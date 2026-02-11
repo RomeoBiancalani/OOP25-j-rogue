@@ -24,6 +24,11 @@ public final class GameState {
         this.currentState = State.MAIN_MENU;
     }
 
+    /**
+     * Getter for the current state.
+     *
+     * @return currentState
+     * */
     public State getCurrentState() {
         return currentState;
     }
