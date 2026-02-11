@@ -28,6 +28,7 @@ public class Bat extends AbstractEnemy {
      * Initializes base stats (level, HP, AC, visibility).
      * 
      * @param startPosition The initial position of the bat.
+     * @throws NullPointerException if start position is null
      */
     public Bat(final Position startPosition) {
         super(

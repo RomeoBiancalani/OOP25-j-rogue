@@ -58,6 +58,7 @@ public class Ring implements Equipment {
      * 
      * @return the healing factor of the ring.
      */
+    @Override
     public int getBonus() {
         return this.healingFactor;
     }
