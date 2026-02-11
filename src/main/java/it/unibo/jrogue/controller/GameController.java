@@ -1,16 +1,18 @@
 package it.unibo.jrogue.controller;
 
+import it.unibo.jrogue.WorldRenderingDemo;
 import it.unibo.jrogue.engine.BaseController;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 
 /**
  * Controller that handles the actions the player can perform during the game.
  * */
 public final class GameController implements InputHandler {
     private final BaseController controller;
-    private final Pane gameView;
+    private final StackPane gameView;
 
     /**
      * Initialize the controller, a temp Pane is added waiting for the actual Pane to be made.
@@ -19,8 +21,7 @@ public final class GameController implements InputHandler {
 
     public GameController(final BaseController controller) {
         this.controller = controller;
-        this.gameView = new Pane(); //Temporary Pane waiting for the team to make Game GUI
-        this.gameView.setStyle("-fx-background-color: #ffffff;");
+        this.gameView = new WorldRenderingDemo();
     }
 
     @Override

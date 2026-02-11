@@ -10,15 +10,11 @@ import it.unibo.jrogue.entity.world.api.GameMap;
 import it.unibo.jrogue.entity.world.api.Level;
 import it.unibo.jrogue.entity.world.api.Tile;
 
-import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,13 +25,11 @@ import java.util.Map;
  * Uses a StackPane with two Canvas layers: terrain (layer 0) and entities (layer 1).
  */
 @SuppressWarnings("PMD.SystemPrintln")
-public final class WorldRenderingDemo extends Application {
+public final class WorldRenderingDemo extends StackPane {
 
-    private static final int DEFAULT_MAP_WIDTH = 80; // This needs to be updated and generated dynamically based on screen size
-    private static final int DEFAULT_MAP_HEIGHT = 40;
-    private static final int DEFAULT_SCREEN_WIDTH = 1280;
-    private static final int DEFAULT_SCREEN_HEIGHT = 720;
-    private static final int DEFAULT_TILE_SIZE = 16;
+    private static final int DEFAULT_MAP_WIDTH = 80;
+    private static final int DEFAULT_MAP_HEIGHT = 45;
+    private static final int DEFAULT_TILE_SIZE = 24;
     private static final String TILESET_PATH = "/tileset/";
     private static final String TILE_CORRIDOR_H = "corridorhorizontal";
     private static final String TILE_STAIRS = "stairs";
@@ -43,17 +37,41 @@ public final class WorldRenderingDemo extends Application {
     private static final String WALL_COLOR = "#1a1a2e";
 
     private static final List<String> TILE_NAMES = List.of(
-        TILE_FLOOR, "tiletopleft", "tiletop", "tiletopright",
-        "tileleft", "tileright",
-        "tilebottomleft", "tilebottom", "tilebottomright",
-        TILE_CORRIDOR_H, "corridorhorizontalleft", "corridorhorizontalright",
-        "corridorvertical", "corridorverticaltop", "corridorverticalbottom",
-        "gold", TILE_STAIRS
+            TILE_FLOOR, "tiletopleft", "tiletop", "tiletopright",
+            "tileleft", "tileright",
+            "tilebottomleft", "tilebottom", "tilebottomright",
+            TILE_CORRIDOR_H, "corridorhorizontalleft", "corridorhorizontalright",
+            "corridorvertical", "corridorverticaltop", "corridorverticalbottom",
+            "gold", TILE_STAIRS
     );
 
     private final Map<String, Image> tileImages = new HashMap<>();
 
-    @Override
+
+    /**
+     * Constructor to generate the game map
+     * */
+    public WorldRenderingDemo(){
+        final long seed = System.currentTimeMillis();
+        loadTileset();
+        final GameMap map = generateMap(seed);
+
+        final int canvasWidth = map.getWidth() * DEFAULT_TILE_SIZE;
+        final int canvasHeight = map.getHeight() * DEFAULT_TILE_SIZE;
+
+        final Canvas terrainCanvas = new Canvas(canvasWidth, canvasHeight);
+        final Canvas entityCanvas = new Canvas(canvasWidth, canvasHeight);
+
+        terrainCanvas.getGraphicsContext2D().setImageSmoothing(false);
+        entityCanvas.getGraphicsContext2D().setImageSmoothing(false);
+
+        renderTerrain(terrainCanvas.getGraphicsContext2D(), map);
+        renderEntities(entityCanvas.getGraphicsContext2D(), map);
+        this.getChildren().addAll(terrainCanvas, entityCanvas);
+    }
+
+//Keeping this because it may be something wrong with the constructor
+/*
     public void start(final Stage primaryStage) {
         final long seed = System.currentTimeMillis();
         final int screenWidth = DEFAULT_SCREEN_WIDTH;
@@ -82,6 +100,7 @@ public final class WorldRenderingDemo extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+*/
 
     private void loadTileset() {
         for (final String name : TILE_NAMES) {
@@ -99,7 +118,7 @@ public final class WorldRenderingDemo extends Application {
         final SpawnConfig spawnConfig = SpawnConfig.debug();
         final LevelGenerator generator = new PopulatedLevelGenerator(spawnConfig);
         final GenerationConfig config = GenerationConfig.withDefaults(
-            DEFAULT_MAP_WIDTH, DEFAULT_MAP_HEIGHT, 1, seed
+                DEFAULT_MAP_WIDTH, DEFAULT_MAP_HEIGHT, 1, seed
         );
         final Level level = generator.generate(config);
         return level.getMap();
@@ -236,26 +255,10 @@ public final class WorldRenderingDemo extends Application {
         final Position start = map.getStartingPosition();
         gc.setFill(Color.RED);
         gc.fillRect(
-            start.x() * DEFAULT_TILE_SIZE,
-            start.y() * DEFAULT_TILE_SIZE,
-            DEFAULT_TILE_SIZE,
-            DEFAULT_TILE_SIZE
+                start.x() * DEFAULT_TILE_SIZE,
+                start.y() * DEFAULT_TILE_SIZE,
+                DEFAULT_TILE_SIZE,
+                DEFAULT_TILE_SIZE
         );
-    }
-
-    /**
-     * Entry point class.
-     */
-    public static final class Main {
-        private Main() { }
-
-        /**
-         * Demo main.
-         * 
-         * @param args cli args
-         */
-        public static void main(final String[] args) {
-            launch(WorldRenderingDemo.class);
-        }
     }
 }

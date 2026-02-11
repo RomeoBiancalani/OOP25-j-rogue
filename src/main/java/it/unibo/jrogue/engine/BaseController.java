@@ -1,5 +1,6 @@
 package it.unibo.jrogue.engine;
 
+import it.unibo.jrogue.WorldGenerationDemo;
 import it.unibo.jrogue.controller.GameController;
 import it.unibo.jrogue.controller.InputHandler;
 import it.unibo.jrogue.controller.InventoryController;
