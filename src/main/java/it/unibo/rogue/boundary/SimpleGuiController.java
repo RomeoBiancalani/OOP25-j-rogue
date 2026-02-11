@@ -7,6 +7,7 @@ import it.unibo.rogue.control.impl.InventoryManagerImpl;
 import it.unibo.rogue.entity.items.api.Item;
 import it.unibo.rogue.entity.items.impl.Armor;
 import it.unibo.rogue.entity.items.impl.MeleeWeapon;
+import it.unibo.rogue.entity.items.impl.Ring;
 import javafx.application.Application;
 
 import javafx.scene.Scene;
@@ -31,14 +32,14 @@ public class SimpleGuiController extends Application {
     private InventoryManager manager;
 
     private final int cols = 10;
-    private final int rows = 10;
+    private final int rows = 5;
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void start(final Stage stage) throws Exception {
-        this.manager = new InventoryManagerImpl(cols * rows);
+        this.manager = new InventoryManagerImpl();
         final GridPane gp = new GridPane();
         gp.setStyle("-fx-background-color: #000000; -fx-padding: 20; -fx-alignment: center;");
         gp.setGridLinesVisible(true);
@@ -141,27 +142,30 @@ public class SimpleGuiController extends Application {
             MeleeWeapon weapon = (MeleeWeapon) item;
             String name = weapon.getName().toLowerCase();
 
-            if(name.contains("ascia")) {
+            if (name.contains("ascia")) {
                 return "ascia";
             } else if (name.contains("pugnale")) {
                 return "pugnale";
-            } else if ( name.contains("spada")) {
+            } else if (name.contains("spada")) {
                 return "spada";
             }
             return "S";
         }
 
         if (item instanceof Armor) {
-            return "A";
+            return "Armor";
+        }
+        if (item instanceof Ring) {
+            return "ring";
         }
 
         return "";
     }
 
     /**
-     * Per ora la teniamo e basta.
+     * Method to help to start the GUI of the inventory.
      * 
-     * @param args the roba.
+     * @param args 
      */
     public static void main(final String[] args) {
         launch(args);

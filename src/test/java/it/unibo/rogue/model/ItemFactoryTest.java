@@ -9,6 +9,7 @@ import it.unibo.rogue.entity.items.impl.Gold;
 import it.unibo.rogue.entity.items.impl.HealthPotion;
 import it.unibo.rogue.entity.items.impl.ItemFactoryImpl;
 import it.unibo.rogue.entity.items.impl.MeleeWeapon;
+import it.unibo.rogue.entity.items.impl.Ring;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -64,6 +65,9 @@ class ItemFactoryTest {
         final int damageLevel1 = getDamageSample(1);
         final int damageLevel10 = getDamageSample(LEVEL);
 
+        assertTrue(damageLevel1 != -1, "Impossibile generare un'arma di livello 1 per il test");
+        assertTrue(damageLevel10 != -1, "Impossibile generare un'arma di livello 10 per il test");
+
         if (damageLevel1 > 0 && damageLevel10 > 0) {
             assertTrue(damageLevel10 > damageLevel1, "Un'arma di livello 10 (" + damageLevel10
                     + ") deve essere più forte di un'arma di livello 1 (" + damageLevel1 + ")");
@@ -98,7 +102,7 @@ class ItemFactoryTest {
                 final Item item = result.get();
 
                 final boolean isValid = item instanceof Armor || item instanceof MeleeWeapon || item instanceof Gold
-                        || item instanceof HealthPotion;
+                        || item instanceof HealthPotion || item instanceof Ring;
 
                 assertTrue(isValid,
                         "L'item generato (" + item.getClass().getSimpleName() + ") non è un tipo valido conosciuto");

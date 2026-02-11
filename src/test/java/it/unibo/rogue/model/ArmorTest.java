@@ -6,6 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import it.unibo.rogue.entity.Position;
+import it.unibo.rogue.entity.entities.api.Player;
+import it.unibo.rogue.entity.entities.impl.player.PlayerImpl;
 import it.unibo.rogue.entity.items.impl.Armor;
 
 /**
@@ -45,10 +48,19 @@ class ArmorTest {
             new Armor(null, EXPECTED_DEF);
         }, "Non si deve poter creare un'armatura con nome null");
 
-        //test armatura senza nome.
+        // test armatura senza nome.
         assertThrows(IllegalArgumentException.class, () -> {
             new Armor("", EXPECTED_DEF);
         }, "Non si deve poter creare un'armatura senza nome");
+    }
+
+    @Test
+    void testEquip() {
+        final Armor armor = new Armor("Armor", EXPECTED_DEF);
+        final Player player = new PlayerImpl(100, 1, 0, new Position(0, 0));
+
+        armor.equip(player);
+        assertEquals(EXPECTED_DEF, player.getArmorClass(), "La difesa del player deve aumentare");
     }
 
 }

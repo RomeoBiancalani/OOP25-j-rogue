@@ -56,4 +56,25 @@ class InventoryTest {
         assertTrue(inventory.getItem(0).isPresent(), "ci dovrebbe essere un item qui");
         assertEquals(testItem, inventory.getItem(0).get(), "L'oggetto nello slot 0 deve essere il sasso");
     }
+
+    @Test
+    void testIndexOutOfBounds() {
+        final Inventory inventory = new SimpleInventory(EXPECTED_SIZE);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            inventory.getItem(-1);
+        }, "L'inventario non dovrebbe avere indici negativi");
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            inventory.getItem(100);
+        }, "L'indice non deve superare la dimensione dell'inventario");
+}
+
+    @Test
+    void testNullItem() {
+        final Inventory inventory = new SimpleInventory(EXPECTED_SIZE);
+        assertThrows(NullPointerException.class, () -> {
+            inventory.addItem(null);
+        }, "Non si dovrebbero poter aggiungere item nulli");
+    }
 }

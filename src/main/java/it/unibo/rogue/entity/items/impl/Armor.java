@@ -61,18 +61,18 @@ public final class Armor implements Equipment {
 
     /**
      * {@inheritDoc}
+     * 
+     * @throws NullPointerException if player is null.
      */
     @Override
     public void equip(final Player player) {
-        if (player != null) {
-            player.equip(this);
-        }
+        Objects.requireNonNull(player).equip(this);
     }
 
     /**
      * {@inheritDoc}
      * 
-     * @throws NullPointerException if player is null
+     * @throws NullPointerException if player is null.
      */
     @Override
     public void unequip(final Player player) {

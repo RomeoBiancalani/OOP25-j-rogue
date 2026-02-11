@@ -37,7 +37,7 @@ public class Ring implements Equipment {
      * {@inheritDoc}
      */
     @Override
-    public String getDescription() { 
+    public String getDescription() {
         if (!isIdentified) {
             return "Anello misterioso";
         }
@@ -71,12 +71,12 @@ public class Ring implements Equipment {
 
     /**
      * {@inheritDoc}
+     * 
+     * @throws NullPointerException if player is null.
      */
     @Override
     public void equip(final Player player) {
-        if (player != null) {
-            player.equip(this);
-        }
+        Objects.requireNonNull(player).equip(this);
     }
 
     /**

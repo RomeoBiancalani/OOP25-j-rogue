@@ -15,6 +15,7 @@ public class ItemFactoryImpl implements ItemFactory {
     private static final int BASE_DAMAGE_AXE = 8;
     private static final int BASE_DEF_HEAVY = 3;
     private static final int BASE_DEF_LIGHT = 1;
+    private static final int HEALING_AMOUNT = 10;
 
     private static final int SCALING_FACTOR = 2;
     private static final int DAMAGE_VARIANCE_BOUND = 3;
@@ -27,6 +28,7 @@ public class ItemFactoryImpl implements ItemFactory {
     private static final int CHANCE_SWORD = 40;
     private static final int CHANCE_AXE = 45;
     private static final int CHANCE_ARMOR = 50;
+    private static final int CHANCE_RING = 55;
     private static final int ARMOR_SELECTION = 70;
     private static final int GOLD_AMOUNT = 10;
 
@@ -124,6 +126,8 @@ public class ItemFactoryImpl implements ItemFactory {
             return Optional.of(new MeleeWeapon("ascia", dmg));
         } else if (roll < CHANCE_ARMOR) {
             return Optional.of(createRandomArmor(level));
+        } else if (roll < CHANCE_RING) {
+            return Optional.of(new Ring("anello della vita", HEALING_AMOUNT));
         } else {
             return Optional.empty();
         }

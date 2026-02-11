@@ -3,11 +3,15 @@ package it.unibo.rogue.control.impl;
 import java.util.Optional;
 
 import it.unibo.rogue.control.api.InventoryManager;
-import it.unibo.rogue.entity.items.api.Inventory;
+import it.unibo.rogue.entity.Position;
+import it.unibo.rogue.entity.entities.api.Player;
+import it.unibo.rogue.entity.entities.impl.player.PlayerImpl;
+import it.unibo.rogue.entity.items.api.Consumable;
+import it.unibo.rogue.entity.items.api.Equipment;
 import it.unibo.rogue.entity.items.api.Item;
 import it.unibo.rogue.entity.items.impl.Armor;
 import it.unibo.rogue.entity.items.impl.MeleeWeapon;
-import it.unibo.rogue.entity.items.impl.SimpleInventory;
+import it.unibo.rogue.entity.items.impl.Ring;
 
 /**
  * Class that implements the InventoryManager interface.
@@ -17,15 +21,16 @@ public class InventoryManagerImpl implements InventoryManager {
     private static final int DAMAGE_SWORD = 5;
     private static final int PROTECTION = 2;
     private static final int DAMAGE_AXE = 10;
-    private final Inventory inventory;
+    private static final int HEALING_FACTOR = 10;
+    private final Player player;
 
     /**
      * Costructor.
      *
      * @param size the size of the inventory.
      */
-    public InventoryManagerImpl(final int size) {
-        this.inventory = new SimpleInventory(size);
+    public InventoryManagerImpl() {
+        this.player = new PlayerImpl(100, 1, 0, new Position(0, 0));
         initTestItems();
     }
 
@@ -34,9 +39,10 @@ public class InventoryManagerImpl implements InventoryManager {
      * to be able to test the GUI inventory.
      */
     private void initTestItems() {
-        inventory.addItem(new MeleeWeapon("Spada", DAMAGE_SWORD));
-        inventory.addItem(new Armor("Armatura", PROTECTION));
-        inventory.addItem(new MeleeWeapon("Ascia", DAMAGE_AXE));
+        player.getInventory().addItem(new MeleeWeapon("Spada", DAMAGE_SWORD));
+        player.getInventory().addItem(new Armor("Armatura", PROTECTION));
+        player.getInventory().addItem(new MeleeWeapon("Ascia", DAMAGE_AXE));
+        player.getInventory().addItem(new Ring("anello misterioso", HEALING_FACTOR));
     }
 
     /**
@@ -44,11 +50,19 @@ public class InventoryManagerImpl implements InventoryManager {
      */
     @Override
     public void useItem(final int index) {
-        final Optional<Item> result = inventory.getItem(index);
+        final Optional<Item> result = player.getInventory().getItem(index);
 
         if (result.isPresent()) {
             final Item item = result.get();
-            System.out.println("Usato : " + item.getDescription());
+            if (item instanceof Equipment) {
+                ((Equipment) item).equip(player);
+                System.out.println("Equipaggiato");
+            }
+            if (item instanceof Consumable) {
+                ((Consumable) item).consume(player);
+                System.out.println("consumato");
+                player.remove((Equipment) item);
+            }
         } else {
             System.out.println("Slot vuoto");
         }
@@ -59,7 +73,7 @@ public class InventoryManagerImpl implements InventoryManager {
      */
     @Override
     public int getSize() {
-        return inventory.getSize();
+        return player.getInventory().getSize();
     }
 
     /**
@@ -67,6 +81,6 @@ public class InventoryManagerImpl implements InventoryManager {
      */
     @Override
     public Optional<Item> getItemAt(final int index) {
-        return inventory.getItem(index);
+        return player.getInventory().getItem(index);
     }
 }
