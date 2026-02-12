@@ -63,5 +63,5 @@ val main: String by project
 
 application {
     // Define the main class for the application
-    mainClass.set("it.unibo.rogue.boundary.Main")
+    mainClass.set("it.unibo.jrogue.main.Main")
 }
