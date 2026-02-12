@@ -3,50 +3,48 @@ package it.unibo.jrogue.controller;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import it.unibo.jrogue.engine.BaseController;
+import it.unibo.jrogue.entity.entities.api.Player;
+import it.unibo.jrogue.boundary.InventoryGUI;
+import it.unibo.jrogue.controller.api.InventoryManager;
 import javafx.scene.input.KeyCode;
 
 /**
  * Controller for the inventory.
- * */
+ */
 
 public final class InventoryController implements InputHandler {
     private final BaseController controller;
-    private final Pane inventoryView;
+    private InventoryGUI inventoryGUI;
+    private InventoryManager manager;
 
     /**
      * Initialize the controller.
      *
-     * @param controller which is the BaseController we communicate with*/
+     * @param controller which is the BaseController we communicate with
+     */
 
     public InventoryController(final BaseController controller) {
         this.controller = controller;
-        this.inventoryView = new Pane(); //Temporary Pane waiting for the team to make Inventory GUI
-        this.inventoryView.setStyle("-fx-background-color: #c800ff;");
-
     }
+
+    public void setupPlayer(final Player player) {
+        this.manager = new InventoryManagerImpl(player);
+        this.inventoryGUI = new InventoryGUI(manager);
+    }
+
 
     @Override
     public void handleInput(final KeyEvent event) {
         final KeyCode code = event.getCode();
-        if (code == KeyCode.W) {
-            //moveUp();
-        } else if (code == KeyCode.A) {
-            //moveLeft();
-        } else if (code == KeyCode.D) {
-            //moveRight();
-        } else if (code == KeyCode.S) {
-            //moveDown();
-        } else if (code == KeyCode.Q) {
+        if (code == KeyCode.Q || code == KeyCode.ESCAPE || code == KeyCode.I) {
             controller.resumeGame();
-        } else if (code == KeyCode.ENTER) {
-            //selectItem();
-        } else if (code == KeyCode.F) {
-            //readItem();
+        } else {
+            inventoryGUI.handleInput(code);
         }
     }
 
     @Override
     public Pane getView() {
-        return this.inventoryView;
+        return this.inventoryGUI.getView();
     }
 }

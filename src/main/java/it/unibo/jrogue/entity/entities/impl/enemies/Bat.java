@@ -3,7 +3,6 @@ package it.unibo.jrogue.entity.entities.impl.enemies;
 import it.unibo.jrogue.commons.Dice;
 import it.unibo.jrogue.commons.Move;
 import it.unibo.jrogue.commons.Position;
-import it.unibo.jrogue.entity.GameRandom;
 import it.unibo.jrogue.entity.entities.impl.AbstractEnemy;
 
 /**
@@ -29,6 +28,7 @@ public class Bat extends AbstractEnemy {
      * Initializes base stats (level, HP, AC, visibility).
      * 
      * @param startPosition The initial position of the bat.
+     * @throws NullPointerException if start position is null
      */
     public Bat(final Position startPosition) {
         super(
@@ -50,7 +50,10 @@ public class Bat extends AbstractEnemy {
      */
     @Override
     public Move getNextMove(final Position playerPosition) {
-        if (!isSleeping() && GameRandom.nextInt(100) < CHASE_PLAYER_PERCENT) {
+        if (!canSeePlayer(playerPosition)) {
+            return Move.IDLE;
+        }
+        if (!isSleeping() && getRandom().nextInt(100) < CHASE_PLAYER_PERCENT) {
             return moveToward(playerPosition);
         }
         return Move.IDLE;

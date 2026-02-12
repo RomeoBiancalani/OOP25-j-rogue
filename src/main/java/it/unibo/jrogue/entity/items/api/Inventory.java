@@ -3,30 +3,47 @@ package it.unibo.jrogue.entity.items.api;
 import java.util.Optional;
 
 /**
- * Represents a container for items with limited capacity.
+ * Represents the inventory that the player has.
  */
 public interface Inventory {
 
     /**
      * Checks if the inventory is full.
-     *
-     * @return true if no more items can be added
+     * 
+     * @return true if the inventory is full.
      */
     boolean isFull();
 
     /**
-     * Gets the item at the specified index.
-     *
-     * @param index the inventory slot index
-     * @return the item at that index, or empty if none
+     *  Retrieves an item from the inventory by its index.
+     * 
+     * @param index the index of the item to retrieve.
+     * 
+     * @return an optional with the item if it exists.
      */
     Optional<Item> getItem(int index);
 
     /**
      * Adds an item to the inventory.
-     *
-     * @param item the item to add
-     * @return true if the item was added successfully
+     * 
+     * @param item the item that we want to add.
+     * 
+     * @throws IllegalStateException if the inventory is full.
      */
-    boolean addItem(Item item);
+    void addItem(Item item);
+
+    /**
+     * Removes an item from the inventory.
+     * 
+     * @param index the index of the item to be removed.
+     */
+    void removeItem(int index);
+
+    /**
+     * Returns the size of the inventory.
+     * 
+     * @return returns the size of the inventory.
+     */
+    int getSize();
 }
+

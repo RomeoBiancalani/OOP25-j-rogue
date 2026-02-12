@@ -3,11 +3,10 @@ package it.unibo.jrogue.entity.entities.impl;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
-import it.unibo.jrogue.commons.Dice;
 import it.unibo.jrogue.commons.Move;
 import it.unibo.jrogue.commons.Position;
-import it.unibo.jrogue.entity.GameRandom;
 import it.unibo.jrogue.entity.entities.api.Enemy;
 
 /**
@@ -24,6 +23,8 @@ public abstract class AbstractEnemy extends AbstractEntity implements Enemy {
      */
     private static final int SLEEP_CHANCE = 10;
 
+    private static final Random RAND = new Random();
+
     private final int visibility;
     private boolean sleeping;
 
@@ -31,24 +32,24 @@ public abstract class AbstractEnemy extends AbstractEntity implements Enemy {
      * Constructos an AbstractEnemy with the specified attributes.
      * 
      * @param currentPosition The current position of the enemy.
-     * @param level The level of the enemy.
-     * @param lifePoint The life points of the enemy.
-     * @param armorClass The armor class of the enemy.
-     * @param visibility The visibility range of the enemy.
+     * @param level           The level of the enemy.
+     * @param lifePoint       The life points of the enemy.
+     * @param armorClass      The armor class of the enemy.
+     * @param visibility      The visibility range of the enemy.
      * @throws IllegalArgumentException if visibility range is negative.
      */
     public AbstractEnemy(final Position currentPosition,
-                         final int level,
-                         final int lifePoint,
-                         final int armorClass,
-                         final int visibility) {
+            final int level,
+            final int lifePoint,
+            final int armorClass,
+            final int visibility) {
 
-            super(lifePoint, level, armorClass, currentPosition);
-            if (visibility < 0) {
-                throw new IllegalArgumentException("Visibility range cannot be negative");
-            }
-            this.visibility = visibility;
-            this.sleeping = computeSleeping();
+        super(lifePoint, level, armorClass, currentPosition);
+        if (visibility < 0) {
+            throw new IllegalArgumentException("Visibility range cannot be negative");
+        }
+        this.visibility = visibility;
+        this.sleeping = computeSleeping();
     }
 
     /**
@@ -72,7 +73,7 @@ public abstract class AbstractEnemy extends AbstractEntity implements Enemy {
      */
     @Override
     public final boolean computeSleeping() {
-        return Dice.roll(1, SLEEP_CHANCE) == 1;
+        return RAND.nextInt(SLEEP_CHANCE) == 0;
     }
 
     /**
@@ -101,13 +102,22 @@ public abstract class AbstractEnemy extends AbstractEntity implements Enemy {
     }
 
     /**
+     * Gets the random number generator use in this class.
+     * 
+     * @return The random number generator.
+     */
+    protected static Random getRandom() {
+        return RAND;
+    }
+
+    /**
      * Generates a random move.
      * 
      * @return A random move.
      */
     protected Move randomMove() {
         final Move[] moves = Move.values();
-        return moves[GameRandom.nextInt(moves.length)];
+        return moves[RAND.nextInt(moves.length)];
     }
 
     /**

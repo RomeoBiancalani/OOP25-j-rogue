@@ -1,6 +1,5 @@
 package it.unibo.jrogue.engine;
 
-import it.unibo.jrogue.WorldGenerationDemo;
 import it.unibo.jrogue.controller.GameController;
 import it.unibo.jrogue.controller.InputHandler;
 import it.unibo.jrogue.controller.InventoryController;
@@ -83,6 +82,9 @@ public final class BaseController {
     public void startGame() {
         entity.setCurrentState(GameState.State.PLAYING);
         this.currentController = gameController;
+        //Player player = gameController.getPlayer();
+
+        //((InventoryController) this.inventoryController).setupPlayer(player); 
         changeView(gameController.getView());
     }
     /**

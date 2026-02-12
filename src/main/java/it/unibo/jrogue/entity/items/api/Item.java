@@ -1,15 +1,17 @@
 package it.unibo.jrogue.entity.items.api;
 
 /**
- * Represents an item in the game.
+ * Represent an item that the player can find and collect
+ * from the dungeon floor.
+ * 
  */
 @FunctionalInterface
 public interface Item {
 
     /**
-     * Returns a description of the item.
-     *
-     * @return the item description
+     * Provides a description of the item.
+     * 
+     * @return a string containing the item description.
      */
     String getDescription();
 }

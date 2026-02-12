@@ -8,43 +8,79 @@ import it.unibo.jrogue.entity.items.api.Inventory;
 import it.unibo.jrogue.entity.items.api.Item;
 
 /**
- * A simple implementation of Inventory using a HashMap.
+ * Implementation of the Inventory.
  */
-public final class SimpleInventory implements Inventory {
+public class SimpleInventory implements Inventory {
 
     private final Map<Integer, Item> inventory = new HashMap<>();
     private final int size;
 
     /**
-     * Creates a new inventory with the specified capacity.
-     *
-     * @param size the maximum number of items
+     * Constructor of the SimpleInventory.
+     * 
+     * @param size size of the Inventory.
      */
     public SimpleInventory(final int size) {
+        if (size <= 0 || size >= 100) {
+            throw new IllegalArgumentException("L'inventario deve avere dimensione positiva");
+        }
         this.size = size;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isFull() {
         return inventory.size() >= size;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Optional<Item> getItem(final int index) {
+        if (index < 0 || index >= size) {
+            throw new IllegalArgumentException("L'indice va fuori dai limiti dell'inventario");
+        }
         return Optional.ofNullable(inventory.get(index));
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     */
     @Override
-    public boolean addItem(final Item item) {
+    public void addItem(final Item item) {
+        if (item == null) {
+            throw new NullPointerException("L'oggetto non può essere null");
+        }
+
         if (isFull()) {
-            return false;
+            throw new IllegalStateException("L'inventario è pieno non si può aggiungere altro");
+
         }
         for (int i = 0; i < size; i++) {
             if (!inventory.containsKey(i)) {
                 inventory.put(i, item);
-                return true;
+                return;
             }
         }
-        return false;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getSize() {
+        return this.size;
+    }
+
+    @Override
+    public void removeItem(int index) {
+        if (inventory.containsKey(index)) {
+            inventory.remove(index);
+        }
+    }
+
 }

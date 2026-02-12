@@ -23,6 +23,20 @@ public interface Entity {
     boolean isAlive();
 
     /**
+     * Reutrn the maximum LifePoint of the entity.
+     * 
+     * @return the maximum LifePoint of the entity.
+     */
+    int getMaxLifePoint();
+
+    /**
+     * Return the current life point of the entity.
+     * 
+     * @return The current life point of the entity.
+     */
+    int getLifePoint();
+
+    /**
      * Get the armor class of the entity.
      * 
      * @return the armor class of the entity.
@@ -40,7 +54,29 @@ public interface Entity {
      * Moves the entity in the specified direction.
      * 
      * @param move the move that the entity will perform.
+     * @throws NullPointerException if move is null.
      */
     void doMove(Move move);
+
+    /**
+     * Heal the entity of the specified amount.
+     * 
+     * @param amount The amount of life point to heal.
+     * @throws IllegalArgumentException if amount is negative.
+     */
+    void heal(int amount);
+
+    /**
+     * Damage the entity of the specified amount.
+     * 
+     * @param amount The amount of damge to deal.
+     * @throws IllegalArgumentException if amount is negative.
+     */
+    void damage(int amount);
+
+    /**
+     * Increment the level of the entity.
+     */
+    void levelUp();
 
 }

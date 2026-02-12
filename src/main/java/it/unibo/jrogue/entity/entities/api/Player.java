@@ -2,7 +2,6 @@ package it.unibo.jrogue.entity.entities.api;
 
 import it.unibo.jrogue.entity.items.api.Equipment;
 import it.unibo.jrogue.entity.items.api.Inventory;
-import it.unibo.jrogue.entity.items.api.Item;
 
 /**
  * Represent the human-controlled protagonist in the game world.
@@ -27,32 +26,21 @@ public interface Player extends Entity {
      * Equip the specified equipment for the player.
      * 
      * @param equipment The equipment to be equipped.
-     * @throws NullPointerException if the specified equipment is null.
      */
     void equip(Equipment equipment);
 
     /**
-     * Equip the specified armor for the player.
+     * Unequip the specified equipment for the player.
      * 
-     * @param armor The armor to be equipped.
-     * @throws NullPointerException if the specified armor is null.
+     * @param equipment The equipment to be removed.
      */
-    void equipArmor(Equipment armor);
+    void remove(Equipment equipment);
 
     /**
-     * Equip the specified weapon for the player.
+     * Collect the specified amount of xp and checks for level up.
      * 
-     * @param weapon the weapon to be equipped.
-     * @throws NullPointerException ff the specified weapon is null.
+     * @param amount the amount of xp to collect.
      */
-    void equipWeapon(Equipment weapon);
-
-    /**
-     * PickUp the specified Item.
-     * 
-     * @param item The item to pick up.
-     * @throws NullPointerException if the specified item is null.
-     */
-    void pickUpItem(Item item);
+    void collectXP(int amount);
 
 }

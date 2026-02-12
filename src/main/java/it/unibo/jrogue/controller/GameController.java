@@ -2,6 +2,8 @@ package it.unibo.jrogue.controller;
 
 import it.unibo.jrogue.WorldRenderingDemo;
 import it.unibo.jrogue.engine.BaseController;
+import it.unibo.jrogue.entity.entities.api.Player;
+import it.unibo.jrogue.entity.world.api.GameMap;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -13,6 +15,7 @@ import javafx.scene.layout.StackPane;
 public final class GameController implements InputHandler {
     private final BaseController controller;
     private final StackPane gameView;
+    private final GameMap gameMap = null;
 
     /**
      * Initialize the controller, a temp Pane is added waiting for the actual Pane to be made.
@@ -35,7 +38,7 @@ public final class GameController implements InputHandler {
             //moveRight();
         } else if (code == KeyCode.S) {
             //moveDown();
-        } else if (code == KeyCode.Q) {
+        } else if (code == KeyCode.I) {
             controller.openInventory();
         } else if (code == KeyCode.E) {
             //nextLevel(); This method take action when the player want to interact with a stair for the next level
@@ -48,6 +51,10 @@ public final class GameController implements InputHandler {
         } else if (code == KeyCode.ESCAPE) { //This is not an actual key that we keep, just to see if it works
             controller.pauseGame();
         }
+    }
+
+    public Player getPlayer() {
+        return this.gameMap.getPlayer().orElseThrow(() -> new IllegalStateException("Player not initialized"));
     }
 
     @Override

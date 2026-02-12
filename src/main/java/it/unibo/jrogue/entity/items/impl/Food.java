@@ -4,24 +4,23 @@ import it.unibo.jrogue.entity.entities.api.Player;
 import it.unibo.jrogue.entity.items.api.Consumable;
 
 /**
- * Potion that if consumed heals
- * back some of the player health.
+ * Class to implement the food item.
  */
-public class HealthPotion implements Consumable {
-    private final static int HEALING_AMOUNT = 20;
+public class Food implements Consumable {
+    private static final int HEALING_AMOUNT = 5;
     private int consumableAmount;
 
     @Override
     public void consume(Player player) {
         if (consumableAmount > 0) {
-            player.heal(HEALING_AMOUNT);
-            consumableAmount--;
+        player.heal(HEALING_AMOUNT);
+        consumableAmount--;
         }
     }
 
     @Override
-    public String getDescription(){
-        return "Healing potion, use it to regenerate a considerable amount of HP";
+    public String getDescription() {
+        return "Food have healing properties, get healed by: " + HEALING_AMOUNT + " HP";
     }
     /**
      * Getter for item amount
@@ -32,5 +31,5 @@ public class HealthPotion implements Consumable {
     public int getConsumableAmount(){
         return consumableAmount;
     }
-}
 
+}

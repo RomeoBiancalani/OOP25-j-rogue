@@ -1,0 +1,80 @@
+package it.unibo.jrogue.model.items;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+import it.unibo.jrogue.entity.items.api.Inventory;
+import it.unibo.jrogue.entity.items.api.Item;
+import it.unibo.jrogue.entity.items.impl.Armor;
+import it.unibo.jrogue.entity.items.impl.SimpleInventory;
+
+/**
+ * Test for Inventory.
+ */
+class InventoryTest {
+    private static final int EXPECTED_SIZE = 5;
+
+    @Test
+    void testInventoryCreation() {
+        final Inventory inventory = new SimpleInventory(EXPECTED_SIZE);
+        assertEquals(EXPECTED_SIZE, inventory.getSize(), "La dimensione dovrebbe essere 5");
+    }
+
+    @Test
+    void testInvalidCreation() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new SimpleInventory(0);
+        }, "Non si deve poter creare un inventario di dimensione 0");
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            new SimpleInventory(-1);
+        }, "Non si dovrebbe poter creare un inventario di dimensione negativa");
+    }
+
+    @Test
+    void testInventoryIsFull() {
+        final Inventory inventory = new SimpleInventory(EXPECTED_SIZE);
+        final Item testItem = new Armor("sasso", 0);
+        for (int i = 0; i < EXPECTED_SIZE; i++) {
+            inventory.addItem(testItem);
+        }
+
+        assertThrows(IllegalStateException.class, () -> {
+            inventory.addItem(testItem);
+        }, "L'inventario è pieno, non si può aggiungere nient'altro");
+    }
+
+    @Test
+    void testItemExistsInInventory() {
+        final Inventory inventory = new SimpleInventory(EXPECTED_SIZE);
+        final Item testItem = new Armor("sasso", 0);
+
+        assertTrue(inventory.getItem(0).isEmpty(), "Lo slot 0 è vuoto");
+        inventory.addItem(testItem);
+        assertTrue(inventory.getItem(0).isPresent(), "ci dovrebbe essere un item qui");
+        assertEquals(testItem, inventory.getItem(0).get(), "L'oggetto nello slot 0 deve essere il sasso");
+    }
+
+    @Test
+    void testIndexOutOfBounds() {
+        final Inventory inventory = new SimpleInventory(EXPECTED_SIZE);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            inventory.getItem(-1);
+        }, "L'inventario non dovrebbe avere indici negativi");
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            inventory.getItem(100);
+        }, "L'indice non deve superare la dimensione dell'inventario");
+}
+
+    @Test
+    void testNullItem() {
+        final Inventory inventory = new SimpleInventory(EXPECTED_SIZE);
+        assertThrows(NullPointerException.class, () -> {
+            inventory.addItem(null);
+        }, "Non si dovrebbero poter aggiungere item nulli");
+    }
+}
