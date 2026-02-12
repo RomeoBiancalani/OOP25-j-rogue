@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import it.unibo.jrogue.commons.Position;
 import it.unibo.jrogue.entity.entities.api.Player;
-import it.unibo.jrogue.entity.entities.impl.PlayerImpl;
+import it.unibo.jrogue.entity.entities.impl.player.PlayerImpl;
 import it.unibo.jrogue.entity.items.impl.Armor;
 
 /**

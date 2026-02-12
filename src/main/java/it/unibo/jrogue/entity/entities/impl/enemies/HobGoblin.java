@@ -53,4 +53,12 @@ public class HobGoblin extends AbstractEnemy {
         }
         return moveToward(playerPosition);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getAttack() {
+        return Dice.roll(1, 8) + getLevel();
+    }
 }

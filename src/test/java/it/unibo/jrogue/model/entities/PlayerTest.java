@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import it.unibo.jrogue.commons.Move;
 import it.unibo.jrogue.commons.Position;
 import it.unibo.jrogue.entity.entities.api.Player;
-import it.unibo.jrogue.entity.entities.impl.PlayerImpl;
+import it.unibo.jrogue.entity.entities.impl.player.PlayerImpl;
 import it.unibo.jrogue.entity.items.api.Equipment;
 import it.unibo.jrogue.entity.items.impl.Armor;
 import it.unibo.jrogue.entity.items.impl.MeleeWeapon;
@@ -155,7 +155,7 @@ class PlayerTest {
     }
 
     /**
-     * Check correct hitBonus range and correct integration of weapon equipment.
+     * Check correct attack range and correct integration of weapon equipment.
      */
     @Test
     void testHitBonusRangeAndWeapon() {
@@ -164,20 +164,20 @@ class PlayerTest {
         // weapon to remove must be not null.
         assertThrows(NullPointerException.class, () -> player.remove(null));
 
-        // Player max hit bonus = 3 (base hit bonus).
+        // Player max attack = 4 (base hit bonus + level = 1).
         final int bound = 50;
         for (int i = 0; i < bound; i++) {
-            final int bonus = player.getHitBonus();
-            assertTrue(bonus >= 1 && bonus <= 3);
+            final int bonus = player.getAttack();
+            assertTrue(bonus >= 1 && bonus <= 4);
         }
 
         final MeleeWeapon sword = new MeleeWeapon("sword", 2);
         player.equip(sword);
 
-        // Player hit bonus = 3 (base hit bonus) + 2 (sword bonus).
+        // Player hit bonus = 6 (base hit bonus) + 2 (sword bonus).
         for (int i = 0; i < bound; i++) {
-            final int bonus = player.getHitBonus();
-            assertTrue(bonus >= 1 && bonus <= sword.getBonus() + 3);
+            final int bonus = player.getAttack();
+            assertTrue(bonus >= 1 && bonus <= sword.getBonus() + 4);
         }
 
         final int axeDamage = 5;
@@ -188,8 +188,8 @@ class PlayerTest {
         player.equip(sword);
         // Player hit bonus = 3 (base hit bonus) + 5 (axe bonus).
         for (int i = 0; i < ITERATION; i++) {
-            final int bonus = player.getHitBonus();
-            assertTrue(bonus >= 1 && bonus <= axe.getBonus() + 3);
+            final int bonus = player.getAttack();
+            assertTrue(bonus >= 1 && bonus <= axe.getBonus() + 4);
         }
     }
 

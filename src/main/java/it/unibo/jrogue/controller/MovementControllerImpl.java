@@ -1,10 +1,12 @@
 package it.unibo.jrogue.controller;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import it.unibo.jrogue.commons.Move;
 import it.unibo.jrogue.commons.Position;
 import it.unibo.jrogue.controller.api.MovementController;
+import it.unibo.jrogue.controller.api.CombatController;
 import it.unibo.jrogue.entity.entities.api.Enemy;
 import it.unibo.jrogue.entity.entities.api.Entity;
 import it.unibo.jrogue.entity.entities.api.Player;
@@ -15,6 +17,8 @@ import it.unibo.jrogue.entity.world.api.GameMap;
  * Uses GameMap to access all game state.
  */
 public class MovementControllerImpl implements MovementController {
+
+    private final CombatController combatController = new CombatControllerImpl();
 
     private final GameMap gameMap;
     private final Player player;
@@ -41,12 +45,16 @@ public class MovementControllerImpl implements MovementController {
     public void executeTurn(final Move move) {
         if (isValidMove(player, move)) {
             player.doMove(move);
-
             // Pick up item if present at the moved position
             gameMap.removeItemAt(player.getPosition())
                     .ifPresent(item -> {
                         player.getInventory().addItem(item);
                     });
+        } else {
+            Optional<Enemy> target = getOccupiedByEnemy(player, move);
+            if (target.isPresent()) {
+                combatController.attack(player, target.get());
+            }
         }
 
         // Move all awake enemies
@@ -56,6 +64,11 @@ public class MovementControllerImpl implements MovementController {
                     final Move eMove = e.getNextMove(player.getPosition());
                     if (isValidMove(e, eMove)) {
                         e.doMove(eMove);
+                    } else {
+                        final Position position = eMove.applyToPosition(e.getPosition());
+                        if (isOccupiedByPlayer(position)) {
+                            combatController.attack(e, player);
+                        }
                     }
                 });
     }
@@ -80,12 +93,46 @@ public class MovementControllerImpl implements MovementController {
      * Checks if position is currently occupied by an entity.
      * 
      * @param position The position to check.
-     * @return true if an enemy is present at the position, false otherwise.
+     * @return true if an entity is present at the position, false otherwise.
      */
     private boolean isOccupiedByEntity(final Position position) {
-        return position.equals(player.getPosition())
-                || gameMap.getEnemies().stream()
+        return isOccupiedByPlayer(position) || isOccupiedByEnemy(position);
+    }
+
+    /**
+     * Checks if position is currently occupied by the Player.
+     * 
+     * @param position The position to check.
+     * @return true if player is present at the position, false otherwise.
+     */
+    private boolean isOccupiedByPlayer(final Position position) {
+        return position.equals(player.getPosition());
+    }
+
+    /**
+     * Checks if position is currently occupied by an enemy.
+     * 
+     * @param position The position to check.
+     * @return true if an enemy is present at the position, false otherwise.
+     */
+    private boolean isOccupiedByEnemy(final Position position) {
+        return gameMap.getEnemies().stream()
                         .filter(Enemy::isAlive)
                         .anyMatch(e -> e.getPosition().equals(position));
+    }
+
+    /**
+     * Finds the enemy that is occupying the position resulting from the entity's move.
+     * 
+     * @param entity The entity performing the check.
+     * @param move The move to simulate.
+     * @return An Optional containing the enemy if found, empty otherwise.
+     */
+    private Optional<Enemy> getOccupiedByEnemy(final Entity entity, final Move move) {
+        final Position position = move.applyToPosition(entity.getPosition());
+        return gameMap.getEnemies().stream()
+                        .filter(Enemy::isAlive)
+                        .filter(e -> e.getPosition().equals(position))
+                        .findAny();
     }
 }

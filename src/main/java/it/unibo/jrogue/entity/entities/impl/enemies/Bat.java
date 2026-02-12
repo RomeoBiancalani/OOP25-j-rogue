@@ -58,4 +58,12 @@ public class Bat extends AbstractEnemy {
         }
         return Move.IDLE;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getAttack() {
+        return Dice.roll(1, 4) + getLevel();
+    }
 }

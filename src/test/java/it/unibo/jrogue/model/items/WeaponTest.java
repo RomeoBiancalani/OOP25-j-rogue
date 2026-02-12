@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 
 import it.unibo.jrogue.commons.Position;
 import it.unibo.jrogue.entity.entities.api.Player;
-import it.unibo.jrogue.entity.entities.impl.PlayerImpl;
+import it.unibo.jrogue.entity.entities.impl.player.PlayerImpl;
 import it.unibo.jrogue.entity.items.impl.MeleeWeapon;
 
 /**
@@ -75,7 +75,7 @@ class WeaponTest {
 
         weapon.equip(player);
 
-        final int randomDamage = player.getHitBonus();
+        final int randomDamage = player.getAttack();
 
         assertTrue(randomDamage > 0, "il player armato deve fare danni positivi");
 

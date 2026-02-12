@@ -16,13 +16,6 @@ public interface Player extends Entity {
     Inventory getInventory();
 
     /**
-     * Returns the hit bonus of the player.
-     * 
-     * @return the hit bonus of the player.
-     */
-    int getHitBonus();
-
-    /**
      * Equip the specified equipment for the player.
      * 
      * @param equipment The equipment to be equipped.

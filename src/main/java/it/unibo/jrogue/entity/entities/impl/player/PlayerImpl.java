@@ -1,4 +1,4 @@
-package it.unibo.jrogue.entity.entities.impl;
+package it.unibo.jrogue.entity.entities.impl.player;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -8,6 +8,7 @@ import it.unibo.jrogue.commons.Dice;
 import it.unibo.jrogue.commons.Move;
 import it.unibo.jrogue.commons.Position;
 import it.unibo.jrogue.entity.entities.api.Player;
+import it.unibo.jrogue.entity.entities.impl.AbstractEntity;
 import it.unibo.jrogue.entity.items.api.Equipment;
 import it.unibo.jrogue.entity.items.api.Inventory;
 import it.unibo.jrogue.entity.items.impl.Armor;
@@ -93,12 +94,12 @@ public class PlayerImpl extends AbstractEntity implements Player {
      * {@inheritDoc}
      */
     @Override
-    public int getHitBonus() {
+    public int getAttack() {
         int maxDamage = BASE_DAMAGE;
         if (weapon.isPresent()) {
             maxDamage += weapon.get().getBonus();
         }
-        return Dice.roll(1, maxDamage);
+        return Dice.roll(1, maxDamage) + getLevel();
     }
 
     /**

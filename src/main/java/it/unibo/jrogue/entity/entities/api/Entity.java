@@ -44,6 +44,13 @@ public interface Entity {
     int getArmorClass();
 
     /**
+     * Get attack of the entity.
+     * 
+     * @return The attack value (dice + level + bonus).
+     */
+    int getAttack();
+
+    /**
      * Returns the current level of the entity.
      * 
      * @return the current level of the entity.
