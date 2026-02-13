@@ -1,12 +1,6 @@
 package it.unibo.jrogue.engine;
 
-import it.unibo.jrogue.controller.DungeonController;
-import it.unibo.jrogue.controller.GameController;
-import it.unibo.jrogue.controller.InputHandler;
-import it.unibo.jrogue.controller.InventoryController;
-import it.unibo.jrogue.controller.MenuController;
-import it.unibo.jrogue.controller.OptionsController;
-import it.unibo.jrogue.controller.PauseGameController;
+import it.unibo.jrogue.controller.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -29,6 +23,7 @@ public final class BaseController {
     private final InputHandler gameController;
     private final InputHandler pauseController;
     private final InputHandler inventoryController;
+    private final InputHandler gameOverController;
 
     /**
      * Controllers initialization.
@@ -42,6 +37,7 @@ public final class BaseController {
         this.gameController = new GameController(this);
         this.pauseController = new PauseGameController(this);
         this.inventoryController = new InventoryController(this);
+        this.gameOverController = new GameOverController(this);
         this.currentController = menuController;
     }
 
@@ -218,4 +214,14 @@ public final class BaseController {
     public InputHandler getInventoryController() {
         return this.inventoryController;
     }
+
+    /**
+     * Change controller and GUI when the player dies.
+     * */
+    public void gameOver() {
+        this.currentController = gameOverController;
+        changeView(gameOverController.getView());
+    }
+
+
 }

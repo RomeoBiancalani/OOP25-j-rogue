@@ -55,12 +55,16 @@ public final class GameController implements InputHandler {
         final KeyCode code = event.getCode();
         if (code == KeyCode.W) {
             dungeonController.executeTurn(Move.UP);
+            isDead();
         } else if (code == KeyCode.A) {
             dungeonController.executeTurn(Move.LEFT);
+            isDead();
         } else if (code == KeyCode.D) {
             dungeonController.executeTurn(Move.RIGHT);
+            isDead();
         } else if (code == KeyCode.S) {
             dungeonController.executeTurn(Move.DOWN);
+            isDead();
         } else if (code == KeyCode.I) {
             controller.openInventory();
         } else if (code == KeyCode.E) {
@@ -84,6 +88,15 @@ public final class GameController implements InputHandler {
      */
     public Player getPlayer() {
         return dungeonController.getPlayer();
+    }
+
+    /**
+     * Check if the player is dead, if it is then call the gameOver controller and GUI.
+     * */
+    private void isDead() {
+        if (!dungeonController.getPlayer().isAlive()) {
+            controller.gameOver();
+        }
     }
 
     /**
