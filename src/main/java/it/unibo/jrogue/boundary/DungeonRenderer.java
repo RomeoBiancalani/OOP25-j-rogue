@@ -126,7 +126,7 @@ public final class DungeonRenderer extends StackPane {
     }
 
     /**
-     * Initializes the canvas layers for the given map dimensions. Before any render.
+     * Returns the spriteCache Map, this can be used by other Boundary classes that needs Image instances to render elements.
      */
     public Map<String, Image> getLoadedSprites() {
         return Collections.unmodifiableMap(this.spriteCache);
