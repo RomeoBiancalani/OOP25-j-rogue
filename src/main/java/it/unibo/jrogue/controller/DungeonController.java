@@ -9,7 +9,7 @@ import it.unibo.jrogue.controller.generation.api.LevelGenerator;
 import it.unibo.jrogue.controller.generation.api.SpawnConfig;
 import it.unibo.jrogue.controller.generation.impl.PopulatedLevelGenerator;
 import it.unibo.jrogue.entity.entities.api.Player;
-import it.unibo.jrogue.entity.entities.impl.PlayerImpl;
+import it.unibo.jrogue.entity.entities.impl.player.PlayerImpl;
 import it.unibo.jrogue.entity.world.api.GameMap;
 import it.unibo.jrogue.entity.world.api.Level;
 import it.unibo.jrogue.entity.world.api.Tile;

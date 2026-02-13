@@ -8,7 +8,7 @@ import it.unibo.jrogue.controller.generation.api.LevelGenerator;
 import it.unibo.jrogue.controller.generation.impl.BSPLevelGenerator;
 import it.unibo.jrogue.entity.entities.api.Enemy;
 import it.unibo.jrogue.entity.entities.api.Player;
-import it.unibo.jrogue.entity.entities.impl.PlayerImpl;
+import it.unibo.jrogue.entity.entities.impl.player.PlayerImpl;
 import it.unibo.jrogue.entity.entities.impl.enemies.Bat;
 import it.unibo.jrogue.entity.entities.impl.enemies.Dragon;
 import it.unibo.jrogue.entity.entities.impl.enemies.HobGoblin;
