@@ -24,6 +24,7 @@ public final class BaseController {
     private final InputHandler pauseController;
     private final InputHandler inventoryController;
     private final InputHandler gameOverController;
+    private final InputHandler victoryController;
 
     /**
      * Controllers initialization.
@@ -38,6 +39,7 @@ public final class BaseController {
         this.pauseController = new PauseGameController(this);
         this.inventoryController = new InventoryController(this);
         this.gameOverController = new GameOverController(this);
+        this.victoryController = new VictoryController(this);
         this.currentController = menuController;
     }
 
@@ -223,5 +225,9 @@ public final class BaseController {
         changeView(gameOverController.getView());
     }
 
+    public void Victory(){
+        this.currentController = victoryController;
+        changeView(victoryController.getView());
+    }
 
 }
