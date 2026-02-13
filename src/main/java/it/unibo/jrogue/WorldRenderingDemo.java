@@ -6,6 +6,8 @@ import it.unibo.jrogue.controller.generation.api.LevelGenerator;
 import it.unibo.jrogue.controller.generation.api.SpawnConfig;
 import it.unibo.jrogue.controller.generation.impl.PopulatedLevelGenerator;
 import it.unibo.jrogue.entity.entities.api.Enemy;
+import it.unibo.jrogue.entity.entities.impl.enemies.Bat;
+import it.unibo.jrogue.entity.entities.impl.enemies.Dragon;
 import it.unibo.jrogue.entity.world.api.GameMap;
 import it.unibo.jrogue.entity.world.api.Level;
 import it.unibo.jrogue.entity.world.api.Tile;
@@ -35,6 +37,11 @@ public final class WorldRenderingDemo extends StackPane {
     private static final String TILE_STAIRS = "stairs";
     private static final String TILE_FLOOR = "tile";
     private static final String WALL_COLOR = "#1a1a2e";
+    private static final String TILE_PLAYER = "entities/player";
+    private static final String TILE_ARMORED_PLAYER = "entities/player-armored";
+    private static final String TILE_BAT = "entities/bat";
+    private static final String TILE_DRAGON = "entities/dragon";
+    private static final String TILE_GOBLIN = "entities/goblin";
 
     private static final List<String> TILE_NAMES = List.of(
             TILE_FLOOR, "tiletopleft", "tiletop", "tiletopright",
@@ -42,7 +49,8 @@ public final class WorldRenderingDemo extends StackPane {
             "tilebottomleft", "tilebottom", "tilebottomright",
             TILE_CORRIDOR_H, "corridorhorizontalleft", "corridorhorizontalright",
             "corridorvertical", "corridorverticaltop", "corridorverticalbottom",
-            "gold", TILE_STAIRS
+            "gold", TILE_STAIRS, TILE_PLAYER, TILE_ARMORED_PLAYER, TILE_BAT,
+            TILE_DRAGON, TILE_GOBLIN
     );
 
     private final Map<String, Image> tileImages = new HashMap<>();
@@ -243,22 +251,34 @@ public final class WorldRenderingDemo extends StackPane {
         }
 
         // Enemies
-        gc.setFill(Color.LIMEGREEN);
         for (final Enemy enemy : map.getEnemies()) {
             final Position pos = enemy.getPosition();
             final double px = pos.x() * DEFAULT_TILE_SIZE;
             final double py = pos.y() * DEFAULT_TILE_SIZE;
-            gc.fillRect(px, py, DEFAULT_TILE_SIZE, DEFAULT_TILE_SIZE);
+            final String enemyTileName;
+            if (enemy instanceof Bat) {
+                enemyTileName = TILE_BAT;
+            } else if (enemy instanceof Dragon) {
+                enemyTileName = TILE_DRAGON;
+            } else {
+                enemyTileName = TILE_GOBLIN;
+            }
+            drawImage(gc, enemyTileName, px, py);
         }
 
         // Player
-        final Position start = map.getStartingPosition();
-        gc.setFill(Color.RED);
-        gc.fillRect(
-                start.x() * DEFAULT_TILE_SIZE,
-                start.y() * DEFAULT_TILE_SIZE,
-                DEFAULT_TILE_SIZE,
-                DEFAULT_TILE_SIZE
-        );
+        final Position pPosition;
+        String playerTileName = TILE_PLAYER;
+        if (map.getPlayer().isPresent()) {
+            pPosition = map.getPlayer().get().getPosition();
+            if (map.getPlayer().get().getArmorClass() > 3) {
+                playerTileName = TILE_ARMORED_PLAYER;
+            }
+        } else {
+            pPosition = map.getStartingPosition();
+        }
+        final double px = pPosition.x() * DEFAULT_TILE_SIZE;
+        final double py = pPosition.y() * DEFAULT_TILE_SIZE;
+        drawImage(gc, playerTileName, px, py);
     }
 }
