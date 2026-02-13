@@ -86,7 +86,6 @@ public final class SimpleGameMap implements GameMap {
         final Tile tile = getTileAt(pos);
         return tile == Tile.FLOOR
             || tile == Tile.CORRIDOR
-            || tile == Tile.DOOR
             || tile == Tile.STAIRS_UP
             || tile == Tile.TRAP;
     }

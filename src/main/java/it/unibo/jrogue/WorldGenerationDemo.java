@@ -140,7 +140,6 @@ public final class WorldGenerationDemo {
             case WALL -> '#';
             case FLOOR -> '.';
             case CORRIDOR -> ',';
-            case DOOR -> '+';
             case STAIRS_UP -> '<';
             case TRAP -> '^';
             case VOID -> ' ';
