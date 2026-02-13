@@ -1,9 +1,13 @@
 package it.unibo.jrogue.entity.entities.impl.enemies;
 
+import java.util.Optional;
+
 import it.unibo.jrogue.commons.Dice;
 import it.unibo.jrogue.commons.Move;
 import it.unibo.jrogue.commons.Position;
 import it.unibo.jrogue.entity.entities.impl.AbstractEnemy;
+import it.unibo.jrogue.entity.items.api.Item;
+import it.unibo.jrogue.entity.items.impl.ItemFactoryImpl;
 
 /**
  * Rapresent a Dragon enemy.
@@ -55,9 +59,34 @@ public class Dragon extends AbstractEnemy {
 
     /**
      * {@inheritDoc}
+     * <p>
+     * Dragon attack: 3d8
+     * </p>
      */
     @Override
     public int getAttack() {
-        return Dice.roll(3, 10) + getLevel();
+        return Dice.roll(3, 8) + getLevel();
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Dragon xp: 5d8
+     * </p>
+     */
+    @Override
+    protected int computeXpValue() {
+        return Dice.roll(5, 8);
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Dragon loot: rare object
+     * </p>
+     */
+    @Override
+    protected Optional<Item> generateLoot() {
+        return new ItemFactoryImpl().createRandomItem(getLevel() + 2);
     }
 }

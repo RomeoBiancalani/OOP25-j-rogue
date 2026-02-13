@@ -63,6 +63,9 @@ public class Bat extends AbstractEnemy {
 
     /**
      * {@inheritDoc}
+     * <p>
+     * Bat attack: 1d4
+     * </p>
      */
     @Override
     public int getAttack() {
@@ -71,14 +74,23 @@ public class Bat extends AbstractEnemy {
 
     /**
      * {@inheritDoc}
-     * 
-     * @throws IllegalStateException if the enemy is still alive.
+     * <p>
+     * Bat xp: 1d3
+     * </p>
      */
     @Override
-    public Optional<Item> getItemDrop() {
-        if (isAlive()) {
-            throw new IllegalStateException("An alive enemy can't drop item");
-        }
+    protected int computeXpValue() {
+        return Dice.roll(1, 3);
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Bat loot: bat has no loot
+     * </p>
+     */
+    @Override
+    protected Optional<Item> generateLoot() {
         return Optional.empty();
     }
 

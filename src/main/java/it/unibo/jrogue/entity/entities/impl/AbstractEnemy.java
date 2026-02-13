@@ -11,7 +11,6 @@ import it.unibo.jrogue.commons.Move;
 import it.unibo.jrogue.commons.Position;
 import it.unibo.jrogue.entity.entities.api.Enemy;
 import it.unibo.jrogue.entity.items.api.Item;
-import it.unibo.jrogue.entity.items.impl.ItemFactoryImpl;
 
 /**
  * Base implementation for all enemy entities.
@@ -167,10 +166,24 @@ public abstract class AbstractEnemy extends AbstractEntity implements Enemy {
      * @throws IllegalStateException if the enemy is still alive.
      */
     @Override
-    public Optional<Item> getItemDrop() {
+    public final Optional<Item> getItemDrop() {
         if (isAlive()) {
             throw new IllegalStateException("An alive enemy can't drop item");
         }
-        return new ItemFactoryImpl().createRandomItem(this.getLevel());
+        return generateLoot();
     }
+
+    /**
+     * Calculate specific xp to drop.
+     * 
+     * @return xp to drop.
+     */
+    protected abstract int computeXpValue();
+
+    /**
+     * Generate specific loot of the enemy.
+     * 
+     * @return The item to drop.
+     */
+    protected abstract Optional<Item> generateLoot();
 }
