@@ -130,6 +130,7 @@ public final class DungeonController {
         renderer.renderEntities(currentMap, player);
         renderer.renderItems(currentMap);
         renderer.renderStatusBar(player);
+        renderer.displayMessage("Hai eseguito un turno");
     }
 
     /**

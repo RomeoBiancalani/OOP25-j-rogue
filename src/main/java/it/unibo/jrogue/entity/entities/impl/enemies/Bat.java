@@ -45,6 +45,7 @@ public class Bat extends AbstractEnemy {
 
     /**
      * {@inheritDoc}
+     * 
      * <p>
      * Bat attack: 1d4
      * </p>
@@ -56,6 +57,7 @@ public class Bat extends AbstractEnemy {
 
     /**
      * {@inheritDoc}
+     * 
      * <p>
      * Bat xp: 1d3
      * </p>
@@ -67,6 +69,7 @@ public class Bat extends AbstractEnemy {
 
     /**
      * {@inheritDoc}
+     * 
      * <p>
      * Bat loot: bat has no loot
      * </p>

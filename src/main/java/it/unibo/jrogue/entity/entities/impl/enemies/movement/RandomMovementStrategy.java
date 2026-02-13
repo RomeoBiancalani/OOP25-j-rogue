@@ -14,7 +14,7 @@ public class RandomMovementStrategy implements MovementStrategy {
      */
     @Override
     public Move calculateNextMove(final Position start, final Position target) {
-        Move[] moves = Move.values();
+        final Move[] moves = Move.values();
         return moves[GameRandom.nextInt(moves.length)];
     }
 }

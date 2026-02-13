@@ -18,7 +18,7 @@ public class ChasingMovementStrategy implements MovementStrategy {
      * </p>
      */
     @Override
-    public Move calculateNextMove(Position start, Position target) {
+    public Move calculateNextMove(final Position start, final Position target) {
         final int dx = Integer.compare(target.x(), start.x());
         final int dy = Integer.compare(target.y(), start.y());
 

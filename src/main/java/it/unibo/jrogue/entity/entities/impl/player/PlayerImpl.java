@@ -172,6 +172,7 @@ public class PlayerImpl extends AbstractEntity implements Player {
      * 
      * @throws NullPointerException if equipment is null.
      */
+    @Override
     public boolean isEquipped(final Equipment equipment) {
         Objects.requireNonNull(equipment, "Equipment to check must be not null");
         return equipment.equals(armor.orElse(null))

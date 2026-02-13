@@ -44,8 +44,6 @@ public class StatusBarGUI extends HBox {
         styleLabel(xpLabel, Color.LIGHTBLUE);
         styleLabel(goldLabel, Color.GOLD);
         styleLabel(levelLabel, Color.WHITE);
-
-        this.getChildren().addAll(hpLabel, xpLabel, goldLabel, levelLabel);
     }
 
     /**
@@ -71,5 +69,8 @@ public class StatusBarGUI extends HBox {
         xpLabel.setText("XP: " + player.getXP() + "/20");
         goldLabel.setText("Gold: " + player.getGold());
         levelLabel.setText("Level: " + player.getLevel());
+
+        this.getChildren().clear();
+        this.getChildren().addAll(hpLabel, xpLabel, goldLabel, levelLabel);
     }
 }

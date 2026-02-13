@@ -45,6 +45,7 @@ public class Dragon extends AbstractEnemy {
 
     /**
      * {@inheritDoc}
+     * 
      * <p>
      * Dragon attack: 3d8
      * </p>
@@ -56,17 +57,19 @@ public class Dragon extends AbstractEnemy {
 
     /**
      * {@inheritDoc}
+     * 
      * <p>
      * Dragon xp: 5d8
      * </p>
      */
     @Override
     protected int computeXpValue() {
-        return Dice.roll(5, 8);
+        return Dice.roll(3, 8);
     }
 
     /**
      * {@inheritDoc}
+     * 
      * <p>
      * Dragon loot: rare object
      * </p>

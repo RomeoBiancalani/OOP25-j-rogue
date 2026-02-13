@@ -74,6 +74,7 @@ public final class DungeonRenderer extends StackPane {
     private Canvas itemCanvas;
     private Canvas entityCanvas;
     private final StatusBarGUI statusBar = new StatusBarGUI();
+    private final MessageDialog messageDialog = new MessageDialog();
 
     private int mapWidth;
     private int mapHeight;
@@ -126,8 +127,9 @@ public final class DungeonRenderer extends StackPane {
         entityCanvas.getGraphicsContext2D().setImageSmoothing(false);
 
         this.getChildren().clear();
-        this.getChildren().addAll(terrainCanvas, statusBar, itemCanvas, entityCanvas);
+        this.getChildren().addAll(terrainCanvas, statusBar, messageDialog, itemCanvas, entityCanvas);
         StackPane.setAlignment(statusBar, Pos.BOTTOM_CENTER);
+        StackPane.setAlignment(messageDialog, Pos.TOP_CENTER);
     }
 
     /**
@@ -245,6 +247,10 @@ public final class DungeonRenderer extends StackPane {
         renderItems(map);
         renderEntities(map, player);
         renderStatusBar(player);
+    }
+
+    public void displayMessage(String message) {
+        this.messageDialog.setMessage(message);
     }
 
     private void loadSprites() {
