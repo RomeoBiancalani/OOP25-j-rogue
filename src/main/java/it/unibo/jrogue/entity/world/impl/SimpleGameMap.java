@@ -33,7 +33,7 @@ public final class SimpleGameMap implements GameMap {
     private final List<Entity> entities;
     private final Set<Position> explored;
     private final Position startingPosition;
-    private final Position stairsDown;
+    private final Position stairsUp;
     private final Map<Position, Item> itemPositions;
     private Player player;
     private Set<Position> wallCache;
@@ -41,18 +41,18 @@ public final class SimpleGameMap implements GameMap {
     /**
      * Creates a new game map.
      *
-     * @param tiles the 2D tile array [y][x]
-     * @param rooms the rooms in this map
-     * @param hallways the hallways connecting rooms
+     * @param tiles            the 2D tile array [y][x]
+     * @param rooms            the rooms in this map
+     * @param hallways         the hallways connecting rooms
      * @param startingPosition the player starting position
-     * @param stairsDown the position of stairs to next level
+     * @param stairsUp         the position of stairs to next level
      */
     public SimpleGameMap(
             final Tile[][] tiles,
             final List<Room> rooms,
             final List<Hallway> hallways,
             final Position startingPosition,
-            final Position stairsDown) {
+            final Position stairsUp) {
         this.height = tiles.length;
         this.width = tiles.length > 0 ? tiles[0].length : 0;
         this.tiles = copyTiles(tiles);
@@ -61,7 +61,7 @@ public final class SimpleGameMap implements GameMap {
         this.entities = new ArrayList<>();
         this.explored = new HashSet<>();
         this.startingPosition = startingPosition;
-        this.stairsDown = stairsDown;
+        this.stairsUp = stairsUp;
         this.itemPositions = new HashMap<>();
     }
 
@@ -85,10 +85,9 @@ public final class SimpleGameMap implements GameMap {
         }
         final Tile tile = getTileAt(pos);
         return tile == Tile.FLOOR
-            || tile == Tile.CORRIDOR
-            || tile == Tile.DOOR
-            || tile == Tile.STAIRS_DOWN
-            || tile == Tile.STAIRS_UP;
+                || tile == Tile.CORRIDOR
+                || tile == Tile.STAIRS_UP
+                || tile == Tile.TRAP;
     }
 
     @Override
@@ -141,15 +140,15 @@ public final class SimpleGameMap implements GameMap {
     }
 
     @Override
-    public Optional<Position> getStairsDown() {
-        return Optional.ofNullable(stairsDown);
+    public Optional<Position> getStairsUp() {
+        return Optional.ofNullable(stairsUp);
     }
 
     @Override
     public Optional<Entity> getEntityAt(final Position pos) {
         return entities.stream()
-            .filter(e -> e.getPosition().equals(pos))
-            .findFirst();
+                .filter(e -> e.getPosition().equals(pos))
+                .findFirst();
     }
 
     @Override
@@ -190,9 +189,9 @@ public final class SimpleGameMap implements GameMap {
     @Override
     public List<Enemy> getEnemies() {
         return entities.stream()
-            .filter(e -> e instanceof Enemy)
-            .map(e -> (Enemy) e)
-            .collect(Collectors.toList());
+                .filter(e -> e instanceof Enemy)
+                .map(e -> (Enemy) e)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -227,6 +226,8 @@ public final class SimpleGameMap implements GameMap {
      * Builds the wall position cache by scanning all tiles.
      */
     private void buildWallCache() {
+        // TODO: Understand if wall needs to be rendered or it's just a border (we have
+        // sprite of wall but it's an additional non walkable tile)
         wallCache = new HashSet<>();
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {

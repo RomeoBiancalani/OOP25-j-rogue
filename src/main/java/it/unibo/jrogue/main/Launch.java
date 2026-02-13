@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 /**
  * This file can change if the JavaFX module check is fixed.
- * */
+ */
 
 public final class Launch extends Application {
 
@@ -31,8 +31,10 @@ public final class Launch extends Application {
     }
 
     /**
-     * Launch the software.
-     * */
+     * Launches the software.
+     * 
+     * @param args the args.
+     */
     public static void launcher(final String[] args) {
         launch(args);
     }

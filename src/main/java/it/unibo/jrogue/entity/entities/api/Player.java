@@ -50,4 +50,11 @@ public interface Player extends Entity {
      */
     void collectXP(int amount);
 
+    /**
+     * Check if the player has an armor equipped.
+     * 
+     * @return true if the player has an armor equipped.
+     */
+    boolean hasArmor();
+
 }

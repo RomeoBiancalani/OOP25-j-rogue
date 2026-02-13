@@ -40,14 +40,13 @@ public final class PopulatedLevelGenerator implements LevelGenerator {
      * Creates a PopulatedLevelGenerator with custom components.
      *
      * @param structureGenerator the generator for dungeon structure
-     * @param entityPopulator the populator for entities
-     * @param spawnConfig the spawn configuration
+     * @param entityPopulator    the populator for entities
+     * @param spawnConfig        the spawn configuration
      */
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP2",
-                        justification = "Dependency injection pattern - components stored as injected")
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "Dependency injection pattern - components stored as injected")
     public PopulatedLevelGenerator(final LevelGenerator structureGenerator,
-                                   final EntityPopulator entityPopulator,
-                                   final SpawnConfig spawnConfig) {
+            final EntityPopulator entityPopulator,
+            final SpawnConfig spawnConfig) {
         this.structureGenerator = structureGenerator;
         this.entityPopulator = entityPopulator;
         this.spawnConfig = spawnConfig;

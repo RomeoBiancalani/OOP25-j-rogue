@@ -72,7 +72,7 @@ public final class PauseGameController implements InputHandler {
     private void selectedChoice() {
         switch (currentIndex) {
             case 0:
-                //saveGame();
+                controller.saveGame();
                 break;
             case 1:
                 currentIndex = 0;

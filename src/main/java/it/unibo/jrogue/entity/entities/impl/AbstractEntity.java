@@ -105,6 +105,15 @@ public abstract class AbstractEntity implements Entity {
      * {@inheritDoc}
      */
     @Override
+    public void setPosition(final Position position) {
+        Objects.requireNonNull(position, "Position cannot be null");
+        this.currentPosition = position;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public int getArmorClass() {
         return armorClass;
     }

@@ -147,8 +147,9 @@ public class PlayerImpl extends AbstractEntity implements Player {
     /**
      * {@inheritDoc}
      * 
-     * @throws NullPointerException if equipment is null.
-     * @throws IllegalArgumentException if equipment to remove is not the current equipped equipment.
+     * @throws NullPointerException     if equipment is null.
+     * @throws IllegalArgumentException if equipment to remove is not the current
+     *                                  equipped equipment.
      */
     @Override
     public void remove(final Equipment equipment) {
@@ -174,9 +175,9 @@ public class PlayerImpl extends AbstractEntity implements Player {
      */
     private boolean isEquipped(final Equipment equipment) {
         Objects.requireNonNull(equipment, "Equipment to check must be not null");
-        return equipment.equals(armor.orElse(null)) 
-            || equipment.equals(weapon.orElse(null)) 
-            || equipment.equals(ring.orElse(null));
+        return equipment.equals(armor.orElse(null))
+                || equipment.equals(weapon.orElse(null))
+                || equipment.equals(ring.orElse(null));
     }
 
     /**
@@ -260,7 +261,7 @@ public class PlayerImpl extends AbstractEntity implements Player {
     /**
      * {@inheritDoc}
      * 
-     * @throws NullPointerException if amount is null.
+     * @throws NullPointerException     if amount is null.
      * @throws IllegalArgumentException if amount is negative.
      */
     @Override
@@ -274,6 +275,14 @@ public class PlayerImpl extends AbstractEntity implements Player {
             levelUp();
             this.xp -= XP_TO_LEVEL_UP;
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean hasArmor() {
+        return !armor.isEmpty();
     }
 
 }

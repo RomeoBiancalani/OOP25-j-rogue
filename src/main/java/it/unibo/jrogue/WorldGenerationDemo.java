@@ -83,7 +83,7 @@ public final class WorldGenerationDemo {
         System.out.println("Rooms: " + map.getRooms().size());
         System.out.println("Hallways: " + map.getHallways().size());
         System.out.println("Starting position: " + map.getStartingPosition());
-        map.getStairsDown().ifPresent(pos -> System.out.println("Stairs down: " + pos));
+        map.getStairsUp().ifPresent(pos -> System.out.println("Stairs up: " + pos));
         System.out.println();
 
         // Show entity/item statistics
@@ -106,7 +106,7 @@ public final class WorldGenerationDemo {
 
     private void printMap(final GameMap map) {
         final Position start = map.getStartingPosition();
-        final Position stairs = map.getStairsDown().orElse(null);
+        final Position stairs = map.getStairsUp().orElse(null);
 
         for (int y = 0; y < map.getHeight(); y++) {
             final StringBuilder line = new StringBuilder();
@@ -116,7 +116,7 @@ public final class WorldGenerationDemo {
                 if (pos.equals(start)) {
                     line.append('@');  // Player starting position
                 } else if (pos.equals(stairs)) {
-                    line.append('>');  // Stairs down
+                    line.append('<');  // Stairs up
                 } else if (hasEnemyAt(map, pos)) {
                     line.append('E');  // Enemy
                 } else if (map.getItems().containsKey(pos)) {
@@ -140,8 +140,6 @@ public final class WorldGenerationDemo {
             case WALL -> '#';
             case FLOOR -> '.';
             case CORRIDOR -> ',';
-            case DOOR -> '+';
-            case STAIRS_DOWN -> '>';
             case STAIRS_UP -> '<';
             case TRAP -> '^';
             case VOID -> ' ';

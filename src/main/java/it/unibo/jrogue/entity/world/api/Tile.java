@@ -17,15 +17,7 @@ public enum Tile {
      */
     CORRIDOR(','),
     /**
-     * A door tile between rooms and corridors.
-     */
-    DOOR('+'),
-    /**
-     * Stairs leading down to the next level.
-     */
-    STAIRS_DOWN('>'),
-    /**
-     * Stairs leading up to the previous level.
+     * Stairs leading up to the next level.
      */
     STAIRS_UP('<'),
     /**

@@ -4,8 +4,12 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import it.unibo.jrogue.engine.BaseController;
 import it.unibo.jrogue.entity.entities.api.Player;
+
+import java.util.Map;
+
 import it.unibo.jrogue.boundary.InventoryGUI;
 import it.unibo.jrogue.controller.api.InventoryManager;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 
 /**
@@ -20,22 +24,29 @@ public final class InventoryController implements InputHandler {
     /**
      * Initialize the controller.
      *
-     * @param controller which is the BaseController we communicate with
+     * @param controller which is the BaseController we communicate with.
      */
 
     public InventoryController(final BaseController controller) {
         this.controller = controller;
     }
 
-    public void setupPlayer(final Player player) {
+    /**
+     * Initializes the player used then for the manager.
+     * 
+     * @param player the player needed.
+     * 
+     * @param sprites a map with all the sprites saved.
+     */
+    public void setupPlayer(final Player player, final Map<String, Image> sprites) {
         this.manager = new InventoryManagerImpl(player);
-        this.inventoryGUI = new InventoryGUI(manager);
+        this.inventoryGUI = new InventoryGUI(manager, sprites);
     }
-
 
     @Override
     public void handleInput(final KeyEvent event) {
         final KeyCode code = event.getCode();
+
         if (code == KeyCode.Q || code == KeyCode.ESCAPE || code == KeyCode.I) {
             controller.resumeGame();
         } else {
@@ -45,6 +56,10 @@ public final class InventoryController implements InputHandler {
 
     @Override
     public Pane getView() {
+        if (this.inventoryGUI == null) {
+            return new Pane();
+        }
+        this.inventoryGUI.updateView();
         return this.inventoryGUI.getView();
     }
 }
