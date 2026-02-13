@@ -1,6 +1,6 @@
 package it.unibo.jrogue.controller;
 
-import it.unibo.jrogue.boundary.GameOverGUI;
+import it.unibo.jrogue.boundary.VictoryGUI;
 import it.unibo.jrogue.engine.BaseController;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -8,7 +8,7 @@ import javafx.scene.layout.Pane;
 
 public class VictoryController implements InputHandler {
     private final BaseController controller;
-    private final GameOverGUI gameOver = new GameOverGUI();
+    private final VictoryGUI victory = new VictoryGUI();
 
     /**
      * This controller, handles the Victory screen of the game.
@@ -27,7 +27,7 @@ public class VictoryController implements InputHandler {
 
     @Override
     public Pane getView(){
-        return gameOver.getLayout();
+        return victory.getLayout();
     }
 
 

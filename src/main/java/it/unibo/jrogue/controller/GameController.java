@@ -6,7 +6,6 @@ import it.unibo.jrogue.boundary.DungeonRenderer;
 import it.unibo.jrogue.commons.Move;
 import it.unibo.jrogue.engine.BaseController;
 import it.unibo.jrogue.entity.entities.api.Player;
-import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -81,16 +80,9 @@ public final class GameController implements InputHandler {
             // useDistanceWeapon();
         }
         if (getPlayer().hasWon()) {
-            showVictoryScreen();
+            controller.victory();
         }
 
-    }
-
-    private void showVictoryScreen() {
-        final Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("VITTORIA");
-        alert.showAndWait();
-        controller.backToMainMenu();
     }
 
     /**

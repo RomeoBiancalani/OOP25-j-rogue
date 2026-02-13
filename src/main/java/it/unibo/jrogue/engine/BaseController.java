@@ -225,7 +225,7 @@ public final class BaseController {
         changeView(gameOverController.getView());
     }
 
-    public void Victory(){
+    public void victory(){
         this.currentController = victoryController;
         changeView(victoryController.getView());
     }
