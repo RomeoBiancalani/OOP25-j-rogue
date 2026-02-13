@@ -89,6 +89,15 @@ public final class GameController implements InputHandler {
         return dungeonController;
     }
 
+    /**
+     * Returns the dungeon rendered for load.
+     *
+     * @return the dungeon renderer
+     */
+    public DungeonRenderer getRenderer() {
+        return this.renderer;
+    }
+
     @Override
     public Pane getView() {
         return this.renderer;

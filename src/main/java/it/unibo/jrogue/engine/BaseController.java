@@ -178,7 +178,7 @@ public final class BaseController {
         try {
             final SaveData data = SaveManager.load(SaveManager.getDefaultSavePath());
             final GameController gc = (GameController) gameController;
-            final DungeonController restored = SaveManager.restore(data, gc.getDungeonController().getRenderer());
+            final DungeonController restored = SaveManager.restore(data, gc.getRenderer());
             gc.restoreGame(restored);
 
             entity.setCurrentState(GameState.State.PLAYING);
