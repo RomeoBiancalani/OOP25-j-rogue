@@ -7,7 +7,6 @@ import it.unibo.jrogue.commons.Move;
 import it.unibo.jrogue.commons.Position;
 import it.unibo.jrogue.controller.api.MovementController;
 import it.unibo.jrogue.controller.api.CombatController;
-import it.unibo.jrogue.engine.BaseController;
 import it.unibo.jrogue.entity.entities.api.Enemy;
 import it.unibo.jrogue.entity.entities.api.Entity;
 import it.unibo.jrogue.entity.entities.api.Player;

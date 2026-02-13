@@ -17,7 +17,7 @@ import it.unibo.jrogue.entity.items.impl.Ring;
 import it.unibo.jrogue.entity.items.impl.Scroll;
 import it.unibo.jrogue.entity.world.api.GameMap;
 import it.unibo.jrogue.entity.world.api.Tile;
-
+import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -73,6 +73,7 @@ public final class DungeonRenderer extends StackPane {
     private Canvas terrainCanvas;
     private Canvas itemCanvas;
     private Canvas entityCanvas;
+    private final StatusBarGUI statusBar = new StatusBarGUI();
 
     private int mapWidth;
     private int mapHeight;
@@ -125,7 +126,8 @@ public final class DungeonRenderer extends StackPane {
         entityCanvas.getGraphicsContext2D().setImageSmoothing(false);
 
         this.getChildren().clear();
-        this.getChildren().addAll(terrainCanvas, itemCanvas, entityCanvas);
+        this.getChildren().addAll(terrainCanvas, statusBar, itemCanvas, entityCanvas);
+        StackPane.setAlignment(statusBar, Pos.BOTTOM_CENTER);
     }
 
     /**
@@ -195,7 +197,7 @@ public final class DungeonRenderer extends StackPane {
      * Renders the entity layer (player and enemies).
      * Call every turn after movement.
      *
-     * @param map    the game map
+     * @param map the game map
      * @param player the player entity
      */
     public void renderEntities(final GameMap map, final Player player) {
@@ -222,6 +224,16 @@ public final class DungeonRenderer extends StackPane {
     }
 
     /**
+     * Renders the status bar (player stats).
+     * Call every turn after movement.
+     *
+     * @param player the player entity
+     */
+    public void renderStatusBar(Player player) {
+        this.statusBar.update(player);
+    }
+
+    /**
      * Renders all layers at once.
      * Convenience method for level changes.
      *
@@ -232,6 +244,7 @@ public final class DungeonRenderer extends StackPane {
         renderTerrain(map);
         renderItems(map);
         renderEntities(map, player);
+        renderStatusBar(player);
     }
 
     private void loadSprites() {
@@ -288,7 +301,7 @@ public final class DungeonRenderer extends StackPane {
     }
 
     private void drawSprite(final GraphicsContext gc, final String name,
-            final double px, final double py) {
+                            final double px, final double py) {
         final Image img = spriteCache.get(name);
         if (img != null) {
             gc.drawImage(img, px, py, tileSize, tileSize);
@@ -296,7 +309,7 @@ public final class DungeonRenderer extends StackPane {
     }
 
     private void drawFloor(final GraphicsContext gc, final GameMap map,
-            final Position pos, final double px, final double py) {
+                           final Position pos, final double px, final double py) {
         final boolean wallAbove = isWallOrVoid(map, pos.x(), pos.y() - 1);
         final boolean wallBelow = isWallOrVoid(map, pos.x(), pos.y() + 1);
         final boolean wallLeft = isWallOrVoid(map, pos.x() - 1, pos.y());
@@ -327,13 +340,13 @@ public final class DungeonRenderer extends StackPane {
     }
 
     private void drawWallFill(final GraphicsContext gc,
-            final double px, final double py) {
+                              final double px, final double py) {
         gc.setFill(Color.web(WALL_COLOR));
         gc.fillRect(px, py, tileSize, tileSize);
     }
 
     private void drawCorridor(final GraphicsContext gc, final GameMap map,
-            final Position pos, final double px, final double py) {
+                              final Position pos, final double px, final double py) {
         final boolean wallAbove = isWallOrVoid(map, pos.x(), pos.y() - 1);
         final boolean wallBelow = isWallOrVoid(map, pos.x(), pos.y() + 1);
         final boolean wallLeft = isWallOrVoid(map, pos.x() - 1, pos.y());
@@ -364,7 +377,7 @@ public final class DungeonRenderer extends StackPane {
     }
 
     private void drawTrapSprite(final GraphicsContext gc,
-            final double px, final double py) {
+                                final double px, final double py) {
         // TODO: Check if trap is hidden
         drawSprite(gc, SPRITE_TRAP_DAMAGE, px, py);
     }

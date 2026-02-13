@@ -259,6 +259,14 @@ public class PlayerImpl extends AbstractEntity implements Player {
 
     /**
      * {@inheritDoc}
+     */
+    @Override
+    public int getXP() {
+        return this.xp;
+    }
+
+    /**
+     * {@inheritDoc}
      * 
      * @throws NullPointerException     if amount is null.
      * @throws IllegalArgumentException if amount is negative.

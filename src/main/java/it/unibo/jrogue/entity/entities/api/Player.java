@@ -52,6 +52,13 @@ public interface Player extends Entity {
     void remove(Equipment equipment);
 
     /**
+     * Return the current xp amount.
+     * 
+     * @return the current experience amount.
+     */
+    int getXP();
+
+    /**
      * Collect the specified amount of xp and checks for level up.
      * 
      * @param amount the amount of xp to collect.
