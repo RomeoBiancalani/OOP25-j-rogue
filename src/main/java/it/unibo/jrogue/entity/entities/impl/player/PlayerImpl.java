@@ -167,13 +167,11 @@ public class PlayerImpl extends AbstractEntity implements Player {
     }
 
     /**
-     * Check if the specified equipment is equipped.
+     * {@inheritDoc}
      * 
-     * @param equipment The equipment to check.
-     * @return true if the equipment is equipped, false otherwise.
      * @throws NullPointerException if equipment is null.
      */
-    private boolean isEquipped(final Equipment equipment) {
+    public boolean isEquipped(final Equipment equipment) {
         Objects.requireNonNull(equipment, "Equipment to check must be not null");
         return equipment.equals(armor.orElse(null))
                 || equipment.equals(weapon.orElse(null))

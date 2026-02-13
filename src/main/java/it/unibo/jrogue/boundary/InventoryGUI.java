@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import it.unibo.jrogue.controller.api.InventoryManager;
+import it.unibo.jrogue.entity.items.api.Equipment;
 import it.unibo.jrogue.entity.items.api.Item;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -157,13 +158,15 @@ public class InventoryGUI {
                             slot.getChildren().add(view);
                         }
 
-                        if (isEquipped) {
-                            final Label badge = new Label("E");
-                            badge.setFont(Font.font("Verdana", FontWeight.BOLD, 10));
-                            badge.setTextFill(Color.WHITE);
-                            badge.setStyle("-fx-background-color: blue; -fx-padding: 2; -fx-background-radius: 3;");
-                            StackPane.setAlignment(badge, Pos.TOP_RIGHT); // Angolo in alto a destra
-                            slot.getChildren().add(badge);
+                        if (item instanceof Equipment) {
+                            if (isEquipped) {
+                                final Label badge = new Label("E");
+                                badge.setFont(Font.font("Verdana", FontWeight.BOLD, 10));
+                                badge.setTextFill(Color.WHITE);
+                                badge.setStyle("-fx-background-color: blue; -fx-padding: 2; -fx-background-radius: 3;");
+                                StackPane.setAlignment(badge, Pos.TOP_RIGHT); // Angolo in alto a destra
+                                slot.getChildren().add(badge);
+                            }
                         }
 
                         if (isSelected) {

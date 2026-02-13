@@ -30,6 +30,14 @@ public interface Player extends Entity {
     void collectGold(int amount);
 
     /**
+     * Check if the specified equipment is equipped.
+     * 
+     * @param equipment The equipment to check.
+     * @return true if the equipment is equipped, false otherwise.
+     */
+    boolean isEquipped(Equipment equipment);
+
+    /**
      * Equip the specified equipment for the player.
      * 
      * @param equipment The equipment to be equipped.

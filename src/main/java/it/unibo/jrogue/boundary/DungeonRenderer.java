@@ -59,7 +59,7 @@ public final class DungeonRenderer extends StackPane {
 
     private static final String SPRITE_DAGGER = "weapons/dagger";
     private static final String SPRITE_SWORD = "weapons/sword";
-    private static final String SPRITE_SHOVEL = "weapons/dagger";
+    private static final String SPRITE_SHOVEL = "weapons/shovel";
     private static final String SPRITE_TRAP_DAMAGE = "traps/trap-damage";
     private static final String SPRITE_TRAP_TELEPORT = "traps/trap-teleport";
 

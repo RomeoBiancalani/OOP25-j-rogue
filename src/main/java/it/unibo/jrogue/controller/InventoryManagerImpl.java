@@ -7,8 +7,6 @@ import it.unibo.jrogue.entity.entities.api.Player;
 import it.unibo.jrogue.entity.items.api.Consumable;
 import it.unibo.jrogue.entity.items.api.Equipment;
 import it.unibo.jrogue.entity.items.api.Item;
-import it.unibo.jrogue.entity.items.impl.Armor;
-import it.unibo.jrogue.entity.items.impl.MeleeWeapon;
 
 /**
  * Class that implements the InventoryManager interface.
@@ -34,9 +32,14 @@ public class InventoryManagerImpl implements InventoryManager {
 
         if (result.isPresent()) {
             final Item item = result.get();
-            if (item instanceof Equipment) {
-                ((Equipment) item).equip(player);
-                System.out.println("Equipaggiato");
+            if (item instanceof Equipment equipment) {
+                if (player.isEquipped(equipment)) {
+                    equipment.unequip(player);
+                    System.out.println("Disequipaggiato");
+                } else {
+                    equipment.equip(player);
+                    System.out.println("Equipaggiato");
+                }
             }
             if (item instanceof Consumable) {
                 ((Consumable) item).consume(player);
@@ -70,17 +73,10 @@ public class InventoryManagerImpl implements InventoryManager {
     @Override
     public boolean isEquipped(final int index) {
         final Optional<Item> itemOpt = player.getInventory().getItem(index);
-
-        if (itemOpt.isEmpty()) {
-            return false;
-        }
-        final Item item = itemOpt.get();
-
-        if (item instanceof MeleeWeapon) {
-            return true;
-        }
-        if (item instanceof Armor) {
-            return true;
+        if (itemOpt.isPresent()) {
+            if (itemOpt.get() instanceof Equipment equipment) {
+                return player.isEquipped(equipment);
+            }
         }
         return false;
     }
