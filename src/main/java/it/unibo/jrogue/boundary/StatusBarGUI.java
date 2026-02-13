@@ -12,7 +12,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 /**
- * This class rapresents the graphical HUD positioned at the bottom of the game screen.
+ * This class rapresents the graphical HUD positioned at the bottom of the game
+ * screen.
  * <p>
  * It provides real-time visualization of the player's statistics
  * </p>
@@ -53,7 +54,7 @@ public class StatusBarGUI extends HBox {
      * @param label The label to be styled.
      * @param color The color to apply to the text
      */
-    private void styleLabel(Label label, Color color) {
+    private void styleLabel(final Label label, final Color color) {
         label.setTextFill(color);
         label.setFont(Font.font("Consolas", FontWeight.BOLD, FONT_SIZE));
     }

@@ -48,7 +48,6 @@ public class InventoryGUI {
     private static final int FONT_SIZE_DESC = 18;
     private static final int WRAP_WIDTH_DESC = 500;
 
-
     private StackPane[][] slotsMatrix;
     private InventoryManager manager;
 
@@ -66,7 +65,7 @@ public class InventoryGUI {
      * 
      * @param manager the inventory manager linked to the player.
      * 
-     *@param sprites the map with all the sprites saved.
+     * @param sprites the map with all the sprites saved.
      */
     public InventoryGUI(final InventoryManager manager, final Map<String, Image> sprites) {
         this.sprites = sprites;
@@ -122,7 +121,7 @@ public class InventoryGUI {
     /**
      * Refreshes the inventory view.
      */
-    public void updateView() {
+    public final void updateView() {
 
         for (int r = 0; r < GRID_ROWS; r++) {
             for (int c = 0; c < GRID_COLS; c++) {
@@ -180,7 +179,7 @@ public class InventoryGUI {
                         }
 
                         if (isSelected) {
-                            updateDescription(item, isEquipped);
+                            updateDescription(item);
                         }
 
                     }
@@ -199,7 +198,7 @@ public class InventoryGUI {
      * 
      * @param isEquipped true if the item is currently equipped.
      */
-    private void updateDescription(final Item item, final boolean isEquipped) {
+    private void updateDescription(final Item item) {
         final StringBuilder sb = new StringBuilder();
 
         sb.append(item.getDescription());

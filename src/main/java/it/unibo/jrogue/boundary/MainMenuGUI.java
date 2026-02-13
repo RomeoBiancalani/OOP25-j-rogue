@@ -33,8 +33,8 @@ public final class MainMenuGUI implements MenuGUI {
     @Override
     public void initGraphics() {
         rootLayout.setAlignment(Pos.CENTER);
-        Image backgroundImage = new Image(getClass().getResourceAsStream("/" + BACKGROUND_PATH));
-        BackgroundImage background = new BackgroundImage(
+        final Image backgroundImage = new Image(getClass().getResourceAsStream("/" + BACKGROUND_PATH));
+        final BackgroundImage background = new BackgroundImage(
                 backgroundImage,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,

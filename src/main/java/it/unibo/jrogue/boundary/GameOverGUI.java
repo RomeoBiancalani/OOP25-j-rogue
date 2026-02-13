@@ -5,7 +5,7 @@ import javafx.scene.layout.*;
 import javafx.scene.image.Image;
 
 /**
- * This class refers to the GameOver Boundary
+ * This class refers to the GameOver Boundary.
  * */
 public class GameOverGUI {
     private static final String BACKGROUND_PATH = "GameOver.png";
@@ -37,7 +37,7 @@ public class GameOverGUI {
     /**
      * getter for the layout.
      *
-     * @return rootLayout which contain the GUI elements
+     * @return rootLayout which contain the GUI elements.
      * */
 
     public VBox getLayout() {
