@@ -10,7 +10,6 @@ package it.unibo.jrogue.controller.generation.api;
  * - XP_gain = XP_base * (1 + lambda*(L-1))
  *
  * @param daggerRate spawn rate for axes (0.05 default)
- * @param bowRate spawn rate for bows (0.05 default)
  * @param armorRate spawn rate for armor (0.05 default)
  * @param armor1Ratio ratio of light vs heavy armor when armor spawns (0.70 = 70% light)
  * @param ringRate spawn rate for rings (0.03 default)
