@@ -76,6 +76,9 @@ public class Bat extends AbstractEnemy {
      */
     @Override
     public Optional<Item> getItemDrop() {
+        if (isAlive()) {
+            throw new IllegalStateException("An alive enemy can't drop item");
+        }
         return Optional.empty();
     }
 
