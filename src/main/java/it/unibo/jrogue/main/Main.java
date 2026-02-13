@@ -6,7 +6,7 @@ package it.unibo.jrogue.main;
 
 public class Main {
     /**
-     * main.
+     * @param args main.
      */
     public static void main(final String[] args) {
         Launch.launcher(args);

@@ -65,4 +65,18 @@ public interface Player extends Entity {
      */
     boolean hasArmor();
 
+    /**
+     * Manages the victory of the player.
+     * 
+     * @param victory set to true if the player has won.
+     */
+    void setVictory(boolean victory);
+
+    /**
+     * Class that checks if the player has won.
+     * 
+     * @return true if the player has won.
+     */
+    boolean hasWon();
+
 }

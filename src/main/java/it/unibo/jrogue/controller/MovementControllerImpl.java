@@ -11,6 +11,7 @@ import it.unibo.jrogue.entity.entities.api.Enemy;
 import it.unibo.jrogue.entity.entities.api.Entity;
 import it.unibo.jrogue.entity.entities.api.Player;
 import it.unibo.jrogue.entity.items.api.Item;
+import it.unibo.jrogue.entity.items.impl.Amulet;
 import it.unibo.jrogue.entity.items.impl.Gold;
 import it.unibo.jrogue.entity.world.api.GameMap;
 
@@ -50,6 +51,9 @@ public class MovementControllerImpl implements MovementController {
             // Pick up item if present at the moved position
             gameMap.removeItemAt(player.getPosition())
                     .ifPresent(item -> {
+                        if (item instanceof Amulet) {
+                            player.setVictory(true);
+                        }
                         if (item instanceof Gold gold) {
                             player.collectGold(gold.getAmount());
                         } else {
@@ -131,22 +135,23 @@ public class MovementControllerImpl implements MovementController {
      */
     private boolean isOccupiedByEnemy(final Position position) {
         return gameMap.getEnemies().stream()
-                        .filter(Enemy::isAlive)
-                        .anyMatch(e -> e.getPosition().equals(position));
+                .filter(Enemy::isAlive)
+                .anyMatch(e -> e.getPosition().equals(position));
     }
 
     /**
-     * Finds the enemy that is occupying the position resulting from the entity's move.
+     * Finds the enemy that is occupying the position resulting from the entity's
+     * move.
      * 
      * @param entity The entity performing the check.
-     * @param move The move to simulate.
+     * @param move   The move to simulate.
      * @return An Optional containing the enemy if found, empty otherwise.
      */
     private Optional<Enemy> getOccupiedByEnemy(final Entity entity, final Move move) {
         final Position position = move.applyToPosition(entity.getPosition());
         return gameMap.getEnemies().stream()
-                        .filter(Enemy::isAlive)
-                        .filter(e -> e.getPosition().equals(position))
-                        .findAny();
+                .filter(Enemy::isAlive)
+                .filter(e -> e.getPosition().equals(position))
+                .findAny();
     }
 }

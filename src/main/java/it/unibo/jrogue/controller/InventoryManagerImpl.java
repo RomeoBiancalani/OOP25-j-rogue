@@ -17,7 +17,7 @@ public class InventoryManagerImpl implements InventoryManager {
     /**
      * Costructor.
      * 
-     * @param the player.
+     * @param player the player.
      */
     public InventoryManagerImpl(final Player player) {
         this.player = player;

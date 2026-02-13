@@ -65,6 +65,8 @@ public class InventoryGUI {
      * The constructor for the InventoryGUI.
      * 
      * @param manager the inventory manager linked to the player.
+     * 
+     *@param sprites the map with all the sprites saved.
      */
     public InventoryGUI(final InventoryManager manager, final Map<String, Image> sprites) {
         this.sprites = sprites;

@@ -54,7 +54,7 @@ public final class DungeonRenderer extends StackPane {
     private static final String SPRITE_POTION = "items/potion";
     private static final String SPRITE_FOOD = "items/food";
     private static final String SPRITE_RING = "items/ring";
-    private static final String SPRITE_AMULET = "items/ring";
+    private static final String SPRITE_AMULET = "items/scroll";
     private static final String SPRITE_SCROLL = "items/scroll";
     private static final String SPRITE_ARMOR_BASE = "items/armor-base";
     private static final String SPRITE_ARMOR_MAX = "items/armor-max";

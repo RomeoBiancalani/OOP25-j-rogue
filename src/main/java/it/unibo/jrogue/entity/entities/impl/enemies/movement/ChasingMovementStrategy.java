@@ -5,9 +5,10 @@ import it.unibo.jrogue.commons.Position;
 import it.unibo.jrogue.entity.entities.api.MovementStrategy;
 
 /**
- * Class that rapresents a standard behavior, the entity moves towards to the player
+ * Class that rapresents a standard behavior, the entity moves towards to the
+ * player.
  */
-public class ChasingMovementStrategy implements MovementStrategy{
+public class ChasingMovementStrategy implements MovementStrategy {
 
     /**
      * {@inheritDoc}

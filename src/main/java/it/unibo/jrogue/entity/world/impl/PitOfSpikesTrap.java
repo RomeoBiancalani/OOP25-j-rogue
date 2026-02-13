@@ -9,7 +9,7 @@ public class PitOfSpikesTrap implements Trap {
     private boolean active;
     private boolean discovered;
 
-    public PitOfSpikesTrap(Position position){
+    public PitOfSpikesTrap(final Position position) {
         this.position = position;
         this.active = true;
         this.damage = 10;
@@ -17,18 +17,18 @@ public class PitOfSpikesTrap implements Trap {
     }
 
     @Override
-    public boolean isActive(){
+    public boolean isActive() {
         return active;
     }
 
     @Override
-    public void trigger(){
+    public void trigger() {
         this.active = false;
         this.discover();
     }
 
     @Override
-    public Position getPosition(){
+    public Position getPosition() {
         return position;
     }
 
@@ -38,10 +38,11 @@ public class PitOfSpikesTrap implements Trap {
     }
 
     @Override
-    public void discover(){
+    public void discover() {
         this.discovered = true;
     }
-    public int getDamage(){
+
+    public int getDamage() {
         return damage;
     }
 }

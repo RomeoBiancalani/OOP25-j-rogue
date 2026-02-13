@@ -6,7 +6,7 @@ import it.unibo.jrogue.entity.GameRandom;
 import it.unibo.jrogue.entity.entities.api.MovementStrategy;
 
 /**
- * Class that rapresents a probabilitic behavior, 
+ * Class that rapresents a probabilitic behavior,
  * entitiy has a specific percentage of chanche to move toward to the player.
  */
 public class BatMovementSTrategy implements MovementStrategy {
@@ -15,7 +15,7 @@ public class BatMovementSTrategy implements MovementStrategy {
     private final MovementStrategy randomStrategy = new RandomMovementStrategy();
 
     /**
-     * Contruct a probabilitic chase strategy with a specific 
+     * Contruct a probabilitic chase strategy with a specific
      * chanche to chase the player.
      * 
      * @param percentage The probability to move towards to the player.
@@ -33,7 +33,7 @@ public class BatMovementSTrategy implements MovementStrategy {
      * </p>
      */
     @Override
-    public Move calculateNextMove(Position start, Position target) {
+    public Move calculateNextMove(final Position start, final Position target) {
         if (GameRandom.nextInt(100) >= chasePercentage) {
             return randomStrategy.calculateNextMove(start, target);
         }

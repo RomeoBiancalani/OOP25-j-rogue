@@ -32,6 +32,7 @@ public class PlayerImpl extends AbstractEntity implements Player {
     private Optional<Armor> armor;
     private Optional<MeleeWeapon> weapon;
     private Optional<Ring> ring;
+    private boolean victory;
 
     /**
      * Construct a player with the specified attributes.
@@ -281,6 +282,22 @@ public class PlayerImpl extends AbstractEntity implements Player {
     @Override
     public boolean hasArmor() {
         return !armor.isEmpty();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setVictory(final boolean victory) {
+        this.victory = victory;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean hasWon() {
+        return this.victory;
     }
 
 }

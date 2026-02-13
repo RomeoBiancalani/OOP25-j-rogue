@@ -61,10 +61,10 @@ public final class EntityPopulatorImpl implements EntityPopulator {
         // Skip first room (player spawn)
         for (int i = 1; i < rooms.size(); i++) {
             populateRoom(map, rooms.get(i), levelNumber, config);
+        }
 
-            if (levelNumber == 10) {
-                spawnAmulet(map, rooms);
-            }
+        if (levelNumber == 10) {
+            spawnAmulet(map, rooms);
         }
     }
 
@@ -75,9 +75,7 @@ public final class EntityPopulatorImpl implements EntityPopulator {
 
             if (!positions.isEmpty()) {
                 final Position pos = positions.get(GameRandom.nextInt(positions.size()));
-                final Item amulet = new Amulet();
-
-                map.addItem(pos, amulet);
+                map.addItem(pos, new Amulet());
             }
         }
     }
