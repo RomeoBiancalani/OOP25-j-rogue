@@ -25,12 +25,29 @@ import javafx.scene.text.TextAlignment;
  * Class responsible for the GUI of the Player's Inventory.
  */
 public class InventoryGUI {
+    private static final int GRID_COLS = 10;
+    private static final int GRID_ROWS = 5;
+
+    private static final int GRID_GAP = 5;
     private static final Color COLOR_SELECTED = Color.RED;
     private static final Color COLOR_NORMAL = Color.BLACK;
     private static final Color COLOR_EQUIPPED = Color.BLUE;
-    private static final int VBOX_SPACING = 20;
-    private static final int RECTANGLE_WIDTH = 50;
-    private static final int RECTANGLE_HEIGHT = 50;
+    private static final Color COLOR_SLOT_BG = Color.LIGHTGRAY;
+    private static final Color COLOR_TEXT = Color.WHITE;
+
+    private static final int SLOT_SIZE = 50;
+    private static final int ICON_SIZE = 40;
+
+    private static final int STROKE_NORMAL = 1;
+    private static final int STROKE_EQUIPPED = 3;
+    private static final int STROKE_SELECTED = 4;
+
+    private static final int LAYOUT_SPACING = 20;
+    private static final int LAYOUT_PADDING = 20;
+    private static final int FONT_SIZE_DESC = 18;
+    private static final int WRAP_WIDTH_DESC = 500;
+
+    private static final int FONT_SIZE_BADGE = 10;
 
     private StackPane[][] slotsMatrix;
     private InventoryManager manager;
@@ -38,9 +55,6 @@ public class InventoryGUI {
     private VBox mainLayout;
     private GridPane gridPane;
     private Text description;
-
-    private final int cols = 10;
-    private final int rows = 5;
 
     private int selectedRow;
     private int selectedCol;
@@ -55,21 +69,21 @@ public class InventoryGUI {
     public InventoryGUI(final InventoryManager manager, final Map<String, Image> sprites) {
         this.sprites = sprites;
         this.manager = manager;
-        this.slotsMatrix = new StackPane[rows][cols];
+        this.slotsMatrix = new StackPane[GRID_ROWS][GRID_COLS];
 
-        this.mainLayout = new VBox(VBOX_SPACING);
+        this.mainLayout = new VBox(LAYOUT_SPACING);
         this.mainLayout.setAlignment(Pos.CENTER);
-        this.mainLayout.setPadding(new Insets(20));
+        this.mainLayout.setPadding(new Insets(LAYOUT_PADDING));
 
         this.gridPane = new GridPane();
         this.gridPane.setAlignment(Pos.CENTER);
-        gridPane.setHgap(5);
-        gridPane.setVgap(5);
+        gridPane.setHgap(GRID_GAP);
+        gridPane.setVgap(GRID_GAP);
 
         this.description = new Text("inventario vuoto");
-        this.description.setFill(Color.WHITE);
-        this.description.setFont(Font.font("Verdana", 18));
-        this.description.setWrappingWidth(500);
+        this.description.setFill(COLOR_TEXT);
+        this.description.setFont(Font.font("Verdana", FONT_SIZE_DESC));
+        this.description.setWrappingWidth(WRAP_WIDTH_DESC);
         this.description.setTextAlignment(TextAlignment.CENTER);
 
         initializeLayout();
@@ -88,11 +102,11 @@ public class InventoryGUI {
          */
         gridPane.setGridLinesVisible(true);
 
-        for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < cols; c++) {
+        for (int r = 0; r < GRID_ROWS; r++) {
+            for (int c = 0; c < GRID_COLS; c++) {
                 final StackPane slot = new StackPane();
-                final Rectangle bg = new Rectangle(RECTANGLE_WIDTH, RECTANGLE_HEIGHT);
-                bg.setFill(Color.LIGHTGRAY);
+                final Rectangle bg = new Rectangle(SLOT_SIZE, SLOT_SIZE);
+                bg.setFill(COLOR_SLOT_BG);
                 bg.setStroke(COLOR_NORMAL);
 
                 slot.getChildren().add(bg);
@@ -108,8 +122,8 @@ public class InventoryGUI {
      */
     public void updateView() {
 
-        for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < cols; c++) {
+        for (int r = 0; r < GRID_ROWS; r++) {
+            for (int c = 0; c < GRID_COLS; c++) {
                 final StackPane slot = slotsMatrix[r][c];
 
                 if (slot.getChildren().size() > 1) {
@@ -117,29 +131,24 @@ public class InventoryGUI {
                 }
                 final Rectangle bg = (Rectangle) slot.getChildren().get(0);
 
-                if (r == selectedRow && c == selectedCol) {
-                    bg.setStroke(COLOR_SELECTED);
-                    bg.setStrokeWidth(3);
-                } else {
-                    bg.setStroke(COLOR_NORMAL);
-                    bg.setStrokeWidth(1);
-                }
+                bg.setStroke(COLOR_NORMAL);
+                bg.setStrokeWidth(STROKE_NORMAL);
 
-                final int index = (r * cols) + c;
+                final int index = (r * GRID_COLS) + c;
                 final boolean isSelected = r == selectedRow && c == selectedCol;
                 final boolean isEquipped = manager.isEquipped(index);
 
                 if (isSelected) {
                     bg.setStroke(COLOR_SELECTED);
-                    bg.setStrokeWidth(4);
+                    bg.setStrokeWidth(STROKE_SELECTED);
 
                     slot.toFront();
                 } else if (isEquipped) {
                     bg.setStroke(COLOR_EQUIPPED);
-                    bg.setStrokeWidth(3);
+                    bg.setStrokeWidth(STROKE_EQUIPPED);
                 } else {
                     bg.setStroke(COLOR_NORMAL);
-                    bg.setStrokeWidth(1);
+                    bg.setStrokeWidth(STROKE_NORMAL);
                 }
                 if (index < manager.getSize()) {
                     final Optional<Item> result = manager.getItemAt(index);
@@ -152,14 +161,14 @@ public class InventoryGUI {
 
                         if (img != null) {
                             final ImageView view = new ImageView(img);
-                            view.setFitWidth(40);
-                            view.setFitHeight(40);
+                            view.setFitWidth(ICON_SIZE);
+                            view.setFitHeight(ICON_SIZE);
                             slot.getChildren().add(view);
                         }
 
                         if (isEquipped) {
                             final Label badge = new Label("E");
-                            badge.setFont(Font.font("Verdana", FontWeight.BOLD, 10));
+                            badge.setFont(Font.font("Verdana", FontWeight.BOLD, FONT_SIZE_BADGE));
                             badge.setTextFill(Color.WHITE);
                             badge.setStyle("-fx-background-color: blue; -fx-padding: 2; -fx-background-radius: 3;");
                             StackPane.setAlignment(badge, Pos.TOP_RIGHT); // Angolo in alto a destra
@@ -210,14 +219,14 @@ public class InventoryGUI {
     public void handleInput(final KeyCode code) {
         if (code == KeyCode.W && selectedRow > 0) {
             selectedRow--;
-        } else if (code == KeyCode.S && selectedRow < rows - 1) {
+        } else if (code == KeyCode.S && selectedRow < GRID_ROWS - 1) {
             selectedRow++;
         } else if (code == KeyCode.A && selectedCol > 0) {
             selectedCol--;
-        } else if (code == KeyCode.D && selectedCol < cols - 1) {
+        } else if (code == KeyCode.D && selectedCol < GRID_COLS - 1) {
             selectedCol++;
         } else if (code == KeyCode.ENTER) {
-            final int index = (selectedRow * cols) + selectedCol;
+            final int index = (selectedRow * GRID_COLS) + selectedCol;
             if (index < manager.getSize()) {
                 manager.useItem(index);
             }
