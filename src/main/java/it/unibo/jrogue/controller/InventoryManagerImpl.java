@@ -7,6 +7,8 @@ import it.unibo.jrogue.entity.entities.api.Player;
 import it.unibo.jrogue.entity.items.api.Consumable;
 import it.unibo.jrogue.entity.items.api.Equipment;
 import it.unibo.jrogue.entity.items.api.Item;
+import it.unibo.jrogue.entity.items.impl.Armor;
+import it.unibo.jrogue.entity.items.impl.MeleeWeapon;
 
 /**
  * Class that implements the InventoryManager interface.
@@ -16,6 +18,8 @@ public class InventoryManagerImpl implements InventoryManager {
 
     /**
      * Costructor.
+     * 
+     * @param the player.
      */
     public InventoryManagerImpl(final Player player) {
         this.player = player;
@@ -58,5 +62,26 @@ public class InventoryManagerImpl implements InventoryManager {
     @Override
     public Optional<Item> getItemAt(final int index) {
         return player.getInventory().getItem(index);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isEquipped(final int index) {
+        final Optional<Item> itemOpt = player.getInventory().getItem(index);
+
+        if (itemOpt.isEmpty()) {
+            return false;
+        }
+        final Item item = itemOpt.get();
+
+        if (item instanceof MeleeWeapon) {
+            return true;
+        }
+        if (item instanceof Armor) {
+            return true;
+        }
+        return false;
     }
 }

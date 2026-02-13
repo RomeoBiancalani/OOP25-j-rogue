@@ -367,7 +367,7 @@ public final class DungeonRenderer extends StackPane {
         return tile == Tile.WALL || tile == Tile.VOID;
     }
 
-    private String getItemSprite(final Item item) {
+    public static String getItemSprite(final Item item) {
         if (item instanceof Gold) {
             return SPRITE_GOLD;
         } else if (item instanceof HealthPotion) {
@@ -386,7 +386,7 @@ public final class DungeonRenderer extends StackPane {
         return SPRITE_GOLD;
     }
 
-    private String getWeaponSprite(final MeleeWeapon weapon) {
+    public static String getWeaponSprite(final MeleeWeapon weapon) {
         final String weaponName = weapon.getName();
         if (weaponName.contains("Pugnale")) {
             return SPRITE_DAGGER;
@@ -396,7 +396,7 @@ public final class DungeonRenderer extends StackPane {
         return SPRITE_SHOVEL;
     }
 
-    private String getArmorSprite(final Armor armor) {
+    public static String getArmorSprite(final Armor armor) {
         if (ARMOR_HEAVY_NAME.equals(armor.getName())) {
             return SPRITE_ARMOR_MAX;
         }
@@ -413,4 +413,5 @@ public final class DungeonRenderer extends StackPane {
         }
         return SPRITE_BAT;
     }
+
 }

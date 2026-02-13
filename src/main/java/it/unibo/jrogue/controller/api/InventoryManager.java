@@ -31,4 +31,13 @@ public interface InventoryManager {
      * @return the size of the inventory.
      */
     int getSize();
+
+    /**
+     * Checks if the item at the specified index is equipped.
+     * 
+     * @param index the index of the item.
+     * 
+     * @return true if is equipped.
+     */
+    boolean isEquipped(int index);
 }

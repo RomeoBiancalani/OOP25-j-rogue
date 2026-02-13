@@ -47,7 +47,6 @@ public final class EntityPopulatorImpl implements EntityPopulator {
     private static final int SWORD_BASE_DAMAGE = 8;
     private static final int SHOVEL_BASE_DAMAGE = 10;
 
-
     /**
      * Creates a new EntityPopulator.
      */
@@ -72,13 +71,13 @@ public final class EntityPopulatorImpl implements EntityPopulator {
     /**
      * Populates a single room with items, enemies, and traps.
      *
-     * @param map the game map
-     * @param room the room to populate
+     * @param map         the game map
+     * @param room        the room to populate
      * @param levelNumber the dungeon level
-     * @param config spawn configuration
+     * @param config      spawn configuration
      */
     private void populateRoom(final GameMap map, final Room room,
-                              final int levelNumber, final SpawnConfig config) {
+            final int levelNumber, final SpawnConfig config) {
         final List<Position> availablePositions = getFloorPositions(map, room);
         if (availablePositions.isEmpty()) {
             return;
@@ -93,7 +92,7 @@ public final class EntityPopulatorImpl implements EntityPopulator {
     /**
      * Gets all floor positions within a room.
      *
-     * @param map the game map
+     * @param map  the game map
      * @param room the room to get floor positions from
      * @return list of floor positions
      */
@@ -116,17 +115,18 @@ public final class EntityPopulatorImpl implements EntityPopulator {
     /**
      * Spawns equipment in a room based on configuration.
      *
-     * @param map the game map
-     * @param room the room to spawn equipment in
-     * @param positions available positions for spawning
+     * @param map         the game map
+     * @param room        the room to spawn equipment in
+     * @param positions   available positions for spawning
      * @param levelNumber the dungeon level
-     * @param config spawn configuration
+     * @param config      spawn configuration
      */
     private void spawnEquipment(final GameMap map, final Room room,
-                                final List<Position> positions,
-                                final int levelNumber, final SpawnConfig config) {
-        // Weapons gets better in next levels so it's suggested to swap (even the same weapon)
-        
+            final List<Position> positions,
+            final int levelNumber, final SpawnConfig config) {
+        // Weapons gets better in next levels so it's suggested to swap (even the same
+        // weapon)
+
         // Dagger (Weapon 1)
         if (rollChance(config.daggerRate()) && !positions.isEmpty()) {
             final Position pos = pickRandomPosition(positions);
@@ -150,7 +150,6 @@ public final class EntityPopulatorImpl implements EntityPopulator {
             map.addItem(pos, axe);
             addItemToRoom(room, axe);
         }
-
 
         // Armor
         if (rollChance(config.armorRate()) && !positions.isEmpty()) {
@@ -178,15 +177,15 @@ public final class EntityPopulatorImpl implements EntityPopulator {
     /**
      * Spawns consumable items based on configuration.
      *
-     * @param map the game map
-     * @param room the room to spawn consumables in
-     * @param positions available positions for spawning
+     * @param map         the game map
+     * @param room        the room to spawn consumables in
+     * @param positions   available positions for spawning
      * @param levelNumber the dungeon level
-     * @param config spawn configuration
+     * @param config      spawn configuration
      */
     private void spawnConsumables(final GameMap map, final Room room,
-                                  final List<Position> positions,
-                                  final int levelNumber, final SpawnConfig config) {
+            final List<Position> positions,
+            final int levelNumber, final SpawnConfig config) {
         // Health Potion (rate decreases with level)
         final double potionRate = config.getFoodPotionRate(levelNumber);
         if (rollChance(potionRate) && !positions.isEmpty()) {
@@ -225,15 +224,15 @@ public final class EntityPopulatorImpl implements EntityPopulator {
     /**
      * Spawns traps based on level requirements.
      *
-     * @param map the game map
-     * @param room the room to spawn traps in
-     * @param positions available positions for spawning
+     * @param map         the game map
+     * @param room        the room to spawn traps in
+     * @param positions   available positions for spawning
      * @param levelNumber the dungeon level
-     * @param config spawn configuration
+     * @param config      spawn configuration
      */
     private void spawnTraps(final GameMap map, final Room room,
-                            final List<Position> positions,
-                            final int levelNumber, final SpawnConfig config) {
+            final List<Position> positions,
+            final int levelNumber, final SpawnConfig config) {
         if (!rollChance(config.trapRate()) || positions.isEmpty()) {
             return;
         }
@@ -259,7 +258,8 @@ public final class EntityPopulatorImpl implements EntityPopulator {
         final Position pos = pickRandomPosition(positions);
         final int damage = switch (type) {
             case SPIKE -> SPIKE_TRAP_DAMAGE;
-            // TODO: Let's understand if we want to implement poison that lasts for multiple steps
+            // TODO: Let's understand if we want to implement poison that lasts for multiple
+            // steps
             case POISON -> POISON_TRAP_DAMAGE;
             case TELEPORT -> TELEPORT_TRAP_DAMAGE;
         };
@@ -273,18 +273,18 @@ public final class EntityPopulatorImpl implements EntityPopulator {
     /**
      * Spawns enemies using weighted selection based on level.
      *
-     * @param map the game map
-     * @param positions available positions for spawning
+     * @param map         the game map
+     * @param positions   available positions for spawning
      * @param levelNumber the dungeon level
-     * @param config spawn configuration
+     * @param config      spawn configuration
      */
     private void spawnEnemies(final GameMap map, final List<Position> positions,
-                              final int levelNumber, final SpawnConfig config) {
+            final int levelNumber, final SpawnConfig config) {
         int enemyCount = 0;
 
         while (enemyCount < config.maxEnemiesPerRoom()
-               && rollChance(config.enemySpawnRate())
-               && !positions.isEmpty()) {
+                && rollChance(config.enemySpawnRate())
+                && !positions.isEmpty()) {
 
             final Position pos = pickRandomPosition(positions);
             final Enemy enemy = createWeightedEnemy(pos, levelNumber, config);
@@ -300,8 +300,8 @@ public final class EntityPopulatorImpl implements EntityPopulator {
      * Creates an enemy using weighted random selection.
      * Stronger enemies become more likely at deeper levels.
      *
-     * @param pos the position for the enemy
-     * @param level the dungeon level
+     * @param pos    the position for the enemy
+     * @param level  the dungeon level
      * @param config spawn configuration
      * @return the created enemy
      */

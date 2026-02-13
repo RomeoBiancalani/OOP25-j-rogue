@@ -21,8 +21,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * JavaFX application that renders the generated dungeon map using tiled graphics.
- * Uses a StackPane with two Canvas layers: terrain (layer 0) and entities (layer 1).
+ * JavaFX application that renders the generated dungeon map using tiled
+ * graphics.
+ * Uses a StackPane with two Canvas layers: terrain (layer 0) and entities
+ * (layer 1).
  */
 @SuppressWarnings("PMD.SystemPrintln")
 public final class WorldRenderingDemo extends StackPane {
@@ -42,16 +44,14 @@ public final class WorldRenderingDemo extends StackPane {
             "tilebottomleft", "tilebottom", "tilebottomright",
             TILE_CORRIDOR_H, "corridorhorizontalleft", "corridorhorizontalright",
             "corridorvertical", "corridorverticaltop", "corridorverticalbottom",
-            "gold", TILE_STAIRS
-    );
+            "gold", TILE_STAIRS);
 
     private final Map<String, Image> tileImages = new HashMap<>();
 
-
     /**
-     * Constructor to generate the game map
-     * */
-    public WorldRenderingDemo(){
+     * Constructor to generate the game map.
+     */
+    public WorldRenderingDemo() {
         final long seed = System.currentTimeMillis();
         loadTileset();
         final GameMap map = generateMap(seed);
@@ -70,37 +70,37 @@ public final class WorldRenderingDemo extends StackPane {
         this.getChildren().addAll(terrainCanvas, entityCanvas);
     }
 
-//Keeping this because it may be something wrong with the constructor
-/*
-    public void start(final Stage primaryStage) {
-        final long seed = System.currentTimeMillis();
-        final int screenWidth = DEFAULT_SCREEN_WIDTH;
-        final int screenHeight = DEFAULT_SCREEN_HEIGHT;
-
-        loadTileset();
-
-        final GameMap map = generateMap(seed);
-
-        final int canvasWidth = map.getWidth() * DEFAULT_TILE_SIZE;
-        final int canvasHeight = map.getHeight() * DEFAULT_TILE_SIZE;
-
-        final Canvas terrainCanvas = new Canvas(canvasWidth, canvasHeight);
-        final Canvas entityCanvas = new Canvas(canvasWidth, canvasHeight);
-
-        renderTerrain(terrainCanvas.getGraphicsContext2D(), map);
-        renderEntities(entityCanvas.getGraphicsContext2D(), map);
-
-        final StackPane layers = new StackPane(terrainCanvas, entityCanvas);
-        final ScrollPane scroll = new ScrollPane(layers);
-
-        final Scene scene = new Scene(scroll, screenWidth, screenHeight);
-        scene.setFill(Color.BLACK);
-
-        primaryStage.setTitle("World Rendering Demo - Seed: " + seed);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-*/
+    // Keeping this because it may be something wrong with the constructor
+    /*
+     * public void start(final Stage primaryStage) {
+     * final long seed = System.currentTimeMillis();
+     * final int screenWidth = DEFAULT_SCREEN_WIDTH;
+     * final int screenHeight = DEFAULT_SCREEN_HEIGHT;
+     * 
+     * loadTileset();
+     * 
+     * final GameMap map = generateMap(seed);
+     * 
+     * final int canvasWidth = map.getWidth() * DEFAULT_TILE_SIZE;
+     * final int canvasHeight = map.getHeight() * DEFAULT_TILE_SIZE;
+     * 
+     * final Canvas terrainCanvas = new Canvas(canvasWidth, canvasHeight);
+     * final Canvas entityCanvas = new Canvas(canvasWidth, canvasHeight);
+     * 
+     * renderTerrain(terrainCanvas.getGraphicsContext2D(), map);
+     * renderEntities(entityCanvas.getGraphicsContext2D(), map);
+     * 
+     * final StackPane layers = new StackPane(terrainCanvas, entityCanvas);
+     * final ScrollPane scroll = new ScrollPane(layers);
+     * 
+     * final Scene scene = new Scene(scroll, screenWidth, screenHeight);
+     * scene.setFill(Color.BLACK);
+     * 
+     * primaryStage.setTitle("World Rendering Demo - Seed: " + seed);
+     * primaryStage.setScene(scene);
+     * primaryStage.show();
+     * }
+     */
 
     private void loadTileset() {
         for (final String name : TILE_NAMES) {
@@ -118,8 +118,7 @@ public final class WorldRenderingDemo extends StackPane {
         final SpawnConfig spawnConfig = SpawnConfig.debug();
         final LevelGenerator generator = new PopulatedLevelGenerator(spawnConfig);
         final GenerationConfig config = GenerationConfig.withDefaults(
-                DEFAULT_MAP_WIDTH, DEFAULT_MAP_HEIGHT, 1, seed
-        );
+                DEFAULT_MAP_WIDTH, DEFAULT_MAP_HEIGHT, 1, seed);
         final Level level = generator.generate(config);
         return level.getMap();
     }
@@ -142,14 +141,15 @@ public final class WorldRenderingDemo extends StackPane {
                     case CORRIDOR -> drawCorridor(gc, map, pos, px, py);
                     case STAIRS_UP -> drawImage(gc, TILE_STAIRS, px, py);
                     case TRAP -> drawColoredTile(gc, Color.DARKORANGE, px, py);
-                    case VOID -> { }
+                    case VOID -> {
+                    }
                 }
             }
         }
     }
 
     private void drawFloor(final GraphicsContext gc, final GameMap map,
-                           final Position pos, final double px, final double py) {
+            final Position pos, final double px, final double py) {
         final boolean wallAbove = isWallOrVoid(map, pos.x(), pos.y() - 1);
         final boolean wallBelow = isWallOrVoid(map, pos.x(), pos.y() + 1);
         final boolean wallLeft = isWallOrVoid(map, pos.x() - 1, pos.y());
@@ -185,7 +185,7 @@ public final class WorldRenderingDemo extends StackPane {
     }
 
     private void drawCorridor(final GraphicsContext gc, final GameMap map,
-                              final Position pos, final double px, final double py) {
+            final Position pos, final double px, final double py) {
         final boolean wallAbove = isWallOrVoid(map, pos.x(), pos.y() - 1);
         final boolean wallBelow = isWallOrVoid(map, pos.x(), pos.y() + 1);
         final boolean wallLeft = isWallOrVoid(map, pos.x() - 1, pos.y());
@@ -216,13 +216,13 @@ public final class WorldRenderingDemo extends StackPane {
     }
 
     private void drawColoredTile(final GraphicsContext gc, final Color color,
-                                 final double px, final double py) {
+            final double px, final double py) {
         gc.setFill(color);
         gc.fillRect(px, py, DEFAULT_TILE_SIZE, DEFAULT_TILE_SIZE);
     }
 
     private void drawImage(final GraphicsContext gc, final String name,
-                           final double px, final double py) {
+            final double px, final double py) {
         final Image img = tileImages.get(name);
         if (img != null) {
             gc.drawImage(img, px, py, DEFAULT_TILE_SIZE, DEFAULT_TILE_SIZE);
@@ -257,7 +257,6 @@ public final class WorldRenderingDemo extends StackPane {
                 start.x() * DEFAULT_TILE_SIZE,
                 start.y() * DEFAULT_TILE_SIZE,
                 DEFAULT_TILE_SIZE,
-                DEFAULT_TILE_SIZE
-        );
+                DEFAULT_TILE_SIZE);
     }
 }

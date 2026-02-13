@@ -1,9 +1,12 @@
 package it.unibo.jrogue.controller;
 
+import java.util.Map;
+
 import it.unibo.jrogue.boundary.DungeonRenderer;
 import it.unibo.jrogue.commons.Move;
 import it.unibo.jrogue.engine.BaseController;
 import it.unibo.jrogue.entity.entities.api.Player;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -34,8 +37,8 @@ public final class GameController implements InputHandler {
         final long seed = System.currentTimeMillis();
         this.dungeonController = new DungeonController(seed, renderer);
         dungeonController.startNewGame();
-        InventoryController ic = (InventoryController) this.controller.getInventoryController();
-        ic.setupPlayer(getPlayer());
+        final InventoryController ic = (InventoryController) this.controller.getInventoryController();
+        ic.setupPlayer(getPlayer(), getGameSprites());
     }
 
     /**
@@ -65,11 +68,12 @@ public final class GameController implements InputHandler {
         } else if (code == KeyCode.ESCAPE) {
             controller.pauseGame();
         } else if (code == KeyCode.SPACE) {
-            //readDialogue(); This method refers to text boxes, when already in a text box continue the dialogue
+            // readDialogue(); This method refers to text boxes, when already in a text box
+            // continue the dialogue
         } else if (code == KeyCode.CONTROL) {
-            //turnAcceleration();
+            // turnAcceleration();
         } else if (code == KeyCode.SHIFT) {
-            //useDistanceWeapon();
+            // useDistanceWeapon();
         }
     }
 
@@ -103,6 +107,15 @@ public final class GameController implements InputHandler {
     @Override
     public Pane getView() {
         return this.renderer;
+    }
+
+    /**
+     * Provides with all the sprites in the game.
+     * 
+     * @return a map with all the sprites saved.
+     */
+    public Map<String, Image> getGameSprites() {
+        return this.renderer.getLoadedSprites();
     }
 
     private void handleStairs() {

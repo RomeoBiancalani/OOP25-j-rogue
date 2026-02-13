@@ -23,16 +23,16 @@ public final class SaveData implements Serializable {
     /**
      * Creates a new SaveData.
      *
-     * @param seed the base seed for level generation
+     * @param seed         the base seed for level generation
      * @param currentLevel the current dungeon level
-     * @param playerData the player's saved state
-     * @param enemies the list of enemy states
-     * @param items the list of item states on the map
+     * @param playerData   the player's saved state
+     * @param enemies      the list of enemy states
+     * @param items        the list of item states on the map
      */
     public SaveData(final long seed, final int currentLevel,
-                    final PlayerData playerData,
-                    final List<EnemyData> enemies,
-                    final List<ItemData> items) {
+            final PlayerData playerData,
+            final List<EnemyData> enemies,
+            final List<ItemData> items) {
         this.baseSeed = seed;
         this.currentLevel = currentLevel;
         this.playerData = playerData;
@@ -104,17 +104,17 @@ public final class SaveData implements Serializable {
         /**
          * Creates player save data.
          *
-         * @param posX player x position
-         * @param posY player y position
-         * @param hp current hp
-         * @param maxHp maximum hp
-         * @param level player level
-         * @param armorClass base armor class
+         * @param posX           player x position
+         * @param posY           player y position
+         * @param hp             current hp
+         * @param maxHp          maximum hp
+         * @param level          player level
+         * @param armorClass     base armor class
          * @param inventoryItems items in inventory
          */
         public PlayerData(final int posX, final int posY, final int hp,
-                          final int maxHp, final int level, final int armorClass,
-                          final List<ItemData> inventoryItems) {
+                final int maxHp, final int level, final int armorClass,
+                final List<ItemData> inventoryItems) {
             this.posX = posX;
             this.posY = posY;
             this.hp = hp;
@@ -258,14 +258,15 @@ public final class SaveData implements Serializable {
         /**
          * Creates item save data.
          *
-         * @param type the item type identifier
-         * @param posX x position on map (-1 for inventory)
-         * @param posY y position on map (-1 for inventory)
-         * @param name the item name (for named items)
-         * @param value the item's numeric value (if needed, this can be use to cound value of items in inventory, value of gold etc)
+         * @param type  the item type identifier
+         * @param posX  x position on map (-1 for inventory)
+         * @param posY  y position on map (-1 for inventory)
+         * @param name  the item name (for named items)
+         * @param value the item's numeric value (if needed, this can be use to cound
+         *              value of items in inventory, value of gold etc)
          */
         public ItemData(final String type, final int posX, final int posY,
-                        final String name, final int value) {
+                final String name, final int value) {
             this.type = type;
             this.posX = posX;
             this.posY = posY;

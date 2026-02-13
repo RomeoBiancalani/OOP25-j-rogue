@@ -76,8 +76,11 @@ public class SimpleInventory implements Inventory {
         return this.size;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void removeItem(int index) {
+    public void removeItem(final int index) {
         if (inventory.containsKey(index)) {
             inventory.remove(index);
         }
