@@ -43,6 +43,7 @@ public final class DungeonRenderer extends StackPane {
     private static final String WALL_COLOR = "#1a1a2e";
 
     private static final String SPRITE_PLAYER = "entities/player";
+    private static final String SPRITE_PLAYER_ARMOR = "entities/player-armored";
     private static final String SPRITE_BAT = "entities/bat";
     private static final String SPRITE_GOBLIN = "entities/goblin";
     private static final String SPRITE_DRAGON = "entities/dragon";
@@ -198,7 +199,11 @@ public final class DungeonRenderer extends StackPane {
         final Position playerPos = player.getPosition();
         final double ppx = playerPos.x() * tileSize;
         final double ppy = playerPos.y() * tileSize;
-        drawSprite(gc, SPRITE_PLAYER, ppx, ppy);
+        String spriteName = SPRITE_PLAYER;
+        if (player.hasArmor()) {
+            spriteName = SPRITE_PLAYER_ARMOR;
+        }
+        drawSprite(gc, spriteName, ppx, ppy);
     }
 
     /**
@@ -235,6 +240,7 @@ public final class DungeonRenderer extends StackPane {
 
         // Entities
         loadSprite(SPRITE_PLAYER);
+        loadSprite(SPRITE_PLAYER_ARMOR);
         loadSprite(SPRITE_BAT);
         loadSprite(SPRITE_GOBLIN);
         loadSprite(SPRITE_DRAGON);

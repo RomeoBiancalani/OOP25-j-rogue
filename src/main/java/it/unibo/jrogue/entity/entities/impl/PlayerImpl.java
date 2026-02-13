@@ -243,4 +243,14 @@ public class PlayerImpl extends AbstractEntity implements Player {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean hasArmor() {
+        return !armor.isEmpty();
+    }
+
+    
+
 }
