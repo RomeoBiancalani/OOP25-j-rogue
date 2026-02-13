@@ -29,5 +29,4 @@ public class CombatControllerImpl implements CombatController {
         }
         return damage;
     }
-
 }
