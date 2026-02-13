@@ -67,7 +67,7 @@ public final class BSPLevelGenerator implements LevelGenerator {
         Position stairsPos = null;
         if (rooms.size() > 1) {
             stairsPos = rooms.get(rooms.size() - 1).getCenter();
-            tiles[stairsPos.y()][stairsPos.x()] = Tile.STAIRS_DOWN;
+            tiles[stairsPos.y()][stairsPos.x()] = Tile.STAIRS_UP;
         }
 
         // Step 6: Create and return the level

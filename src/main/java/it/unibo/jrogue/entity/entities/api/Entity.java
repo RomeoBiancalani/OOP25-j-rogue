@@ -4,7 +4,7 @@ import it.unibo.jrogue.commons.Move;
 import it.unibo.jrogue.commons.Position;
 
 /**
- * Represents any intteractive object taht exist in the game world.
+ * Represents any intteractive object that exist in the game world.
  */
 public interface Entity {
 
@@ -57,6 +57,14 @@ public interface Entity {
      * @throws NullPointerException if move is null.
      */
     void doMove(Move move);
+
+    /**
+     * Sets the entity position directly.
+     * Used for level transitions and save/load.
+     * 
+     * @param position the new position
+     */
+    void setPosition(Position position);
 
     /**
      * Heal the entity of the specified amount.

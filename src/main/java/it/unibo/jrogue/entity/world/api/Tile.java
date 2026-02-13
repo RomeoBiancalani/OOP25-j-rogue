@@ -21,11 +21,7 @@ public enum Tile {
      */
     DOOR('+'),
     /**
-     * Stairs leading down to the next level.
-     */
-    STAIRS_DOWN('>'),
-    /**
-     * Stairs leading up to the previous level.
+     * Stairs leading up to the next level.
      */
     STAIRS_UP('<'),
     /**

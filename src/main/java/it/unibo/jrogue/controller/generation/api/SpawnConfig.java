@@ -9,12 +9,15 @@ package it.unibo.jrogue.controller.generation.api;
  * - XP_next(L) = 50*L^2 - 50*L + 100
  * - XP_gain = XP_base * (1 + lambda*(L-1))
  *
- * @param axeRate spawn rate for axes (0.05 default)
+ * @param daggerRate spawn rate for axes (0.05 default)
  * @param bowRate spawn rate for bows (0.05 default)
  * @param armorRate spawn rate for armor (0.05 default)
- * @param armor1Ratio ratio of Armor1 vs Armor2 when armor spawns (0.70 = 70% Armor1)
- * @param foodPotionBaseRate base spawn rate for food/potions (0.10 default)
- * @param foodPotionDecayPerLevel rate decrease per level (0.0025 default)
+ * @param armor1Ratio ratio of light vs heavy armor when armor spawns (0.70 = 70% light)
+ * @param ringRate spawn rate for rings (0.03 default)
+ * @param scrollRate spawn rate for scrolls (0.05 default)
+ * @param foodRate spawn rate for food (0.08 default)
+ * @param foodPotionBaseRate base spawn rate for health potions (0.10 default)
+ * @param foodPotionDecayPerLevel potion rate decrease per level (0.0025 default)
  * @param goldRate spawn rate for gold coins (0.20 default)
  * @param arrowRate spawn rate for arrows (placeholder)
  * @param spikeTrapMinLevel minimum level for spike traps (3)
@@ -27,17 +30,21 @@ package it.unibo.jrogue.controller.generation.api;
  * @param damageScalingBeta damage scaling coefficient (1.2 default)
  * @param xpScalingLambda XP gain scaling coefficient (0.5 default)
  * @param batBaseWeight base weight for bat enemy selection (10)
- * @param snakeBaseWeight base weight for snake enemy selection (8)
- * @param goblinBaseWeight base weight for goblin enemy selection (5)
+ * @param goblinBaseWeight base weight for goblin enemy selection (8)
+ * @param dragonBaseWeight base weight for dragon enemy selection (5)
  */
 public record SpawnConfig(
     // Equipment rates (per room)
-    double axeRate,
-    double bowRate,
+    double daggerRate,
+    double swordRate,
+    double shovelRate,
     double armorRate,
     double armor1Ratio,
+    double ringRate,
+    double scrollRate,
 
     // Consumables
+    double foodRate,
     double foodPotionBaseRate,
     double foodPotionDecayPerLevel,
     double goldRate,
@@ -57,17 +64,21 @@ public record SpawnConfig(
 
     // Enemy weights for level-based selection
     int batBaseWeight,
-    int snakeBaseWeight,
-    int goblinBaseWeight
+    int goblinBaseWeight,
+    int dragonBaseWeight
 ) {
 
     // Equipment rates
-    private static final double DEFAULT_AXE_RATE = 0.05;
-    private static final double DEFAULT_BOW_RATE = 0.05;
+    private static final double DEFAULT_DAGGER_RATE = 0.05;
+    private static final double DEFAULT_SWORD_RATE = 0.03;
+    private static final double DEFAULT_SHOVEL_RATE = 0.02;
     private static final double DEFAULT_ARMOR_RATE = 0.05;
     private static final double DEFAULT_ARMOR1_RATIO = 0.70;
+    private static final double DEFAULT_RING_RATE = 0.03;
+    private static final double DEFAULT_SCROLL_RATE = 0.05;
 
     // Consumables
+    private static final double DEFAULT_FOOD_RATE = 0.08;
     private static final double DEFAULT_FOOD_POTION_BASE_RATE = 0.10;
     private static final double DEFAULT_FOOD_POTION_DECAY = 0.0025;
     private static final double DEFAULT_GOLD_RATE = 0.20;
@@ -88,11 +99,12 @@ public record SpawnConfig(
 
     // Enemy weights
     private static final int DEFAULT_BAT_BASE_WEIGHT = 10;
-    private static final int DEFAULT_SNAKE_BASE_WEIGHT = 8;
-    private static final int DEFAULT_GOBLIN_BASE_WEIGHT = 5;
+    private static final int DEFAULT_GOBLIN_BASE_WEIGHT = 8;
+    private static final int DEFAULT_DRAGON_BASE_WEIGHT = 5;
 
     // Debug rates
     private static final double DEBUG_EQUIPMENT_RATE = 0.10;
+    private static final double DEBUG_FOOD_RATE = 0.12;
     private static final double DEBUG_FOOD_POTION_RATE = 0.15;
     private static final double DEBUG_TRAP_RATE = 0.20;
     private static final double DEBUG_ENEMY_SPAWN_RATE = 0.50;
@@ -110,9 +122,11 @@ public record SpawnConfig(
     public static SpawnConfig defaults() {
         return new SpawnConfig(
             // Equipment
-            DEFAULT_AXE_RATE, DEFAULT_BOW_RATE,
+            DEFAULT_DAGGER_RATE, DEFAULT_SWORD_RATE, DEFAULT_SHOVEL_RATE,
             DEFAULT_ARMOR_RATE, DEFAULT_ARMOR1_RATIO,
+            DEFAULT_RING_RATE, DEFAULT_SCROLL_RATE,
             // Consumables
+            DEFAULT_FOOD_RATE,
             DEFAULT_FOOD_POTION_BASE_RATE, DEFAULT_FOOD_POTION_DECAY,
             DEFAULT_GOLD_RATE, DEFAULT_ARROW_RATE,
             // Traps
@@ -123,8 +137,8 @@ public record SpawnConfig(
             DEFAULT_HP_SCALING_ALPHA, DEFAULT_DAMAGE_SCALING_BETA,
             DEFAULT_XP_SCALING_LAMBDA,
             // Enemy weights
-            DEFAULT_BAT_BASE_WEIGHT, DEFAULT_SNAKE_BASE_WEIGHT,
-            DEFAULT_GOBLIN_BASE_WEIGHT
+            DEFAULT_BAT_BASE_WEIGHT, DEFAULT_GOBLIN_BASE_WEIGHT,
+            DEFAULT_DRAGON_BASE_WEIGHT
         );
     }
 
@@ -135,15 +149,17 @@ public record SpawnConfig(
      */
     public static SpawnConfig debug() {
         return new SpawnConfig(
-            // Equipment - slightly higher for testing
-            DEBUG_EQUIPMENT_RATE, DEBUG_EQUIPMENT_RATE,
+            // Equipment
+            DEBUG_EQUIPMENT_RATE, DEBUG_EQUIPMENT_RATE, DEBUG_EQUIPMENT_RATE,
             DEBUG_EQUIPMENT_RATE, DEFAULT_ARMOR1_RATIO,
-            // Consumables - moderate
+            DEBUG_EQUIPMENT_RATE, DEBUG_EQUIPMENT_RATE,
+            // Consumables
+            DEBUG_FOOD_RATE,
             DEBUG_FOOD_POTION_RATE, 0.0,
             DEFAULT_GOLD_RATE, DEFAULT_ARROW_RATE,
-            // Traps - available from level 1
+            // Traps from level 1
             1, 1, 1, DEBUG_TRAP_RATE,
-            // Enemies - moderate spawn rate
+            // Enemies
             DEBUG_ENEMY_SPAWN_RATE, DEFAULT_MAX_ENEMIES_PER_ROOM,
             DEFAULT_HP_SCALING_ALPHA, DEFAULT_DAMAGE_SCALING_BETA,
             DEFAULT_XP_SCALING_LAMBDA,
@@ -216,17 +232,17 @@ public record SpawnConfig(
      * Calculates enemy weight for level-based weighted selection.
      * Stronger enemies become more likely at deeper levels.
      * Weight = baseWeight + (level - 1) * levelBonus
-     * levelBonus: Bat=0, Snake=1, Goblin=2
+     * levelBonus: Bat=0, Goblin=1, Dragon=2
      *
-     * @param enemyType 0=Bat, 1=Snake, 2=Goblin
+     * @param enemyType 0=Bat, 1=Goblin, 2=Dragon
      * @param level the dungeon level
      * @return effective weight for enemy selection
      */
     public int getEnemyWeight(final int enemyType, final int level) {
         return switch (enemyType) {
             case 0 -> batBaseWeight;  // Bat doesn't scale up
-            case 1 -> snakeBaseWeight + level - 1;
-            case 2 -> goblinBaseWeight + 2 * (level - 1);
+            case 1 -> goblinBaseWeight + level - 1;
+            case 2 -> dragonBaseWeight + 2 * (level - 1);
             default -> throw new IllegalArgumentException("Unknown enemy type: " + enemyType);
         };
     }

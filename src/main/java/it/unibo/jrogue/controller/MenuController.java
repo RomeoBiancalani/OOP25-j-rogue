@@ -70,7 +70,7 @@ public final class MenuController implements InputHandler {
                 controller.startGame();
                 break;
             case 1:
-                // loadGame();
+                controller.loadGame();
                 break;
             case 2:
                 currentIndex = 0;

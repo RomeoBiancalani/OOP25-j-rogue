@@ -141,7 +141,7 @@ public final class WorldRenderingDemo extends StackPane {
                     case WALL -> drawWallFill(gc, px, py);
                     case CORRIDOR -> drawCorridor(gc, map, pos, px, py);
                     case DOOR -> drawColoredTile(gc, Color.SADDLEBROWN, px, py);
-                    case STAIRS_DOWN, STAIRS_UP -> drawImage(gc, TILE_STAIRS, px, py);
+                    case STAIRS_UP -> drawImage(gc, TILE_STAIRS, px, py);
                     case TRAP -> drawColoredTile(gc, Color.DARKORANGE, px, py);
                     case VOID -> { }
                 }

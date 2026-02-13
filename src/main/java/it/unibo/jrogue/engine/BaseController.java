@@ -1,5 +1,6 @@
 package it.unibo.jrogue.engine;
 
+import it.unibo.jrogue.controller.DungeonController;
 import it.unibo.jrogue.controller.GameController;
 import it.unibo.jrogue.controller.InputHandler;
 import it.unibo.jrogue.controller.InventoryController;
@@ -9,6 +10,7 @@ import it.unibo.jrogue.controller.PauseGameController;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import java.io.IOException;
 
 /**
  *  BaseController class handle every controller the software utilize
@@ -81,10 +83,8 @@ public final class BaseController {
 
     public void startGame() {
         entity.setCurrentState(GameState.State.PLAYING);
+        ((GameController) gameController).startNewGame();
         this.currentController = gameController;
-        //Player player = gameController.getPlayer();
-
-        //((InventoryController) this.inventoryController).setupPlayer(player); 
         changeView(gameController.getView());
     }
     /**
@@ -154,4 +154,48 @@ public final class BaseController {
         changeView(gameController.getView());
     }
 
+    /**
+     * Saves the current game to the default save file.
+     *
+     * @return true if the save was successful
+     */
+    public boolean saveGame() {
+        try {
+            final GameController gc = (GameController) gameController;
+            SaveManager.save(gc.getDungeonController(), SaveManager.getDefaultSavePath());
+            return true;
+        } catch (final IOException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Loads a game from the default save file.
+     *
+     * @return true if the load was successful
+     */
+    public boolean loadGame() {
+        try {
+            final SaveData data = SaveManager.load(SaveManager.getDefaultSavePath());
+            final GameController gc = (GameController) gameController;
+            final DungeonController restored = SaveManager.restore(data, gc.getDungeonController().getRenderer());
+            gc.restoreGame(restored);
+
+            entity.setCurrentState(GameState.State.PLAYING);
+            this.currentController = gameController;
+            changeView(gameController.getView());
+            return true;
+        } catch (final IOException | ClassNotFoundException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Checks if a save file exists.
+     *
+     * @return true if a save file exists
+     */
+    public boolean hasSaveFile() {
+        return SaveManager.saveExists();
+    }
 }

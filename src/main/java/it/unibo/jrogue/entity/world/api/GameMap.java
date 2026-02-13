@@ -97,11 +97,11 @@ public interface GameMap {
     Position getStartingPosition();
 
     /**
-     * Returns the position of stairs to the next level.
+     * Returns the position of stairs up to the next level.
      *
      * @return the stairs position, or empty if none
      */
-    Optional<Position> getStairsDown();
+    Optional<Position> getStairsUp();
 
     /**
      * Returns the entity at a given position, if any.
