@@ -8,17 +8,13 @@ import it.unibo.jrogue.entity.items.api.Consumable;
  */
 public class Food implements Consumable {
     private static final int HEALING_AMOUNT = 5;
-    private int consumableAmount;
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void consume(final Player player) {
-        if (consumableAmount > 0) {
             player.heal(HEALING_AMOUNT);
-            consumableAmount--;
-        }
     }
 
     /**
@@ -27,16 +23,6 @@ public class Food implements Consumable {
     @Override
     public String getDescription() {
         return "Food have healing properties, get healed by: " + HEALING_AMOUNT + " HP";
-    }
-
-    /**
-     * Getter for item amount.
-     *
-     * @return consumableAmount.
-     */
-
-    public int getConsumableAmount() {
-        return consumableAmount;
     }
 
 }

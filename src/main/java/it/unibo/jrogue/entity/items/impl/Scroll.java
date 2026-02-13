@@ -11,7 +11,6 @@ import java.util.Optional;
  * Class that manages the scroll item. 
  */
 public class Scroll implements Consumable {
-    private int consumableAmount;
 
     @Override
     public void consume(final Player player) {
@@ -22,7 +21,6 @@ public class Scroll implements Consumable {
                 final Item item = invItem.get();
                 if (item instanceof Ring ring) {
                     ring.identify();
-                    consumableAmount--;
                     return;
                 }
             }
@@ -36,15 +34,5 @@ public class Scroll implements Consumable {
     @Override
     public String getDescription() {
         return "It may help you discover the first ring effect";
-    }
-
-    /**
-     * Getter for item amount.
-     *
-     * @return consumableAmount.
-     */
-
-    public int getConsumableAmount() {
-        return consumableAmount;
     }
 }
