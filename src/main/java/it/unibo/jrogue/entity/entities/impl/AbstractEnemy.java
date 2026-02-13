@@ -3,13 +3,15 @@ package it.unibo.jrogue.entity.entities.impl;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
-import java.util.Random;
 
 import it.unibo.jrogue.commons.Dice;
 import it.unibo.jrogue.commons.Move;
 import it.unibo.jrogue.commons.Position;
+import it.unibo.jrogue.entity.GameRandom;
 import it.unibo.jrogue.entity.entities.api.Enemy;
+import it.unibo.jrogue.entity.entities.api.MovementStrategy;
 import it.unibo.jrogue.entity.items.api.Item;
 
 /**
@@ -26,8 +28,7 @@ public abstract class AbstractEnemy extends AbstractEntity implements Enemy {
      */
     private static final int SLEEP_CHANCE = 10;
 
-    private static final Random RAND = new Random();
-
+    private final MovementStrategy movementStrategy;
     private final int visibility;
     private boolean sleeping;
 
@@ -39,19 +40,24 @@ public abstract class AbstractEnemy extends AbstractEntity implements Enemy {
      * @param lifePoint       The life points of the enemy.
      * @param armorClass      The armor class of the enemy.
      * @param visibility      The visibility range of the enemy.
+     * @param strategy        The strategy of movement of the enemy
      * @throws IllegalArgumentException if visibility range is negative.
+     * @throws NullPointerException if strategy is null.
      */
     public AbstractEnemy(final Position currentPosition,
             final int level,
             final int lifePoint,
             final int armorClass,
-            final int visibility) {
+            final int visibility,
+            final MovementStrategy strategy) {
 
         super(lifePoint, level, armorClass, currentPosition);
         if (visibility < 0) {
             throw new IllegalArgumentException("Visibility range cannot be negative");
         }
+        Objects.requireNonNull(strategy);
         this.visibility = visibility;
+        this.movementStrategy = strategy;
         this.sleeping = computeSleeping();
     }
 
@@ -76,7 +82,21 @@ public abstract class AbstractEnemy extends AbstractEntity implements Enemy {
      */
     @Override
     public final boolean computeSleeping() {
-        return RAND.nextInt(SLEEP_CHANCE) == 0;
+        return GameRandom.nextInt(SLEEP_CHANCE) == 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Move getNextMove(final Position playerPosition) {
+        if (isSleeping()) {
+            return Move.IDLE;
+        }
+        if (canSeePlayer(playerPosition)) {
+            return movementStrategy.calculateNextMove(this.getPosition(), playerPosition);
+        }
+        return Move.IDLE;
     }
 
     /**
@@ -102,49 +122,6 @@ public abstract class AbstractEnemy extends AbstractEntity implements Enemy {
             }
         }
         return Collections.unmodifiableList(visible);
-    }
-
-    /**
-     * Gets the random number generator use in this class.
-     * 
-     * @return The random number generator.
-     */
-    protected static Random getRandom() {
-        return RAND;
-    }
-
-    /**
-     * Generates a random move.
-     * 
-     * @return A random move.
-     */
-    protected Move randomMove() {
-        final Move[] moves = Move.values();
-        return moves[RAND.nextInt(moves.length)];
-    }
-
-    /**
-     * Determines the move direction towards the specified target position.
-     * 
-     * @param targetPosition The target position to move towards.
-     * @return The move direction towards the target position.
-     */
-    protected Move moveToward(final Position targetPosition) {
-        if (targetPosition == null) {
-            return Move.IDLE;
-        }
-
-        final Position from = getPosition();
-        final int dx = Integer.compare(targetPosition.x(), from.x());
-        final int dy = Integer.compare(targetPosition.y(), from.y());
-
-        for (final Move move : Move.values()) {
-            if (move.getX() == dx && move.getY() == dy) {
-                return move;
-            }
-        }
-
-        return Move.IDLE;
     }
 
     /**

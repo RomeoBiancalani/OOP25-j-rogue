@@ -45,8 +45,8 @@ class BatTest {
 
     @Test
     void testVisibility() {
-        // Bat has range 1 of visibility.
-        final int bound = 3;
+        // Bat has range 6 of visibility.
+        final int bound = 6 + START_POS.x();
         for (int j = 0; j < bound; j++) {
             for (int i = 0; i < bound; i++) {
                 assertTrue(bat.canSeePlayer(new Position(i, j)));
@@ -73,19 +73,6 @@ class BatTest {
             bat.wakeUp();
         }
         assertNotNull(bat.getNextMove(new Position(0, 0)));
-    }
-
-    @Test
-    void testMoveTorwardDirection() {
-        final Position visiblePlayerPos = new Position(2, 2);
-        bat.wakeUp();
-        Move batMove;
-        // iterate while but decide to move (60% probability).
-        do {
-            batMove = bat.getNextMove(visiblePlayerPos);
-        } while (batMove == Move.IDLE);
-        // if bat move towards to (2, 2), move has to be bottom-right (1, 1).
-        assertEquals(batMove, Move.BOTTOM_RIGHT);
     }
 
     @Test

@@ -74,9 +74,9 @@ class DragonTest {
         if (dragon.isSleeping()) {
             dragon.wakeUp();
         }
-        // if bat doesn't see player it doesn't move.
+        // if dragon doesn't see player it doesn't move.
         assertEquals(Move.IDLE, dragon.getNextMove(notVisiblePlayerPos));
-        // if bat move towards to (1, 1), move has to be top-left (-1, -1).
+        // if dragon move towards to (1, 1), move has to be top-left (-1, -1).
         assertEquals(Move.TOP_LEFT, dragon.getNextMove(visiblePlayerPos));
     }
 

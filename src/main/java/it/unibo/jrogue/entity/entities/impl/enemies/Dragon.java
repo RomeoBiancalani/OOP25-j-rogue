@@ -3,9 +3,9 @@ package it.unibo.jrogue.entity.entities.impl.enemies;
 import java.util.Optional;
 
 import it.unibo.jrogue.commons.Dice;
-import it.unibo.jrogue.commons.Move;
 import it.unibo.jrogue.commons.Position;
 import it.unibo.jrogue.entity.entities.impl.AbstractEnemy;
+import it.unibo.jrogue.entity.entities.impl.enemies.movement.ChasingMovementStrategy;
 import it.unibo.jrogue.entity.items.api.Item;
 import it.unibo.jrogue.entity.items.impl.ItemFactoryImpl;
 
@@ -38,23 +38,9 @@ public class Dragon extends AbstractEnemy {
             D_LEVEL, 
             Dice.roll(D_NUM_DICE, D_SIDES_DICE), 
             D_AC, 
-            D_VISIBILITY
+            D_VISIBILITY,
+            new ChasingMovementStrategy()
         );
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * <p>
-     * Dragon behavior: If it can see the player, it move towards to it.
-     * </p>
-     */
-    @Override
-    public Move getNextMove(final Position playerPosition) {
-        if (isSleeping() || !canSeePlayer(playerPosition)) {
-            return Move.IDLE;
-        }
-        return moveToward(playerPosition);
     }
 
     /**
