@@ -16,6 +16,20 @@ public interface Player extends Entity {
     Inventory getInventory();
 
     /**
+     * Returns the gold amount of the player.
+     * 
+     * @return the gold of the player.
+     */
+    int getGold();
+
+    /**
+     * Collect the specified gold amount of the player.
+     * 
+     * @param amount The amount of gold to collect.
+     */
+    void collectGold(int amount);
+
+    /**
      * Equip the specified equipment for the player.
      * 
      * @param equipment The equipment to be equipped.

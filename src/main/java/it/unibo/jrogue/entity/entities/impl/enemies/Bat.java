@@ -1,9 +1,11 @@
 package it.unibo.jrogue.entity.entities.impl.enemies;
 
+import java.util.Optional;
 import it.unibo.jrogue.commons.Dice;
 import it.unibo.jrogue.commons.Move;
 import it.unibo.jrogue.commons.Position;
 import it.unibo.jrogue.entity.entities.impl.AbstractEnemy;
+import it.unibo.jrogue.entity.items.api.Item;
 
 /**
  * Rapresents a Bat enemy entity.
@@ -66,4 +68,15 @@ public class Bat extends AbstractEnemy {
     public int getAttack() {
         return Dice.roll(1, 4) + getLevel();
     }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @throws IllegalStateException if the enemy is still alive.
+     */
+    @Override
+    public Optional<Item> getItemDrop() {
+        return Optional.empty();
+    }
+
 }

@@ -17,7 +17,7 @@ import it.unibo.jrogue.entity.entities.impl.AbstractEnemy;
 public class Dragon extends AbstractEnemy {
 
     private static final int D_LEVEL = 6;
-    private static final int D_AC = 20;
+    private static final int D_AC = 12;
     private static final int D_VISIBILITY = 5;
     private static final int D_NUM_DICE = 4;
     private static final int D_SIDES_DICE = 10;

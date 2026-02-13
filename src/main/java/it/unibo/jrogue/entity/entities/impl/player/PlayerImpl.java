@@ -27,6 +27,7 @@ public class PlayerImpl extends AbstractEntity implements Player {
     private static final int XP_TO_LEVEL_UP = 20;
 
     private int xp;
+    private int gold;
     private final Inventory inventory;
     private Optional<Armor> armor;
     private Optional<MeleeWeapon> weapon;
@@ -49,6 +50,7 @@ public class PlayerImpl extends AbstractEntity implements Player {
         armor = Optional.empty();
         weapon = Optional.empty();
         ring = Optional.empty();
+        gold = 0;
         xp = 0;
     }
 
@@ -76,6 +78,27 @@ public class PlayerImpl extends AbstractEntity implements Player {
 
     /**
      * {@inheritDoc}
+     */
+    @Override
+    public int getGold() {
+        return gold;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @throws IllegalArgumentException if amount is not positive.
+     */
+    @Override
+    public void collectGold(final int amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("Amount must be non positive");
+        }
+        gold = gold + amount;
+    }
+
+    /**
+     * {@inheritDoc}
      * 
      * <p>
      * Calculates the total armor class including the bonus from equipped armor
@@ -96,10 +119,12 @@ public class PlayerImpl extends AbstractEntity implements Player {
     @Override
     public int getAttack() {
         int maxDamage = BASE_DAMAGE;
+        int nDice = 1;
         if (weapon.isPresent()) {
+            nDice++;
             maxDamage += weapon.get().getBonus();
         }
-        return Dice.roll(1, maxDamage) + getLevel();
+        return Dice.roll(nDice, maxDamage) + getLevel();
     }
 
     /**
@@ -140,6 +165,13 @@ public class PlayerImpl extends AbstractEntity implements Player {
         }
     }
 
+    /**
+     * Check if the specified equipment is equipped.
+     * 
+     * @param equipment The equipment to check.
+     * @return true if the equipment is equipped, false otherwise.
+     * @throws NullPointerException if equipment is null.
+     */
     private boolean isEquipped(final Equipment equipment) {
         Objects.requireNonNull(equipment, "Equipment to check must be not null");
         return equipment.equals(armor.orElse(null)) 

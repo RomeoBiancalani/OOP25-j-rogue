@@ -174,10 +174,10 @@ class PlayerTest {
         final MeleeWeapon sword = new MeleeWeapon("sword", 2);
         player.equip(sword);
 
-        // Player hit bonus = 6 (base hit bonus) + 2 (sword bonus).
+        // Player hit bonus = (4 (base hit bonus) + 2 (sword bonus)) * 2 (if has weapon it throw 2 dice).
         for (int i = 0; i < bound; i++) {
             final int bonus = player.getAttack();
-            assertTrue(bonus >= 1 && bonus <= sword.getBonus() + 4);
+            assertTrue(bonus >= 1 && bonus <= (sword.getBonus() + 4) * 2);
         }
 
         final int axeDamage = 5;
@@ -186,10 +186,10 @@ class PlayerTest {
         assertThrows(IllegalArgumentException.class, () -> player.remove(axe));
 
         player.equip(sword);
-        // Player hit bonus = 3 (base hit bonus) + 5 (axe bonus).
+        // Player hit bonus = (4 (base hit bonus) + 5 (axe bonus)) * 2 (if has weapon it throw 2 dice).
         for (int i = 0; i < ITERATION; i++) {
             final int bonus = player.getAttack();
-            assertTrue(bonus >= 1 && bonus <= axe.getBonus() + 4);
+            assertTrue(bonus >= 1 && bonus <= (axe.getBonus() + 4) * 2);
         }
     }
 

@@ -1,7 +1,10 @@
 package it.unibo.jrogue.entity.entities.api;
 
+import java.util.Optional;
+
 import it.unibo.jrogue.commons.Move;
 import it.unibo.jrogue.commons.Position;
+import it.unibo.jrogue.entity.items.api.Item;
 
 /**
  * Defines the contract for all enemy entities in the game.
@@ -42,4 +45,18 @@ public interface Enemy extends Entity {
      * @return true if the enemy can see the player, false otherwise.
      */
     boolean canSeePlayer(Position playerPosition);
+
+    /**
+     * Return the amount of xp that the enemy drop when is killed.
+     * 
+     * @return The amount of xp to drop.
+     */
+    int getXpDrop();
+
+    /**
+     * Return the item that the enemy drop when is killed.
+     * 
+     * @return The item to drop.
+     */
+    Optional<Item> getItemDrop();
 }

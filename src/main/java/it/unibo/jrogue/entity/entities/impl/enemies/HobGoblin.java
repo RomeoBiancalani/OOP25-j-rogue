@@ -17,7 +17,7 @@ import it.unibo.jrogue.entity.entities.impl.AbstractEnemy;
 public class HobGoblin extends AbstractEnemy {
 
     private static final int HG_LEVEL = 2;
-    private static final int HG_AC = 11;
+    private static final int HG_AC = 6;
     private static final int HG_VISIBILITY = 2;
     private static final int HP_NUM_DICE = 2;
     private static final int HP_SIDES_DICE = 9;

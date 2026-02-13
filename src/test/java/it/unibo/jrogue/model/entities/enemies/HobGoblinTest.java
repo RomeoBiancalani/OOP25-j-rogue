@@ -18,7 +18,7 @@ import it.unibo.jrogue.entity.entities.impl.enemies.HobGoblin;
 class HobGoblinTest {
     private static final Position START_POS = new Position(2, 2);
     private static final int HG_LEVEL = 2;
-    private static final int HG_AC = 11;
+    private static final int HG_AC = 6;
     private static final int HG_MIN_HP = 2;
     private static final int HG_MAX_HP = 18;
     private static final int HG_VISIBILITY = 2;

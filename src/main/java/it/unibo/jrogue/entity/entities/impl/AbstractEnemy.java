@@ -3,11 +3,15 @@ package it.unibo.jrogue.entity.entities.impl;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
+import it.unibo.jrogue.commons.Dice;
 import it.unibo.jrogue.commons.Move;
 import it.unibo.jrogue.commons.Position;
 import it.unibo.jrogue.entity.entities.api.Enemy;
+import it.unibo.jrogue.entity.items.api.Item;
+import it.unibo.jrogue.entity.items.impl.ItemFactoryImpl;
 
 /**
  * Base implementation for all enemy entities.
@@ -142,5 +146,31 @@ public abstract class AbstractEnemy extends AbstractEntity implements Enemy {
         }
 
         return Move.IDLE;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @throws IllegalStateException if the enemy is alive.
+     */
+    @Override
+    public int getXpDrop() {
+        if (isAlive()) {
+            throw new IllegalStateException("An alive enemy can't drop xp");
+        }
+        return Dice.roll(getLevel(), 4);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @throws IllegalStateException if the enemy is still alive.
+     */
+    @Override
+    public Optional<Item> getItemDrop() {
+        if (isAlive()) {
+            throw new IllegalStateException("An alive enemy can't drop item");
+        }
+        return new ItemFactoryImpl().createRandomItem(this.getLevel());
     }
 }

@@ -10,6 +10,8 @@ import it.unibo.jrogue.controller.api.CombatController;
 import it.unibo.jrogue.entity.entities.api.Enemy;
 import it.unibo.jrogue.entity.entities.api.Entity;
 import it.unibo.jrogue.entity.entities.api.Player;
+import it.unibo.jrogue.entity.items.api.Item;
+import it.unibo.jrogue.entity.items.impl.Gold;
 import it.unibo.jrogue.entity.world.api.GameMap;
 
 /**
@@ -48,12 +50,24 @@ public class MovementControllerImpl implements MovementController {
             // Pick up item if present at the moved position
             gameMap.removeItemAt(player.getPosition())
                     .ifPresent(item -> {
-                        player.getInventory().addItem(item);
+                        if (item instanceof Gold gold) {
+                            player.collectGold(gold.getAmount());
+                        } else {
+                            player.getInventory().addItem(item);
+                        }
                     });
         } else {
-            Optional<Enemy> target = getOccupiedByEnemy(player, move);
+            final Optional<Enemy> target = getOccupiedByEnemy(player, move);
             if (target.isPresent()) {
                 combatController.attack(player, target.get());
+                // If player killed the enemy, collect his drop and xp.
+                if (!target.get().isAlive()) {
+                    final Optional<Item> drop = target.get().getItemDrop();
+                    if (drop.isPresent()) {
+                        player.getInventory().addItem(drop.get());
+                    }
+                    player.collectXP(target.get().getXpDrop());
+                }
             }
         }
 

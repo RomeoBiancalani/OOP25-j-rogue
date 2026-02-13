@@ -18,7 +18,7 @@ import it.unibo.jrogue.entity.entities.impl.enemies.Dragon;
 class DragonTest {
     private static final Position START_POS = new Position(5, 5);
     private static final int D_LEVEL = 6;
-    private static final int D_AC = 20;
+    private static final int D_AC = 12;
     private static final int D_MIN_HP = 4;
     private static final int D_MAX_HP = 40;
     private static final int D_VISIBILITY = 5;
