@@ -22,6 +22,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -121,6 +123,13 @@ public final class DungeonRenderer extends StackPane {
 
         this.getChildren().clear();
         this.getChildren().addAll(terrainCanvas, itemCanvas, entityCanvas);
+    }
+
+    /**
+     * Initializes the canvas layers for the given map dimensions. Before any render.
+     */
+    public Map<String, Image> getLoadedSprites() {
+        return Collections.unmodifiableMap(this.spriteCache);
     }
 
     /**
