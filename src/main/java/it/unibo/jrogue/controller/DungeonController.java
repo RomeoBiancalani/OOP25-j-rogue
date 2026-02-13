@@ -121,7 +121,7 @@ public final class DungeonController {
 
     /**
      * Executes a single game turn: moves the player, then enemies.
-     * Updates the entity and item rendering layers.
+     * Updates the entity, item rendering layers and update player StatusBar.
      *
      * @param move the player's movement direction
      */
@@ -129,6 +129,7 @@ public final class DungeonController {
         movementController.executeTurn(move);
         renderer.renderEntities(currentMap, player);
         renderer.renderItems(currentMap);
+        renderer.renderStatusBar(player);
     }
 
     /**
