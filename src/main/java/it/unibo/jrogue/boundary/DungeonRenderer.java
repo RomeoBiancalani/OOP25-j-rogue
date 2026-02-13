@@ -7,6 +7,7 @@ import it.unibo.jrogue.entity.entities.impl.enemies.Bat;
 import it.unibo.jrogue.entity.entities.impl.enemies.Dragon;
 import it.unibo.jrogue.entity.entities.impl.enemies.HobGoblin;
 import it.unibo.jrogue.entity.items.api.Item;
+import it.unibo.jrogue.entity.items.impl.Amulet;
 import it.unibo.jrogue.entity.items.impl.Armor;
 import it.unibo.jrogue.entity.items.impl.Food;
 import it.unibo.jrogue.entity.items.impl.Gold;
@@ -53,6 +54,7 @@ public final class DungeonRenderer extends StackPane {
     private static final String SPRITE_POTION = "items/potion";
     private static final String SPRITE_FOOD = "items/food";
     private static final String SPRITE_RING = "items/ring";
+    private static final String SPRITE_AMULET = "items/ring";
     private static final String SPRITE_SCROLL = "items/scroll";
     private static final String SPRITE_ARMOR_BASE = "items/armor-base";
     private static final String SPRITE_ARMOR_MAX = "items/armor-max";
@@ -102,7 +104,8 @@ public final class DungeonRenderer extends StackPane {
     }
 
     /**
-     * Initializes the canvas layers for the given map dimensions. Before any render.
+     * Initializes the canvas layers for the given map dimensions. Before any
+     * render.
      * 
      * @param map the game map
      */
@@ -126,7 +129,8 @@ public final class DungeonRenderer extends StackPane {
     }
 
     /**
-     * Returns the spriteCache Map, this can be used by other Boundary classes that needs Image instances to render elements.
+     * Returns the spriteCache Map, this can be used by other Boundary classes that
+     * needs Image instances to render elements.
      */
     public Map<String, Image> getLoadedSprites() {
         return Collections.unmodifiableMap(this.spriteCache);
@@ -158,8 +162,10 @@ public final class DungeonRenderer extends StackPane {
                     case STAIRS_UP -> drawSprite(gc, TILE_STAIRS, px, py);
                     // TODO: Trap is hidden by default, need to handle show and hide
                     case TRAP -> drawTrapSprite(gc, px, py);
-                    case VOID -> { }
-                    default -> { }
+                    case VOID -> {
+                    }
+                    default -> {
+                    }
                 }
             }
         }
@@ -189,7 +195,7 @@ public final class DungeonRenderer extends StackPane {
      * Renders the entity layer (player and enemies).
      * Call every turn after movement.
      *
-     * @param map the game map
+     * @param map    the game map
      * @param player the player entity
      */
     public void renderEntities(final GameMap map, final Player player) {
@@ -219,7 +225,7 @@ public final class DungeonRenderer extends StackPane {
      * Renders all layers at once.
      * Convenience method for level changes.
      *
-     * @param map the game map
+     * @param map    the game map
      * @param player the player entity
      */
     public void renderAll(final GameMap map, final Player player) {
@@ -259,6 +265,7 @@ public final class DungeonRenderer extends StackPane {
         loadSprite(SPRITE_POTION);
         loadSprite(SPRITE_FOOD);
         loadSprite(SPRITE_RING);
+        loadSprite(SPRITE_AMULET);
         loadSprite(SPRITE_SCROLL);
         loadSprite(SPRITE_ARMOR_BASE);
         loadSprite(SPRITE_ARMOR_MAX);
@@ -281,7 +288,7 @@ public final class DungeonRenderer extends StackPane {
     }
 
     private void drawSprite(final GraphicsContext gc, final String name,
-                            final double px, final double py) {
+            final double px, final double py) {
         final Image img = spriteCache.get(name);
         if (img != null) {
             gc.drawImage(img, px, py, tileSize, tileSize);
@@ -289,7 +296,7 @@ public final class DungeonRenderer extends StackPane {
     }
 
     private void drawFloor(final GraphicsContext gc, final GameMap map,
-                           final Position pos, final double px, final double py) {
+            final Position pos, final double px, final double py) {
         final boolean wallAbove = isWallOrVoid(map, pos.x(), pos.y() - 1);
         final boolean wallBelow = isWallOrVoid(map, pos.x(), pos.y() + 1);
         final boolean wallLeft = isWallOrVoid(map, pos.x() - 1, pos.y());
@@ -320,13 +327,13 @@ public final class DungeonRenderer extends StackPane {
     }
 
     private void drawWallFill(final GraphicsContext gc,
-                              final double px, final double py) {
+            final double px, final double py) {
         gc.setFill(Color.web(WALL_COLOR));
         gc.fillRect(px, py, tileSize, tileSize);
     }
 
     private void drawCorridor(final GraphicsContext gc, final GameMap map,
-                              final Position pos, final double px, final double py) {
+            final Position pos, final double px, final double py) {
         final boolean wallAbove = isWallOrVoid(map, pos.x(), pos.y() - 1);
         final boolean wallBelow = isWallOrVoid(map, pos.x(), pos.y() + 1);
         final boolean wallLeft = isWallOrVoid(map, pos.x() - 1, pos.y());
@@ -357,7 +364,7 @@ public final class DungeonRenderer extends StackPane {
     }
 
     private void drawTrapSprite(final GraphicsContext gc,
-                                final double px, final double py) {
+            final double px, final double py) {
         // TODO: Check if trap is hidden
         drawSprite(gc, SPRITE_TRAP_DAMAGE, px, py);
     }
@@ -376,6 +383,8 @@ public final class DungeonRenderer extends StackPane {
             return SPRITE_FOOD;
         } else if (item instanceof Ring) {
             return SPRITE_RING;
+        } else if (item instanceof Amulet) {
+            return SPRITE_AMULET;
         } else if (item instanceof Scroll) {
             return SPRITE_SCROLL;
         } else if (item instanceof MeleeWeapon weapon) {

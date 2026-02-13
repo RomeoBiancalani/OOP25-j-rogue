@@ -9,6 +9,7 @@ import it.unibo.jrogue.entity.entities.impl.enemies.Bat;
 import it.unibo.jrogue.entity.entities.impl.enemies.Dragon;
 import it.unibo.jrogue.entity.entities.impl.enemies.HobGoblin;
 import it.unibo.jrogue.entity.items.api.Item;
+import it.unibo.jrogue.entity.items.impl.Amulet;
 import it.unibo.jrogue.entity.items.impl.Armor;
 import it.unibo.jrogue.entity.items.impl.Food;
 import it.unibo.jrogue.entity.items.impl.Gold;
@@ -60,6 +61,24 @@ public final class EntityPopulatorImpl implements EntityPopulator {
         // Skip first room (player spawn)
         for (int i = 1; i < rooms.size(); i++) {
             populateRoom(map, rooms.get(i), levelNumber, config);
+
+            if (levelNumber == 10) {
+                spawnAmulet(map, rooms);
+            }
+        }
+    }
+
+    private void spawnAmulet(final GameMap map, final List<Room> rooms) {
+        if (rooms.size() > 1) {
+            final Room randomRoom = rooms.get(1 + GameRandom.nextInt(rooms.size() - 1));
+            final List<Position> positions = getFloorPositions(map, randomRoom);
+
+            if (!positions.isEmpty()) {
+                final Position pos = positions.get(GameRandom.nextInt(positions.size()));
+                final Item amulet = new Amulet();
+
+                map.addItem(pos, amulet);
+            }
         }
     }
 
