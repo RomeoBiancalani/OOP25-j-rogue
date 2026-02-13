@@ -96,6 +96,30 @@ public final class DungeonController {
     }
 
     /**
+     * This function is used by the teleport trap.
+     * Transfers the player to the the previous level.
+     *
+     * @return true if advanced successfully, false if at first level
+     */
+    public boolean previousLevel() {
+        if (currentLevel == 1) {
+            return false;
+        }
+
+        currentLevel--;
+        generateCurrentLevel();
+
+        player.setPosition(currentMap.getStartingPosition());
+        currentMap.setPlayer(player);
+
+        this.movementController = new MovementControllerImpl(currentMap);
+
+        renderer.initForMap(currentMap);
+        renderer.renderAll(currentMap, player);
+        return true;
+    }
+
+    /**
      * Executes a single game turn: moves the player, then enemies.
      * Updates the entity and item rendering layers.
      *
