@@ -34,6 +34,8 @@ public final class GameController implements InputHandler {
         final long seed = System.currentTimeMillis();
         this.dungeonController = new DungeonController(seed, renderer);
         dungeonController.startNewGame();
+        InventoryController ic = (InventoryController) this.controller.getInventoryController();
+        ic.setupPlayer(getPlayer());
     }
 
     /**

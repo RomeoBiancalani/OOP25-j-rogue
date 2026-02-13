@@ -48,6 +48,7 @@ public final class DungeonController {
     public DungeonController(final long seed, final DungeonRenderer renderer) {
         this.baseSeed = seed;
         this.renderer = renderer;
+        // DEBUG: this.generator = new PopulatedLevelGenerator(SpawnConfig.debug());
         this.generator = new PopulatedLevelGenerator(SpawnConfig.defaults());
         this.currentLevel = 0;
     }

@@ -87,7 +87,8 @@ public final class SimpleGameMap implements GameMap {
         return tile == Tile.FLOOR
             || tile == Tile.CORRIDOR
             || tile == Tile.DOOR
-            || tile == Tile.STAIRS_UP;
+            || tile == Tile.STAIRS_UP
+            || tile == Tile.TRAP;
     }
 
     @Override

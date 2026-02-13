@@ -198,4 +198,8 @@ public final class BaseController {
     public boolean hasSaveFile() {
         return SaveManager.saveExists();
     }
+
+    public InputHandler getInventoryController() {
+        return this.inventoryController;
+    }
 }
