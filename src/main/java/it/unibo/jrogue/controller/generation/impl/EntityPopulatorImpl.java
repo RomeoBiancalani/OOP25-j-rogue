@@ -5,9 +5,8 @@ import it.unibo.jrogue.controller.generation.api.EntityPopulator;
 import it.unibo.jrogue.controller.generation.api.SpawnConfig;
 import it.unibo.jrogue.entity.GameRandom;
 import it.unibo.jrogue.entity.entities.api.Enemy;
-import it.unibo.jrogue.entity.entities.impl.enemies.Bat;
-import it.unibo.jrogue.entity.entities.impl.enemies.Dragon;
-import it.unibo.jrogue.entity.entities.impl.enemies.HobGoblin;
+import it.unibo.jrogue.entity.entities.impl.enemies.factory.EnemyFactory;
+import it.unibo.jrogue.entity.entities.impl.enemies.factory.EnemyFactoryImpl;
 import it.unibo.jrogue.entity.items.api.Item;
 import it.unibo.jrogue.entity.items.api.ItemFactory;
 import it.unibo.jrogue.entity.items.impl.ItemFactoryImpl;
@@ -31,12 +30,14 @@ public final class EntityPopulatorImpl implements EntityPopulator {
     private static final int TELEPORT_TRAP_DAMAGE = 0;
 
     private final ItemFactory itemFactory;
+    private final EnemyFactory enemyFactory;
 
     /**
      * Creates a new EntityPopulator.
      */
     public EntityPopulatorImpl() {
         this.itemFactory = new ItemFactoryImpl();
+        this.enemyFactory = new EnemyFactoryImpl();
     }
 
     @Override
@@ -195,7 +196,7 @@ public final class EntityPopulatorImpl implements EntityPopulator {
                 && !positions.isEmpty()) {
 
             final Position pos = pickRandomPosition(positions);
-            final Enemy enemy = createWeightedEnemy(pos, levelNumber, config);
+            final Enemy enemy = createWeightedEnemy(pos, levelNumber);
 
             map.addEntity(enemy);
 
@@ -213,26 +214,9 @@ public final class EntityPopulatorImpl implements EntityPopulator {
      * @param config spawn configuration
      * @return the created enemy
      */
-    private Enemy createWeightedEnemy(final Position pos, final int level, final SpawnConfig config) {
+    private Enemy createWeightedEnemy(final Position pos, final int level) {
         // Calculate weights for each enemy type
-        final int batWeight = config.getEnemyWeight(0, level);
-        final int goblinWeight = config.getEnemyWeight(1, level);
-        final int dragonWeight = config.getEnemyWeight(2, level);
-
-        final int totalWeight = batWeight + goblinWeight + dragonWeight;
-        int roll = GameRandom.nextInt(totalWeight);
-
-        roll -= batWeight;
-        if (roll < 0) {
-            return new Bat(pos);
-        }
-
-        roll -= goblinWeight;
-        if (roll < 0) {
-            return new HobGoblin(pos);
-        }
-
-        return new Dragon(pos);
+        return enemyFactory.createRandomEnemy(pos, level);
     }
 
     /**

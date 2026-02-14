@@ -1,14 +1,12 @@
 package it.unibo.jrogue.entity.entities.impl.enemies.factory;
 
-import java.util.Optional;
-
 import it.unibo.jrogue.commons.Position;
 import it.unibo.jrogue.entity.entities.api.Enemy;
 
 /**
  * Factory interface to create different type of enemies.
  */
-public interface EnemiesFactory {
+public interface EnemyFactory {
 
     /**
      * Creates a bat enemy.
@@ -44,5 +42,5 @@ public interface EnemiesFactory {
      * @param level The curren dungeon level.
      * @return An Optional containing a new Enemy, or empty if no enemy is generated.
      */
-    Optional<Enemy> createRandomEnemy(Position pos, int level);
+    Enemy createRandomEnemy(Position pos, int level);
 }

@@ -26,8 +26,9 @@ public class Bat extends AbstractEnemy {
     private static final int BAT_VISIBILITY = 6;
     private static final int HP_NUM_DICE = 1;
     private static final int HP_SIDES_DICE = 8;
-    private static final int ATK_NUM_DICE = 8;
-    private static final int ATK_SIDES_DICE = 8;
+    private static final int ATK_NUM_DICE = 1;
+    private static final int ATK_SIDES_DICE = 5;
+    private static final int ATK_SCALING = 2;
     private static final int XP_NUM_DICE = 1;
     private static final int XP_SIDES_DICE = 3;
 
@@ -77,7 +78,7 @@ public class Bat extends AbstractEnemy {
      */
     @Override
     public int getAttack() {
-        return Dice.roll(ATK_NUM_DICE, ATK_SIDES_DICE) + getLevel();
+        return Dice.roll(ATK_NUM_DICE, ATK_SIDES_DICE + (getLevel() / ATK_SCALING)) + getLevel();
     }
 
     /**

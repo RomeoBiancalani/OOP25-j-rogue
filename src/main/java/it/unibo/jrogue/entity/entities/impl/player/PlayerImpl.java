@@ -27,7 +27,7 @@ public class PlayerImpl extends AbstractEntity implements Player {
     private static final int XP_TO_LEVEL_UP = 20;
     private static final int DEFAULT_START_HP = 20;
     private static final int DEFAULT_START_LEVEL = 1;
-    private static final int DEFAULT_START_AC = 5;
+    private static final int DEFAULT_START_AC = 3;
 
     private int xp;
     private int gold;
