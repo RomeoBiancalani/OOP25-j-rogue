@@ -6,7 +6,9 @@ import it.unibo.jrogue.entity.entities.api.Player;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -25,11 +27,18 @@ public class StatusBarGUI extends HBox {
     private static final int MAX_HEIGHT = 50;
     private static final double OPACITY = 0.7;
     private static final int FONT_SIZE = 20;
+    private static final int BAR_WIDTH = 200;
+    private static final int XP_TO_LEVEL_UP = 20;
 
     private final Label hpLabel = new Label();
     private final Label levelLabel = new Label();
     private final Label xpLabel = new Label();
     private final Label goldLabel = new Label();
+
+    private final ProgressBar hpBar = new ProgressBar(1.0);
+    private final ProgressBar xpBar = new ProgressBar(0.0);
+    private final StackPane hpStack = new StackPane(hpBar, hpLabel);
+    private final StackPane xpStack = new StackPane(xpBar, xpLabel);
 
     /**
      * Constructs a new StatusBar with the default styling.
@@ -41,10 +50,13 @@ public class StatusBarGUI extends HBox {
         this.setStyle("-fx-background-color: rgba(0, 0, 0, " + OPACITY + ");");
         this.setMaxHeight(MAX_HEIGHT);
 
-        styleLabel(hpLabel, Color.RED);
-        styleLabel(xpLabel, Color.LIGHTBLUE);
+        styleLabel(hpLabel, Color.BLACK);
+        styleLabel(xpLabel, Color.BLACK);
         styleLabel(goldLabel, Color.GOLD);
         styleLabel(levelLabel, Color.WHITE);
+
+        styleBar(hpBar, "red");
+        styleBar(xpBar, "deepskyblue");
     }
 
     /**
@@ -59,6 +71,17 @@ public class StatusBarGUI extends HBox {
     }
 
     /**
+     * Applies a uniform style to the statistic bar.
+     * 
+     * @param bar The bar to be styled.
+     * @param cssColor The css xcolor to apply to the text
+     */
+    private void styleBar(final ProgressBar bar, final String cssColor) {
+        bar.setPrefWidth(BAR_WIDTH);
+        bar.setStyle("-fx-accent: " + cssColor + ";");
+    }
+
+    /**
      * Updates the text of the label based on the current state of the player.
      * 
      * @param player The player whose statistics will be displayed.
@@ -66,12 +89,21 @@ public class StatusBarGUI extends HBox {
      */
     public void update(final Player player) {
         Objects.requireNonNull(player, "Player must be not null");
-        hpLabel.setText("HP: " + player.getLifePoint() + "/" + player.getMaxLifePoint());
-        xpLabel.setText("XP: " + player.getXP() + "/20");
+
         goldLabel.setText("Gold: " + player.getGold());
         levelLabel.setText("Level: " + player.getLevel());
 
+        final double hpPercent = (double) player.getLifePoint() / player.getMaxLifePoint();
+        hpBar.setProgress(hpPercent);
+        hpLabel.setText("HP: " + player.getLifePoint() + "/" + player.getMaxLifePoint());
+
+        final double xpPercent = (double) player.getXP() / XP_TO_LEVEL_UP;
+        xpBar.setProgress(xpPercent);
+        xpLabel.setText("XP: " + player.getXP() + "/20");
+
+        
+
         this.getChildren().clear();
-        this.getChildren().addAll(hpLabel, xpLabel, goldLabel, levelLabel);
+        this.getChildren().addAll(hpStack, xpStack, goldLabel, levelLabel);
     }
 }
