@@ -1,5 +1,6 @@
 package it.unibo.jrogue.boundary;
 
+import it.unibo.jrogue.boundary.api.GameViewRenderer;
 import it.unibo.jrogue.commons.Position;
 import it.unibo.jrogue.entity.entities.api.Enemy;
 import it.unibo.jrogue.entity.entities.api.Player;
@@ -34,7 +35,7 @@ import java.util.Map;
  * terrain (redrawn on level change), items (redrawn on pickup),
  * and entities (redrawn every turn).
  */
-public final class DungeonRenderer extends StackPane {
+public final class DungeonRenderer extends StackPane implements GameViewRenderer {
 
     /** Default tile size in pixels. */
     public static final int DEFAULT_TILE_SIZE = 24;
@@ -231,7 +232,8 @@ public final class DungeonRenderer extends StackPane {
      *
      * @param player the player entity
      */
-    public void renderStatusBar(Player player) {
+    @Override
+    public void updateStatus(Player player) {
         this.statusBar.update(player);
     }
 
@@ -242,11 +244,12 @@ public final class DungeonRenderer extends StackPane {
      * @param map    the game map
      * @param player the player entity
      */
+    @Override
     public void renderAll(final GameMap map, final Player player) {
         renderTerrain(map);
         renderItems(map);
         renderEntities(map, player);
-        renderStatusBar(player);
+        updateStatus(player);
     }
 
     /**
@@ -254,6 +257,7 @@ public final class DungeonRenderer extends StackPane {
      * 
      * @param message The message to display.
      */
+    @Override
     public void displayMessage(final String message) {
         this.messageDialog.setMessage(message);
     }

@@ -3,7 +3,7 @@ package it.unibo.jrogue.controller;
 import java.util.Objects;
 import java.util.Optional;
 
-import it.unibo.jrogue.boundary.DungeonRenderer;
+import it.unibo.jrogue.boundary.api.GameViewRenderer;
 import it.unibo.jrogue.commons.Move;
 import it.unibo.jrogue.commons.Position;
 import it.unibo.jrogue.controller.api.MovementController;
@@ -24,7 +24,7 @@ public class MovementControllerImpl implements MovementController {
 
     private final CombatController combatController = new CombatControllerImpl();
 
-    private final DungeonRenderer renderer;
+    private final GameViewRenderer renderer;
     private final GameMap gameMap;
     private final Player player;
 
@@ -37,7 +37,7 @@ public class MovementControllerImpl implements MovementController {
      * @throws NullPointerException  if renderer is null.
      * @throws IllegalStateException if gameMap has no player set.
      */
-    public MovementControllerImpl(final GameMap gameMap, final DungeonRenderer renderer) {
+    public MovementControllerImpl(final GameMap gameMap, final GameViewRenderer renderer) {
         this.gameMap = Objects.requireNonNull(gameMap, "gameMap cannot be null");
         this.renderer = Objects.requireNonNull(renderer, "renderer cannot be null");
         if (gameMap.getPlayer().isEmpty()) {

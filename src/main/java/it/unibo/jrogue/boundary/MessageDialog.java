@@ -47,7 +47,7 @@ public class MessageDialog extends HBox {
         fadeIn.setFromValue(0.0);
         fadeIn.setToValue(1.0);
 
-        final PauseTransition stayVisible = new PauseTransition(Duration.seconds(1.5));
+        final PauseTransition stayVisible = new PauseTransition(Duration.seconds(1));
 
         fadeOut = new FadeTransition(Duration.seconds(0.5), messagLabel);
         fadeOut.setFromValue(1.0);

@@ -1,7 +1,7 @@
 package it.unibo.jrogue.controller;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import it.unibo.jrogue.boundary.DungeonRenderer;
+import it.unibo.jrogue.boundary.api.GameViewRenderer;
 import it.unibo.jrogue.commons.Move;
 import it.unibo.jrogue.commons.Position;
 import it.unibo.jrogue.controller.generation.api.GenerationConfig;
@@ -26,7 +26,7 @@ public final class DungeonController {
     private static final int MAP_HEIGHT = 45;
 
     private final long baseSeed;
-    private final DungeonRenderer renderer;
+    private final GameViewRenderer renderer;
     private final LevelGenerator generator;
 
     private int currentLevel;
@@ -41,7 +41,7 @@ public final class DungeonController {
      * @param renderer the dungeon renderer
      */
     @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "Renderer is shared between instances by design")
-    public DungeonController(final long seed, final DungeonRenderer renderer) {
+    public DungeonController(final long seed, final GameViewRenderer renderer) {
         this.baseSeed = seed;
         this.renderer = renderer;
         // DEBUG: this.generator = new PopulatedLevelGenerator(SpawnConfig.debug());
@@ -123,9 +123,7 @@ public final class DungeonController {
      */
     public void executeTurn(final Move move) {
         movementController.executeTurn(move);
-        renderer.renderEntities(currentMap, player);
-        renderer.renderItems(currentMap);
-        renderer.renderStatusBar(player);
+        renderer.renderAll(currentMap, player);
     }
 
     /**
@@ -179,7 +177,7 @@ public final class DungeonController {
      *
      * @return the renderer
      */
-    public DungeonRenderer getRenderer() {
+    public GameViewRenderer getRenderer() {
         return renderer;
     }
 
