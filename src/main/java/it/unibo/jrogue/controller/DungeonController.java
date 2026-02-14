@@ -22,7 +22,6 @@ public final class DungeonController {
 
     /** Maximum number of dungeon levels. */
     public static final int MAX_LEVEL = 10;
-
     private static final int MAP_WIDTH = 80;
     private static final int MAP_HEIGHT = 45;
 

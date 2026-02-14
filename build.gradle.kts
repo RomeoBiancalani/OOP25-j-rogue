@@ -57,6 +57,9 @@ dependencies {
 tasks.withType<Test> {
     // Enables JUnit 5 Jupiter module
     useJUnitPlatform()
+    testLogging {
+        events("passed", "failed", "skipped")
+    }
 }
 
 val main: String by project
