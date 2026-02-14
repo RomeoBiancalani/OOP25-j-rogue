@@ -1,8 +1,10 @@
 package it.unibo.jrogue.boundary;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.jrogue.controller.api.InventoryManager;
 import it.unibo.jrogue.entity.items.api.Equipment;
 import it.unibo.jrogue.entity.items.api.Item;
@@ -11,7 +13,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -26,8 +27,8 @@ import javafx.scene.text.TextAlignment;
  * Class responsible for the GUI of the Player's Inventory.
  */
 public class InventoryGUI {
-    private static final int GRID_COLS = 10;
-    private static final int GRID_ROWS = 5;
+    public static final int GRID_COLS = 10;
+    public static final int GRID_ROWS = 5;
 
     private static final int GRID_GAP = 5;
     private static final Color COLOR_SELECTED = Color.RED;
@@ -51,12 +52,9 @@ public class InventoryGUI {
     private final StackPane[][] slotsMatrix;
     private final InventoryManager manager;
 
-    final private VBox mainLayout;
-    final private GridPane gridPane;
-    final private Text description;
-
-    private int selectedRow;
-    private int selectedCol;
+    private final VBox mainLayout;
+    private final GridPane gridPane;
+    private final Text description;
 
     private final Map<String, Image> sprites;
 
@@ -68,7 +66,7 @@ public class InventoryGUI {
      * @param sprites the map with all the sprites saved.
      */
     public InventoryGUI(final InventoryManager manager, final Map<String, Image> sprites) {
-        this.sprites = sprites;
+        this.sprites = new HashMap<>(sprites);
         this.manager = manager;
         this.slotsMatrix = new StackPane[GRID_ROWS][GRID_COLS];
 
@@ -90,7 +88,7 @@ public class InventoryGUI {
         initializeLayout();
 
         this.mainLayout.getChildren().addAll(gridPane, description);
-        updateView();
+        updateView(0, 0);
     }
 
     /**
@@ -120,8 +118,12 @@ public class InventoryGUI {
 
     /**
      * Refreshes the inventory view.
+     * 
+     * @param selectedRow the row currently on.
+     * 
+     * @param selectedCol the col currently on.
      */
-    public final void updateView() {
+    public final void updateView(final int selectedRow, final int selectedCol) {
 
         for (int r = 0; r < GRID_ROWS; r++) {
             for (int c = 0; c < GRID_COLS; c++) {
@@ -208,37 +210,12 @@ public class InventoryGUI {
      * 
      * @return The VBox containing the inventory grid and the description area.
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP",
+        justification = "Returning the internal VBox is necessary for JavaFX to render the component in the Scene Graph."
+    )
     public VBox getView() {
         return this.mainLayout;
-    }
-
-    /**
-     * Handles keyboard input for navigation and interaction.
-     * 
-     * @param code the KeyCode of the key pressed.
-     */
-    public void handleInput(final KeyCode code) {
-        if (code == KeyCode.W && selectedRow > 0) {
-            selectedRow--;
-        } else if (code == KeyCode.S && selectedRow < GRID_ROWS - 1) {
-            selectedRow++;
-        } else if (code == KeyCode.A && selectedCol > 0) {
-            selectedCol--;
-        } else if (code == KeyCode.D && selectedCol < GRID_COLS - 1) {
-            selectedCol++;
-        } else if (code == KeyCode.ENTER) {
-            final int index = (selectedRow * GRID_COLS) + selectedCol;
-            if (index < manager.getSize()) {
-                manager.useItem(index);
-            }
-        } else if (code == KeyCode.R) {
-            final int index = (selectedRow * GRID_COLS) + selectedCol;
-            if (index < manager.getSize()) {
-                manager.dropItem(index);
-
-            }
-        }
-        updateView();
     }
 
 }

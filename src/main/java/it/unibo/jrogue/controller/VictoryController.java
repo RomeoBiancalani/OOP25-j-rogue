@@ -13,8 +13,8 @@ public class VictoryController implements InputHandler {
 
     /**
      * This controller, handles the Victory screen of the game.
-     * */
-    public VictoryController(final BaseController controller, final GameController gameController){
+     */
+    public VictoryController(final BaseController controller, final GameController gameController) {
         this.controller = controller;
         this.gameController = gameController;
     }
@@ -30,13 +30,16 @@ public class VictoryController implements InputHandler {
         }
     }
 
-    public void setScore(){
+    public void setScore() {
         int score = gameController.getPlayer().getGold();
         this.victory.setScoreLabel(score);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Pane getView(){
+    public Pane getView() {
         setScore();
         return victory.getLayout();
     }

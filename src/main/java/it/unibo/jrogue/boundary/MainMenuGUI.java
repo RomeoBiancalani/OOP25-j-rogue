@@ -22,7 +22,7 @@ public final class MainMenuGUI implements MenuGUI {
     private static final int FONT_SIZE = 35;
     private static final int BUTTONS_SPACING = 10;
     private static final String BACKGROUND_PATH = "jrogueMenu.png";
-    private static final String[] BUTTONS_NAME = { "New Game", "Load Game", "Options", "Exit" };
+    private static final String[] BUTTONS_NAME = {"New Game", "Load Game", "Options", "Exit" };
 
     private final List<Button> buttonsMenu;
     private final VBox rootLayout;

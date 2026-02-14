@@ -37,7 +37,6 @@ public class PlayerImpl extends AbstractEntity implements Player {
     private Optional<Ring> ring;
     private boolean victory;
 
-
     public PlayerImpl(final Position startPosition) {
         super(DEFAULT_START_HP, DEFAULT_START_LEVEL, DEFAULT_START_AC, startPosition);
         inventory = new SimpleInventory(INVENTORY_SIZE);
@@ -47,7 +46,7 @@ public class PlayerImpl extends AbstractEntity implements Player {
         gold = 0;
         xp = 0;
     }
-    
+
     /**
      * Construct a player with the specified attributes.
      * 

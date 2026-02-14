@@ -164,13 +164,17 @@ public abstract class AbstractEntity implements Entity {
      */
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        AbstractEntity other = (AbstractEntity) obj;
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        final AbstractEntity other = (AbstractEntity) obj;
         return this.hashCode() == other.hashCode();
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
         return Objects.hash(currentPosition, lifePoint, armorClass, maxLifePoint, level);

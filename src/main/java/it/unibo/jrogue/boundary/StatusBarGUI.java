@@ -14,6 +14,7 @@ import javafx.scene.text.FontWeight;
 /**
  * This class rapresents the graphical HUD positioned at the bottom of the game
  * screen.
+ * 
  * <p>
  * It provides real-time visualization of the player's statistics
  * </p>

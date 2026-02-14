@@ -53,7 +53,7 @@ public class SimpleInventory implements Inventory {
     @Override
     public void addItem(final Item item) {
         if (item == null) {
-            throw new NullPointerException("L'oggetto non può essere null");
+            throw new IllegalArgumentException("L'oggetto non può essere null");
         }
 
         if (isFull()) {

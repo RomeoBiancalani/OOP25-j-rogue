@@ -13,7 +13,7 @@ import java.util.Optional;
 public class Scroll implements Consumable {
 
     /**
-    * {@inheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public boolean consume(final Player player) {
@@ -23,7 +23,7 @@ public class Scroll implements Consumable {
             if (invItem.isPresent()) {
                 final Item item = invItem.get();
                 if (item instanceof Ring ring) {
-                    if(ring.getIsIdentified()){
+                    if (ring.getIsIdentified()) {
                         continue;
                     }
                     ring.identify();

@@ -7,6 +7,7 @@ import it.unibo.jrogue.entity.entities.api.Player;
 import it.unibo.jrogue.entity.items.api.Consumable;
 import it.unibo.jrogue.entity.items.api.Equipment;
 import it.unibo.jrogue.entity.items.api.Item;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Class that implements the InventoryManager interface.
@@ -19,6 +20,10 @@ public class InventoryManagerImpl implements InventoryManager {
      * 
      * @param player the player.
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2", 
+        justification = "The manager must hold a reference to the live Player entity to modify its state."
+    )
     public InventoryManagerImpl(final Player player) {
         this.player = player;
     }
@@ -35,19 +40,16 @@ public class InventoryManagerImpl implements InventoryManager {
             if (item instanceof Equipment equipment) {
                 if (player.isEquipped(equipment)) {
                     equipment.unequip(player);
-                    System.out.println("Disequipaggiato");
                 } else {
                     equipment.equip(player);
-                    System.out.println("Equipaggiato");
                 }
             }
             if (item instanceof Consumable consumable) {
-                boolean isConsumed = consumable.consume(player);
-                if(isConsumed){
-                    System.out.println("consumato");
+                final boolean isConsumed = consumable.consume(player);
+                if (isConsumed) {
                     player.getInventory().removeItem(index);
-                } else
-                    System.out.println("Non consumato");
+                }
+
             }
         }
     }

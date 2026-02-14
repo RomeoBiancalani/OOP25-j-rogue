@@ -14,15 +14,17 @@ public class GameOverController implements InputHandler {
     private final GameController gameController;
     private final GameOverGUI gameOver = new GameOverGUI();
 
-/**
- * This controller, handles the GameOver screen of the game.
- * */
-    public GameOverController(final BaseController controller, final GameController gameController){
+    /**
+     * This controller, handles the GameOver screen of the game.
+     * 
+     * 
+     */
+    public GameOverController(final BaseController controller, final GameController gameController) {
         this.controller = controller;
         this.gameController = gameController;
     }
 
-    public void setScore(){
+    public void setScore() {
         int score = gameController.getPlayer().getGold();
         this.gameOver.setScoreLabel(score);
     }
@@ -42,7 +44,7 @@ public class GameOverController implements InputHandler {
      * {@inheritDoc}
      */
     @Override
-    public Pane getView(){
+    public Pane getView() {
         setScore();
         return gameOver.getLayout();
     }

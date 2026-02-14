@@ -19,7 +19,8 @@ import it.unibo.jrogue.entity.world.api.Level;
 
 /**
  * Tests for the level generator.
- * To run: ./gradlew clean test --tests "it.unibo.jrogue.generation.BSPLevelGeneratorTest" --console=verbose
+ * To run: ./gradlew clean test --tests
+ * "it.unibo.jrogue.generation.BSPLevelGeneratorTest" --console=verbose.
  */
 class BSPLevelGeneratorTest {
     private static final int MAP_WIDTH = 80;
@@ -83,18 +84,18 @@ class BSPLevelGeneratorTest {
         final GameMap map2 = level2.getMap();
         // Checks rooms (size)
         assertEquals(map1.getRooms().size(), map2.getRooms().size(),
-            "Stesse stanze con stesso seed");
+                "Stesse stanze con stesso seed");
         // Checks startingPos
         assertEquals(map1.getStartingPosition(), map2.getStartingPosition(),
-            "Stessa posizione iniziale con stesso seed");
+                "Stessa posizione iniziale con stesso seed");
         // Checks enemies
         assertEquals(map1.getEnemies(), map2.getEnemies(),
-        "Stessi mostri con stesso seed");
+                "Stessi mostri con stesso seed");
         // Checks Items
-        Map<Position, String> items1 = map1.getItems().entrySet().stream()
-            .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().getDescription()));
-        Map<Position, String> items2 = map2.getItems().entrySet().stream()
-            .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().getDescription()));  
+        final Map<Position, String> items1 = map1.getItems().entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().getDescription()));
+        final Map<Position, String> items2 = map2.getItems().entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().getDescription()));
         assertEquals(items1, items2, "Stessi items con stesso seed");
     }
 
@@ -102,31 +103,27 @@ class BSPLevelGeneratorTest {
     void testDifferentSeedsProduceDifferentMaps() {
         final long otherSeed = 9999L;
         final GenerationConfig otherConfig = GenerationConfig.withDefaults(
-            MAP_WIDTH, MAP_HEIGHT, LEVEL_NUMBER, otherSeed
-        );
+                MAP_WIDTH, MAP_HEIGHT, LEVEL_NUMBER, otherSeed);
 
         final Level level1 = generator.generate(config);
         final Level level2 = generator.generate(otherConfig);
 
         // Con seed diverse, almeno il numero di stanze o la posizione iniziale
         // dovrebbero differire (non garantito al 100% ma altamente probabile)
-        final boolean differentRooms = level1.getMap().getRooms().size()
-            != level2.getMap().getRooms().size();
+        final boolean differentRooms = level1.getMap().getRooms().size() != level2.getMap().getRooms().size();
         final boolean differentStart = !level1.getMap().getStartingPosition()
-            .equals(level2.getMap().getStartingPosition());
-        final boolean differentEnemies = level1.getMap().getEnemies().size() 
-            != level2.getMap().getEnemies().size();
+                .equals(level2.getMap().getStartingPosition());
+        final boolean differentEnemies = level1.getMap().getEnemies().size() != level2.getMap().getEnemies().size();
 
         assertTrue(differentRooms || differentStart || differentEnemies,
-            "Seed diversi producono mappe diverse");
+                "Seed diversi producono mappe diverse");
     }
 
     @Test
     void testLevelNumberIsPreserved() {
         final int testLevel = 5;
         final GenerationConfig levelConfig = GenerationConfig.withDefaults(
-            MAP_WIDTH, MAP_HEIGHT, testLevel, TEST_SEED
-        );
+                MAP_WIDTH, MAP_HEIGHT, testLevel, TEST_SEED);
         final Level level = generator.generate(levelConfig);
         assertEquals(testLevel, level.getLevel());
     }

@@ -118,7 +118,7 @@ public final class EntityPopulatorImpl implements EntityPopulator {
 
         for (int i = 0; i < itemsToSpawn && !positions.isEmpty(); i++) {
 
-            Position pos = pickRandomPosition(positions);
+            final Position pos = pickRandomPosition(positions);
 
             final Optional<Item> item = itemFactory.createRandomItem(level);
             item.ifPresent(it -> {

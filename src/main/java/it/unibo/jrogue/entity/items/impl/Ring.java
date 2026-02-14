@@ -92,7 +92,9 @@ public class Ring implements Equipment {
 
     /**
      * Getter for isIdentified.
-     * */
+     * 
+     * @return true if the ring is identified.
+     */
     public boolean getIsIdentified() {
         return this.isIdentified;
     }

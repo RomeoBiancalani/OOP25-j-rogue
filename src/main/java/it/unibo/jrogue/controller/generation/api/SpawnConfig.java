@@ -157,7 +157,7 @@ public record SpawnConfig(
         return (int) (baseXP * (1 + xpScalingLambda * (monsterLevel - 1)));
     }
 
-    /**
+    /*/**
      * Calculates the adjusted food/potion spawn rate for a given level.
      * Rate decreases by foodPotionDecayPerLevel for each level.
      *

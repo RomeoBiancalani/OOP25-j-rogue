@@ -5,6 +5,7 @@ import java.util.Optional;
 import it.unibo.jrogue.entity.GameRandom;
 import it.unibo.jrogue.entity.items.api.Item;
 import it.unibo.jrogue.entity.items.api.ItemFactory;
+import java.util.Locale;
 
 /**
  * Implementation of the ItemFactory.
@@ -194,12 +195,12 @@ public class ItemFactoryImpl implements ItemFactory {
      * {@inheritDoc}
      */
     @Override
-    public Item createWeapon(final String name,final int level) {
+    public Item createWeapon(final String name, final int level) {
         int baseDmg = BASE_DAMAGE_SWORD;
-        final String currentName = name;
-        if (currentName.toLowerCase().contains("pugnale")) {
+        final String lowerName = name.toLowerCase(Locale.ROOT);
+        if (lowerName.contains("pugnale") || lowerName.contains("dagger")) {
             baseDmg = BASE_DAMAGE_DAGGER;
-        } else if (currentName.toLowerCase().contains("pala")) {
+        } else if (lowerName.contains("pala") || lowerName.contains("shovel")) {
             baseDmg = BASE_DAMAGE_SHOVEL;
         }
         final int finalDmg = calculateDamage(baseDmg, level);
