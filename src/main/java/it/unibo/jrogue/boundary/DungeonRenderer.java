@@ -112,6 +112,7 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
      * 
      * @param map the game map
      */
+    @Override
     public void initForMap(final GameMap map) {
         this.mapWidth = map.getWidth();
         this.mapHeight = map.getHeight();
@@ -136,6 +137,8 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
     /**
      * Returns the spriteCache Map, this can be used by other Boundary classes that
      * needs Image instances to render elements.
+     * 
+     * @return The sprite map.
      */
     public Map<String, Image> getLoadedSprites() {
         return Collections.unmodifiableMap(this.spriteCache);
@@ -147,7 +150,7 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
      * 
      * @param map the game map
      */
-    public void renderTerrain(final GameMap map) {
+    private void renderTerrain(final GameMap map) {
         final GraphicsContext gc = terrainCanvas.getGraphicsContext2D();
         // TODO: Let's check if the default color needs to be changed
         gc.setFill(Color.BLACK);
@@ -182,7 +185,7 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
      * 
      * @param map the game map
      */
-    public void renderItems(final GameMap map) {
+    private void renderItems(final GameMap map) {
         final GraphicsContext gc = itemCanvas.getGraphicsContext2D();
         gc.clearRect(0, 0, mapWidth * tileSize, mapHeight * tileSize);
 
@@ -203,7 +206,7 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
      * @param map the game map
      * @param player the player entity
      */
-    public void renderEntities(final GameMap map, final Player player) {
+    private void renderEntities(final GameMap map, final Player player) {
         final GraphicsContext gc = entityCanvas.getGraphicsContext2D();
         gc.clearRect(0, 0, mapWidth * tileSize, mapHeight * tileSize);
 
@@ -233,7 +236,7 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
      * @param player the player entity
      */
     @Override
-    public void updateStatus(Player player) {
+    public void updateStatus(final Player player) {
         this.statusBar.update(player);
     }
 
@@ -423,7 +426,7 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
         return SPRITE_GOLD;
     }
 
-    public static String getWeaponSprite(final MeleeWeapon weapon) {
+    private static String getWeaponSprite(final MeleeWeapon weapon) {
         final String weaponName = weapon.getName();
         if (weaponName.contains("Pugnale")) {
             return SPRITE_DAGGER;
@@ -433,7 +436,7 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
         return SPRITE_SHOVEL;
     }
 
-    public static String getArmorSprite(final Armor armor) {
+    private static String getArmorSprite(final Armor armor) {
         if (ARMOR_HEAVY_NAME.equals(armor.getName())) {
             return SPRITE_ARMOR_MAX;
         }

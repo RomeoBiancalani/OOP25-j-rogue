@@ -95,7 +95,7 @@ public class Ring implements Equipment {
      * 
      * @return true if the ring is identified.
      */
-    public boolean getIsIdentified() {
+    public boolean isIdentified() {
         return this.isIdentified;
     }
 }

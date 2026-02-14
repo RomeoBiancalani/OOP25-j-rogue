@@ -37,6 +37,11 @@ public class PlayerImpl extends AbstractEntity implements Player {
     private Optional<Ring> ring;
     private boolean victory;
 
+    /**
+     * Constructs a new player with default stats.
+     * 
+     * @param startPosition Starting position of the player.
+     */
     public PlayerImpl(final Position startPosition) {
         super(DEFAULT_START_HP, DEFAULT_START_LEVEL, DEFAULT_START_AC, startPosition);
         inventory = new SimpleInventory(INVENTORY_SIZE);

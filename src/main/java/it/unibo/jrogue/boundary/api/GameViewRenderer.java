@@ -4,7 +4,7 @@ import it.unibo.jrogue.entity.entities.api.Player;
 import it.unibo.jrogue.entity.world.api.GameMap;
 
 /**
- * Defines the contract for game rendering and user interaction feedback
+ * Defines the contract for game rendering and user interaction feedback. 
  */
 public interface GameViewRenderer {
 

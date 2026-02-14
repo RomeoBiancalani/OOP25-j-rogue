@@ -30,7 +30,8 @@ public final class InventoryController implements InputHandler {
      *
      * @param controller which is the BaseController we communicate with.
      */
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "InventoryController needs a reference to the main BaseController to switch scenes.")
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2",
+                        justification = "InventoryController needs a reference to the main BaseController to switch scenes.")
     public InventoryController(final BaseController controller) {
         this.controller = controller;
     }

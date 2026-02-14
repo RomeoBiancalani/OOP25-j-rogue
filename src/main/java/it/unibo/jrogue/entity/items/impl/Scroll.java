@@ -23,7 +23,7 @@ public class Scroll implements Consumable {
             if (invItem.isPresent()) {
                 final Item item = invItem.get();
                 if (item instanceof Ring ring) {
-                    if (ring.getIsIdentified()) {
+                    if (ring.isIdentified()) {
                         continue;
                     }
                     ring.identify();

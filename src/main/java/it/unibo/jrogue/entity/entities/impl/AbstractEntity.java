@@ -163,11 +163,13 @@ public abstract class AbstractEntity implements Entity {
      * @return true if they are the same
      */
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
+    public boolean equals(final Object obj) {
+        if (this == obj) {
             return true;
-        if (obj == null || getClass() != obj.getClass())
+        }
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
+        }
         final AbstractEntity other = (AbstractEntity) obj;
         return this.hashCode() == other.hashCode();
     }

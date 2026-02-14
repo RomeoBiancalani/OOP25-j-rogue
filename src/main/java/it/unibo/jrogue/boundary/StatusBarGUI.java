@@ -61,7 +61,7 @@ public class StatusBarGUI extends HBox {
     /**
      * Updates the text of the label based on the current state of the player.
      * 
-     * @param player
+     * @param player The player whose statistics will be displayed.
      * @throws NullPointerExceptions if the provided player is null.
      */
     public void update(final Player player) {
