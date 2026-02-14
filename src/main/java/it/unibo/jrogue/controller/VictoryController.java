@@ -12,23 +12,28 @@ public class VictoryController implements InputHandler {
 
     /**
      * This controller, handles the Victory screen of the game.
-     * */
-    public VictoryController(final BaseController controller){
+     */
+    public VictoryController(final BaseController controller) {
         this.controller = controller;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void handleInput(final KeyEvent event){
+    public void handleInput(final KeyEvent event) {
         final KeyCode code = event.getCode();
         if (code == KeyCode.ENTER) {
             controller.backToMainMenu();
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Pane getView(){
+    public Pane getView() {
         return victory.getLayout();
     }
-
 
 }

@@ -1,10 +1,19 @@
 package it.unibo.jrogue.engine;
 
-import it.unibo.jrogue.controller.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import java.io.IOException;
+
+import it.unibo.jrogue.controller.DungeonController;
+import it.unibo.jrogue.controller.GameController;
+import it.unibo.jrogue.controller.GameOverController;
+import it.unibo.jrogue.controller.InputHandler;
+import it.unibo.jrogue.controller.InventoryController;
+import it.unibo.jrogue.controller.MenuController;
+import it.unibo.jrogue.controller.OptionsController;
+import it.unibo.jrogue.controller.PauseGameController;
+import it.unibo.jrogue.controller.VictoryController;
 
 /**
  * BaseController class handle every controller the software utilize
@@ -219,13 +228,16 @@ public final class BaseController {
 
     /**
      * Change controller and GUI when the player dies.
-     * */
+     */
     public void gameOver() {
         this.currentController = gameOverController;
         changeView(gameOverController.getView());
     }
 
-    public void victory(){
+    /**
+     * Changes the controller and GUI when the player wins.
+     */
+    public void victory() {
         this.currentController = victoryController;
         changeView(victoryController.getView());
     }

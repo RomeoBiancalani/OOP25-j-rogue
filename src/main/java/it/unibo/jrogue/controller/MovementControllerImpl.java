@@ -31,7 +31,7 @@ public class MovementControllerImpl implements MovementController {
     /**
      * Constructs a MovementController with a GameMap containing all game state.
      *
-     * @param gameMap The game map containing player, enemies, items, and terrain.
+     * @param gameMap  The game map containing player, enemies, items, and terrain.
      * @param renderer The DungeonRenderer to render resources
      * @throws NullPointerException  if gameMap is null.
      * @throws NullPointerException  if renderer is null.
@@ -61,7 +61,7 @@ public class MovementControllerImpl implements MovementController {
                         }
                         if (item instanceof Gold gold) {
                             player.collectGold(gold.getAmount());
-                            
+
                         } else {
                             player.getInventory().addItem(item);
                         }

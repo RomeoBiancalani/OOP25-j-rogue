@@ -254,7 +254,7 @@ public final class DungeonRenderer extends StackPane {
      * 
      * @param message The message to display.
      */
-    public void displayMessage(String message) {
+    public void displayMessage(final String message) {
         this.messageDialog.setMessage(message);
     }
 

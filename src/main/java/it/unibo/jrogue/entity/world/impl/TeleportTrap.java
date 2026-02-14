@@ -46,7 +46,7 @@ public class TeleportTrap implements Trap {
     }
 
     /**
-     * {@inheriDoc}
+     * {@inheritDoc}
      */
     @Override
     public Position getPosition() {
@@ -62,7 +62,7 @@ public class TeleportTrap implements Trap {
     }
 
     /**
-     * {@inheriDoc}
+     * {@inheritDoc}
      */
     @Override
     public boolean isDiscovered() {

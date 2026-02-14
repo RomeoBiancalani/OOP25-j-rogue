@@ -46,8 +46,6 @@ public class InventoryManagerImpl implements InventoryManager {
                 System.out.println("consumato");
                 player.getInventory().removeItem(index);
             }
-        } else {
-            System.out.println("Slot vuoto");
         }
     }
 
@@ -73,11 +71,31 @@ public class InventoryManagerImpl implements InventoryManager {
     @Override
     public boolean isEquipped(final int index) {
         final Optional<Item> itemOpt = player.getInventory().getItem(index);
-        if (itemOpt.isPresent()) {
-            if (itemOpt.get() instanceof Equipment equipment) {
-                return player.isEquipped(equipment);
-            }
+        if (itemOpt.isPresent() && itemOpt.get() instanceof Equipment equipment) {
+            return player.isEquipped(equipment);
         }
+
         return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void dropItem(final int index) {
+        final Optional<Item> result = player.getInventory().getItem(index);
+
+        if (result.isPresent()) {
+            final Item item = result.get();
+
+            if (item instanceof Equipment && isEquipped(index)) {
+                player.remove((Equipment) item);
+                System.out.println("L'oggetto viene disequipaggiato automaticamente");
+            }
+
+            player.getInventory().removeItem(index);
+            System.out.println("Oggetto buttato");
+        }
+
     }
 }

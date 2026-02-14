@@ -37,7 +37,7 @@ public class RockTrap implements Trap {
     }
 
     /**
-     * {@inheriDoc}
+     * {@inheritDoc}
      */
     @Override
     public Position getPosition() {

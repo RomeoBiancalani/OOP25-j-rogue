@@ -8,13 +8,16 @@ import it.unibo.jrogue.entity.items.api.Item;
 import java.util.Optional;
 
 /**
- * Class that manages the scroll item. 
+ * Class that manages the scroll item.
  */
 public class Scroll implements Consumable {
 
+    /**
+    * {@inheritDoc}
+     */
     @Override
     public void consume(final Player player) {
-        Inventory inventory = player.getInventory();
+        final Inventory inventory = player.getInventory();
         for (int i = 0; i < inventory.getSize(); i++) {
             final Optional<Item> invItem = inventory.getItem(i);
             if (invItem.isPresent()) {

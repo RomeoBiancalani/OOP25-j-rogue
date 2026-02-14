@@ -48,12 +48,12 @@ public class InventoryGUI {
     private static final int FONT_SIZE_DESC = 18;
     private static final int WRAP_WIDTH_DESC = 500;
 
-    private StackPane[][] slotsMatrix;
-    private InventoryManager manager;
+    private final StackPane[][] slotsMatrix;
+    private final InventoryManager manager;
 
-    private VBox mainLayout;
-    private GridPane gridPane;
-    private Text description;
+    final private VBox mainLayout;
+    final private GridPane gridPane;
+    final private Text description;
 
     private int selectedRow;
     private int selectedCol;
@@ -138,11 +138,14 @@ public class InventoryGUI {
                 final int index = (r * GRID_COLS) + c;
                 final boolean isSelected = r == selectedRow && c == selectedCol;
                 final boolean isEquipped = manager.isEquipped(index);
+                Optional<Item> itemInSlot = Optional.empty();
+                if (index < manager.getSize()) {
+                    itemInSlot = manager.getItemAt(index);
+                }
 
                 if (isSelected) {
                     bg.setStroke(COLOR_SELECTED);
                     bg.setStrokeWidth(STROKE_SELECTED);
-
                     slot.toFront();
                 } else if (isEquipped) {
                     bg.setStroke(COLOR_EQUIPPED);
@@ -151,42 +154,38 @@ public class InventoryGUI {
                     bg.setStroke(COLOR_NORMAL);
                     bg.setStrokeWidth(STROKE_NORMAL);
                 }
-                if (index < manager.getSize()) {
-                    final Optional<Item> result = manager.getItemAt(index);
+                if (itemInSlot.isPresent()) {
+                    final Item item = itemInSlot.get();
 
-                    if (result.isPresent()) {
-                        final Item item = result.get();
+                    final String spriteName = DungeonRenderer.getItemSprite(item);
+                    final Image img = sprites.get(spriteName);
 
-                        final String spriteName = DungeonRenderer.getItemSprite(item);
-                        final Image img = sprites.get(spriteName);
-
-                        if (img != null) {
-                            final ImageView view = new ImageView(img);
-                            view.setFitWidth(ICON_SIZE);
-                            view.setFitHeight(ICON_SIZE);
-                            slot.getChildren().add(view);
-                        }
-
-                        if (item instanceof Equipment) {
-                            if (isEquipped) {
-                                final Label badge = new Label("E");
-                                badge.setFont(Font.font("Verdana", FontWeight.BOLD, 10));
-                                badge.setTextFill(Color.WHITE);
-                                badge.setStyle("-fx-background-color: blue; -fx-padding: 2; -fx-background-radius: 3;");
-                                StackPane.setAlignment(badge, Pos.TOP_RIGHT); // Angolo in alto a destra
-                                slot.getChildren().add(badge);
-                            }
-                        }
-
-                        if (isSelected) {
-                            updateDescription(item);
-                        }
-
+                    if (img != null) {
+                        final ImageView view = new ImageView(img);
+                        view.setFitWidth(ICON_SIZE);
+                        view.setFitHeight(ICON_SIZE);
+                        slot.getChildren().add(view);
                     }
 
-                } else if (isSelected) {
-                    description.setText("slot vuoto");
+                    if (item instanceof Equipment && isEquipped) {
+
+                        final Label badge = new Label("E");
+                        badge.setFont(Font.font("Verdana", FontWeight.BOLD, 10));
+                        badge.setTextFill(Color.WHITE);
+                        badge.setStyle("-fx-background-color: blue; -fx-padding: 2; -fx-background-radius: 3;");
+                        StackPane.setAlignment(badge, Pos.TOP_RIGHT); // Angolo in alto a destra
+                        slot.getChildren().add(badge);
+
+                    }
                 }
+                if (isSelected) {
+                    if (itemInSlot.isPresent()) {
+                        updateDescription(itemInSlot.get());
+                    } else {
+                        description.setText("slot vuoto");
+                    }
+                }
+
             }
         }
     }
@@ -194,9 +193,8 @@ public class InventoryGUI {
     /**
      * Updates the description text area based on witch item we are upon.
      * 
-     * @param item       the item currently selected.
+     * @param item the item currently selected.
      * 
-     * @param isEquipped true if the item is currently equipped.
      */
     private void updateDescription(final Item item) {
         final StringBuilder sb = new StringBuilder();
@@ -232,6 +230,12 @@ public class InventoryGUI {
             final int index = (selectedRow * GRID_COLS) + selectedCol;
             if (index < manager.getSize()) {
                 manager.useItem(index);
+            }
+        } else if (code == KeyCode.R) {
+            final int index = (selectedRow * GRID_COLS) + selectedCol;
+            if (index < manager.getSize()) {
+                manager.dropItem(index);
+
             }
         }
         updateView();

@@ -28,7 +28,7 @@ public class MessageDialog extends HBox {
 
     private final Label messagLabel = new Label();
     private final SequentialTransition transition;
-    final FadeTransition fadeOut;
+    private final FadeTransition fadeOut;
     private final Queue<String> queue = new LinkedList<>();
 
     /**

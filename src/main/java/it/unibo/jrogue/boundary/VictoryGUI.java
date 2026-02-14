@@ -5,7 +5,7 @@ import javafx.scene.layout.*;
 import javafx.scene.image.Image;
 
 /**
- * This class refers to the GameOver Boundary
+ * This class refers to the GameOver Boundary.
  * */
 public class VictoryGUI {
     private static final String BACKGROUND_PATH = "VictoryImage.png";

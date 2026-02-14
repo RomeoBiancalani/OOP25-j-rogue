@@ -40,4 +40,12 @@ public interface InventoryManager {
      * @return true if is equipped.
      */
     boolean isEquipped(int index);
+
+    /**
+     * Removes an item from the inventory.
+     * 
+     * @param index the index of the item to remove.
+     */
+    void dropItem(int index);
+
 }

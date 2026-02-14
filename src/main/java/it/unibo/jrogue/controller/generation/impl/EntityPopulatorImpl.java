@@ -9,14 +9,8 @@ import it.unibo.jrogue.entity.entities.impl.enemies.Bat;
 import it.unibo.jrogue.entity.entities.impl.enemies.Dragon;
 import it.unibo.jrogue.entity.entities.impl.enemies.HobGoblin;
 import it.unibo.jrogue.entity.items.api.Item;
-import it.unibo.jrogue.entity.items.impl.Amulet;
-import it.unibo.jrogue.entity.items.impl.Armor;
-import it.unibo.jrogue.entity.items.impl.Food;
-import it.unibo.jrogue.entity.items.impl.Gold;
-import it.unibo.jrogue.entity.items.impl.HealthPotion;
-import it.unibo.jrogue.entity.items.impl.MeleeWeapon;
-import it.unibo.jrogue.entity.items.impl.Ring;
-import it.unibo.jrogue.entity.items.impl.Scroll;
+import it.unibo.jrogue.entity.items.api.ItemFactory;
+import it.unibo.jrogue.entity.items.impl.ItemFactoryImpl;
 import it.unibo.jrogue.entity.world.api.GameMap;
 import it.unibo.jrogue.entity.world.api.Room;
 import it.unibo.jrogue.entity.world.api.Tile;
@@ -24,6 +18,7 @@ import it.unibo.jrogue.entity.world.impl.SimpleTrap;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Implementation of EntityPopulator that populates rooms with
@@ -34,24 +29,14 @@ public final class EntityPopulatorImpl implements EntityPopulator {
     private static final int SPIKE_TRAP_DAMAGE = 5;
     private static final int POISON_TRAP_DAMAGE = 2;
     private static final int TELEPORT_TRAP_DAMAGE = 0;
-    private static final int BASE_GOLD_AMOUNT = 10;
-    private static final int GOLD_RANDOM_BOUND = 20;
-    private static final int BASE_RING_HEALING = 2;
-    private static final int RING_HEALING_BOUND = 5;
-    private static final int LIGHT_ARMOR_PROTECTION = 1;
-    private static final int HEAVY_ARMOR_PROTECTION = 3;
-    private static final String LIGHT_ARMOR_NAME = "Armatura di cuoio";
-    private static final String HEAVY_ARMOR_NAME = "Armatura di ferro";
-    private static final String RING_NAME = "Anello recupera vita";
 
-    private static final int DAGGER_BASE_DAMAGE = 5;
-    private static final int SWORD_BASE_DAMAGE = 8;
-    private static final int SHOVEL_BASE_DAMAGE = 10;
+    private final ItemFactory itemFactory;
 
     /**
      * Creates a new EntityPopulator.
      */
     public EntityPopulatorImpl() {
+        this.itemFactory = new ItemFactoryImpl();
     }
 
     @Override
@@ -75,7 +60,7 @@ public final class EntityPopulatorImpl implements EntityPopulator {
 
             if (!positions.isEmpty()) {
                 final Position pos = positions.get(GameRandom.nextInt(positions.size()));
-                map.addItem(pos, new Amulet());
+                map.addItem(pos, itemFactory.createAmulet());
             }
         }
     }
@@ -100,8 +85,7 @@ public final class EntityPopulatorImpl implements EntityPopulator {
             return;
         }
 
-        spawnEquipment(map, room, availablePositions, levelNumber, config);
-        spawnConsumables(map, room, availablePositions, levelNumber, config);
+        spawnLoot(map, room, availablePositions, levelNumber);
         spawnTraps(map, room, availablePositions, levelNumber, config);
         spawnEnemies(map, availablePositions, levelNumber, config);
     }
@@ -129,113 +113,20 @@ public final class EntityPopulatorImpl implements EntityPopulator {
         return positions;
     }
 
-    /**
-     * Spawns equipment in a room based on configuration.
-     *
-     * @param map         the game map
-     * @param room        the room to spawn equipment in
-     * @param positions   available positions for spawning
-     * @param levelNumber the dungeon level
-     * @param config      spawn configuration
-     */
-    private void spawnEquipment(final GameMap map, final Room room,
-            final List<Position> positions,
-            final int levelNumber, final SpawnConfig config) {
-        // Weapons gets better in next levels so it's suggested to swap (even the same
-        // weapon)
+    private void spawnLoot(final GameMap map, final Room room, final List<Position> positions, final int level) {
+        final int itemsToSpawn = GameRandom.nextInt(4);
 
-        // Dagger (Weapon 1)
-        if (rollChance(config.daggerRate()) && !positions.isEmpty()) {
-            final Position pos = pickRandomPosition(positions);
-            final Item axe = new MeleeWeapon("Pugnale", DAGGER_BASE_DAMAGE + levelNumber);
-            map.addItem(pos, axe);
-            addItemToRoom(room, axe);
+        for (int i = 0; i < itemsToSpawn && !positions.isEmpty(); i++) {
+
+            Position pos = pickRandomPosition(positions);
+
+            final Optional<Item> item = itemFactory.createRandomItem(level);
+            item.ifPresent(it -> {
+                map.addItem(pos, it);
+                addItemToRoom(room, it);
+            });
         }
 
-        // Sword (Weapon 2)
-        if (rollChance(config.swordRate()) && !positions.isEmpty()) {
-            final Position pos = pickRandomPosition(positions);
-            final Item axe = new MeleeWeapon("Spada", SWORD_BASE_DAMAGE + levelNumber);
-            map.addItem(pos, axe);
-            addItemToRoom(room, axe);
-        }
-
-        // Shovel (Weapon 3)
-        if (rollChance(config.shovelRate()) && !positions.isEmpty()) {
-            final Position pos = pickRandomPosition(positions);
-            final Item axe = new MeleeWeapon("Pala", SHOVEL_BASE_DAMAGE + levelNumber);
-            map.addItem(pos, axe);
-            addItemToRoom(room, axe);
-        }
-
-        // Armor
-        if (rollChance(config.armorRate()) && !positions.isEmpty()) {
-            final Position pos = pickRandomPosition(positions);
-            final Item armor;
-            if (GameRandom.nextDouble() < config.armor1Ratio()) {
-                armor = new Armor(LIGHT_ARMOR_NAME, LIGHT_ARMOR_PROTECTION + levelNumber / 2);
-            } else {
-                armor = new Armor(HEAVY_ARMOR_NAME, HEAVY_ARMOR_PROTECTION + levelNumber);
-            }
-            map.addItem(pos, armor);
-            addItemToRoom(room, armor);
-        }
-
-        // Ring
-        if (rollChance(config.ringRate()) && !positions.isEmpty()) {
-            final Position pos = pickRandomPosition(positions);
-            final int healing = BASE_RING_HEALING + GameRandom.nextInt(RING_HEALING_BOUND);
-            final Item ring = new Ring(RING_NAME, healing);
-            map.addItem(pos, ring);
-            addItemToRoom(room, ring);
-        }
-    }
-
-    /**
-     * Spawns consumable items based on configuration.
-     *
-     * @param map         the game map
-     * @param room        the room to spawn consumables in
-     * @param positions   available positions for spawning
-     * @param levelNumber the dungeon level
-     * @param config      spawn configuration
-     */
-    private void spawnConsumables(final GameMap map, final Room room,
-            final List<Position> positions,
-            final int levelNumber, final SpawnConfig config) {
-        // Health Potion (rate decreases with level)
-        final double potionRate = config.getFoodPotionRate(levelNumber);
-        if (rollChance(potionRate) && !positions.isEmpty()) {
-            final Position pos = pickRandomPosition(positions);
-            final Item potion = new HealthPotion();
-            map.addItem(pos, potion);
-            addItemToRoom(room, potion);
-        }
-
-        // Food
-        if (rollChance(config.foodRate()) && !positions.isEmpty()) {
-            final Position pos = pickRandomPosition(positions);
-            final Item food = new Food();
-            map.addItem(pos, food);
-            addItemToRoom(room, food);
-        }
-
-        // Gold
-        if (rollChance(config.goldRate()) && !positions.isEmpty()) {
-            final Position pos = pickRandomPosition(positions);
-            final int amount = BASE_GOLD_AMOUNT + GameRandom.nextInt(GOLD_RANDOM_BOUND) + 1;
-            final Item gold = new Gold(amount);
-            map.addItem(pos, gold);
-            addItemToRoom(room, gold);
-        }
-
-        // Scroll
-        if (rollChance(config.scrollRate()) && !positions.isEmpty()) {
-            final Position pos = pickRandomPosition(positions);
-            final Item scroll = new Scroll();
-            map.addItem(pos, scroll);
-            addItemToRoom(room, scroll);
-        }
     }
 
     /**
