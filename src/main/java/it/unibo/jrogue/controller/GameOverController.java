@@ -16,8 +16,8 @@ public class GameOverController implements InputHandler {
 
     /**
      * This controller, handles the GameOver screen of the game.
-     * 
-     * 
+     * @param controller
+     * @param gameController
      */
     public GameOverController(final BaseController controller, final GameController gameController) {
         this.controller = controller;
@@ -25,7 +25,7 @@ public class GameOverController implements InputHandler {
     }
 
     public void setScore() {
-        int score = gameController.getPlayer().getGold();
+        final int score = gameController.getPlayer().getGold();
         this.gameOver.setScoreLabel(score);
     }
 

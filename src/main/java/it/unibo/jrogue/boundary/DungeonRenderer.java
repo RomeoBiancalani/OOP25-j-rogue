@@ -130,8 +130,8 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
 
         this.getChildren().clear();
         this.getChildren().addAll(terrainCanvas, statusBar, messageDialog, itemCanvas, entityCanvas);
-        StackPane.setAlignment(statusBar, Pos.BOTTOM_CENTER);
-        StackPane.setAlignment(messageDialog, Pos.TOP_CENTER);
+        setAlignment(statusBar, Pos.BOTTOM_CENTER);
+        setAlignment(messageDialog, Pos.TOP_CENTER);
     }
 
     /**
@@ -152,7 +152,6 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
      */
     private void renderTerrain(final GameMap map) {
         final GraphicsContext gc = terrainCanvas.getGraphicsContext2D();
-        // TODO: Let's check if the default color needs to be changed
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, mapWidth * tileSize, mapHeight * tileSize);
 
@@ -170,10 +169,7 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
                     case STAIRS_UP -> drawSprite(gc, TILE_STAIRS, px, py);
                     // TODO: Trap is hidden by default, need to handle show and hide
                     case TRAP -> drawTrapSprite(gc, px, py);
-                    case VOID -> {
-                    }
-                    default -> {
-                    }
+                    case VOID -> { }
                 }
             }
         }
@@ -405,6 +401,12 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
         return tile == Tile.WALL || tile == Tile.VOID;
     }
 
+    /**
+     * Function to get the name of the sprite by class.
+     * 
+     * @param item the class instance
+     * @return the sprite path
+     */
     public static String getItemSprite(final Item item) {
         if (item instanceof Gold) {
             return SPRITE_GOLD;

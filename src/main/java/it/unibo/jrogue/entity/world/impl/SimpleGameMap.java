@@ -20,6 +20,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Simple implementation of a dungeon map.
  */
@@ -31,7 +33,6 @@ public final class SimpleGameMap implements GameMap {
     private final List<Room> rooms;
     private final List<Hallway> hallways;
     private final List<Entity> entities;
-    private final Set<Position> explored;
     private final Position startingPosition;
     private final Position stairsUp;
     private final Map<Position, Item> itemPositions;
@@ -59,7 +60,6 @@ public final class SimpleGameMap implements GameMap {
         this.rooms = List.copyOf(rooms);
         this.hallways = List.copyOf(hallways);
         this.entities = new ArrayList<>();
-        this.explored = new HashSet<>();
         this.startingPosition = startingPosition;
         this.stairsUp = stairsUp;
         this.itemPositions = new HashMap<>();
@@ -88,17 +88,6 @@ public final class SimpleGameMap implements GameMap {
                 || tile == Tile.CORRIDOR
                 || tile == Tile.STAIRS_UP
                 || tile == Tile.TRAP;
-    }
-
-    @Override
-    public boolean isExplored(final Position pos) {
-        return explored.contains(pos);
-    }
-
-    @Override
-    public void explore(final Position pos) {
-        // TODO: Decide if fog needs to be implemented. Otherwise this is not needed
-        explored.add(pos);
     }
 
     @Override
@@ -169,19 +158,6 @@ public final class SimpleGameMap implements GameMap {
     }
 
     @Override
-    public void exploreRadius(final Position center, final int radius) {
-        // -radius ... +radius
-        for (int dy = -radius; dy <= radius; dy++) {
-            for (int dx = -radius; dx <= radius; dx++) {
-                final Position pos = new Position(center.x() + dx, center.y() + dy);
-                if (isInBounds(pos)) {
-                    explore(pos);
-                }
-            }
-        }
-    }
-
-    @Override
     public Optional<Player> getPlayer() {
         return Optional.ofNullable(player);
     }
@@ -208,6 +184,7 @@ public final class SimpleGameMap implements GameMap {
     }
 
     @Override
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "Player is intentionally shared across the game")
     public void setPlayer(final Player player) {
         this.player = player;
     }

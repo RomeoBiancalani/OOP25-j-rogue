@@ -1,5 +1,7 @@
 package it.unibo.jrogue.controller;
 
+import java.util.Objects;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.jrogue.boundary.api.GameViewRenderer;
 import it.unibo.jrogue.commons.Move;
@@ -31,7 +33,9 @@ public final class DungeonController {
 
     private int currentLevel;
     private GameMap currentMap;
+    @SuppressFBWarnings(value = "UwF", justification = "Player is initialized and null-checked before use")
     private Player player;
+    @SuppressFBWarnings(value = "UwF", justification = "Initialized when level is generated")
     private MovementControllerImpl movementController;
 
     /**
@@ -74,6 +78,7 @@ public final class DungeonController {
      * @return true if advanced successfully, false if already at max level
      */
     public boolean nextLevel() {
+        Objects.requireNonNull(player, "Player cannot be null");
         if (currentLevel >= MAX_LEVEL) {
             return false;
         }
@@ -98,6 +103,7 @@ public final class DungeonController {
      * @return true if advanced successfully, false if at first level
      */
     public boolean previousLevel() {
+        Objects.requireNonNull(player, "Player cannot be null");
         if (currentLevel == 1) {
             return false;
         }
@@ -122,6 +128,7 @@ public final class DungeonController {
      * @param move the player's movement direction
      */
     public void executeTurn(final Move move) {
+        Objects.requireNonNull(movementController, "Movement controller cannot be null");
         movementController.executeTurn(move);
         renderer.renderAll(currentMap, player);
     }
@@ -132,6 +139,7 @@ public final class DungeonController {
      * @return true if the player is on stairs
      */
     public boolean isOnStairs() {
+        Objects.requireNonNull(player, "Player cannot be null");
         final Tile tile = currentMap.getTileAt(player.getPosition());
         return tile == Tile.STAIRS_UP;
     }
@@ -150,6 +158,7 @@ public final class DungeonController {
      *
      * @return the game map
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "GameMap is intentionally shared across the application")
     public GameMap getCurrentMap() {
         return currentMap;
     }
@@ -159,6 +168,7 @@ public final class DungeonController {
      *
      * @return the player
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "Player is intentionally shared across the application")
     public Player getPlayer() {
         return player;
     }
@@ -189,6 +199,7 @@ public final class DungeonController {
      * @param restoredPlayer the restored player
      * @param restoredMap the restored game map
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "Player and GameMap are intentionally shared")
     public void restoreState(final int level, final Player restoredPlayer, final GameMap restoredMap) {
         this.currentLevel = level;
         this.currentMap = restoredMap;

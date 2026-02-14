@@ -99,9 +99,7 @@ public class StatusBarGUI extends HBox {
 
         final double xpPercent = (double) player.getXP() / XP_TO_LEVEL_UP;
         xpBar.setProgress(xpPercent);
-        xpLabel.setText("XP: " + player.getXP() + "/20");
-
-        
+        xpLabel.setText("XP: " + player.getXP() + "/20");        
 
         this.getChildren().clear();
         this.getChildren().addAll(hpStack, xpStack, goldLabel, levelLabel);

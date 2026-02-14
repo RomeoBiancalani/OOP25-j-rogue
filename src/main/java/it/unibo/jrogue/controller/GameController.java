@@ -71,14 +71,15 @@ public final class GameController implements InputHandler {
             handleStairs();
         } else if (code == KeyCode.ESCAPE) {
             controller.pauseGame();
-        } else if (code == KeyCode.SPACE) {
-            // readDialogue(); This method refers to text boxes, when already in a text box
-            // continue the dialogue
-        } else if (code == KeyCode.CONTROL) {
-            // turnAcceleration();
-        } else if (code == KeyCode.SHIFT) {
-            // useDistanceWeapon();
-        }
+        } 
+        // else if (code == KeyCode.SPACE) {
+        //     // readDialogue(); This method refers to text boxes, when already in a text box
+        //     // continue the dialogue
+        // } else if (code == KeyCode.CONTROL) {
+        //     // turnAcceleration();
+        // } else if (code == KeyCode.SHIFT) {
+        //     // useDistanceWeapon();
+        // }
         if (getPlayer().hasWon()) {
             controller.victory();
         }

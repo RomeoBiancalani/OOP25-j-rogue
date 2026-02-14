@@ -22,17 +22,10 @@ import java.util.List;
  */
 public final class BSPLevelGenerator implements LevelGenerator {
 
-    // TODO: Parameters in GenerationConfig may need to be twisted for bigger screens
     private static final double ROOM_PADDING = 0.20;
     private static final double SPLIT_RATIO_MIN = 0.35;
     private static final double SPLIT_RATIO_MAX = 0.65;
     private static final double ASPECT_RATIO_THRESHOLD = 1.25;
-
-    /**
-     * Creates a new BSP level generator.
-     */
-    public BSPLevelGenerator() {
-    }
 
     @Override
     public void setSeed(final long seed) {

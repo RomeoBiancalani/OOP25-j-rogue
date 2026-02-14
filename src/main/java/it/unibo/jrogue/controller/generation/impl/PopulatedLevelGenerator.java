@@ -74,7 +74,6 @@ public final class PopulatedLevelGenerator implements LevelGenerator {
 
     @Override
     public void setSeed(final long seed) {
-        // TODO: Understand the best solution for deterministic randomness
         structureGenerator.setSeed(seed);
     }
 

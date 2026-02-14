@@ -32,21 +32,6 @@ public interface GameMap {
     boolean isWalkable(Position pos);
 
     /**
-     * Checks if a position has been explored by the player.
-     *
-     * @param pos the position to check
-     * @return true if the position has been explored
-     */
-    boolean isExplored(Position pos);
-
-    /**
-     * Marks a position as explored.
-     *
-     * @param pos the position to mark
-     */
-    void explore(Position pos);
-
-    /**
      * Returns the map width in tiles.
      *
      * @return the width
@@ -184,12 +169,4 @@ public interface GameMap {
      * @param tile the new tile
      */
     void setTileAt(Position pos, Tile tile);
-
-    /**
-     * Explores all tiles within a radius of a position. (For DEBUG purposes)
-     *
-     * @param center the center position
-     * @param radius the radius in tiles
-     */
-    void exploreRadius(Position center, int radius);
 }

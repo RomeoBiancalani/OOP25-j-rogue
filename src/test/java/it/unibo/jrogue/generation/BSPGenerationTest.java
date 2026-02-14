@@ -20,9 +20,9 @@ import it.unibo.jrogue.entity.world.api.Level;
 /**
  * Tests for the level generator.
  * To run: ./gradlew clean test --tests
- * "it.unibo.jrogue.generation.BSPLevelGeneratorTest" --console=verbose.
+ * "it.unibo.jrogue.generation.BSPGenerationTest" --console=verbose.
  */
-class BSPLevelGeneratorTest {
+class BSPGenerationTest {
     private static final int MAP_WIDTH = 80;
     private static final int MAP_HEIGHT = 45;
     private static final int LEVEL_NUMBER = 1;
