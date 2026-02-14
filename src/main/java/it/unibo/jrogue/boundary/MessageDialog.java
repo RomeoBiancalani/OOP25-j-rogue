@@ -25,6 +25,7 @@ public class MessageDialog extends HBox {
     private static final int MAX_HEIGHT = 50;
     private static final double OPACITY = 0.7;
     private static final int FONT_SIZE = 20;
+    private static final int QUEUE_MAX_SIZE = 4;
 
     private final Label messagLabel = new Label();
     private final SequentialTransition transition;
@@ -71,23 +72,26 @@ public class MessageDialog extends HBox {
         this.getChildren().clear();
         this.getChildren().add(messagLabel);
         if (transition.getStatus() == Animation.Status.RUNNING) {
-            if (fadeOut.getStatus() == Animation.Status.RUNNING) {
-                queue.add(message);
-            } else {
-                messagLabel.setText(messagLabel.getText() + " || " + message);
-            }
+            queue.add(message);
         } else {
             messagLabel.setText(message);
             transition.playFromStart();
         }
-        transition.playFromStart();
     }
 
     /**
      * Show the next message in the queue message.
      */
     private void showNextFromQueue() {
-        messagLabel.setText(queue.poll());
+        if (queue.size() >= QUEUE_MAX_SIZE) {
+            String lastMessage = queue.poll();
+            while (!queue.isEmpty()) {
+                lastMessage = queue.poll();
+            };
+            messagLabel.setText(lastMessage);
+        } else {
+            messagLabel.setText(queue.poll());
+        }
         transition.playFromStart();
     }
 }
