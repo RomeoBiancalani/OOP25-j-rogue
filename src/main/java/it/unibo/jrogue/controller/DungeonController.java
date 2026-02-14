@@ -65,7 +65,7 @@ public final class DungeonController {
         this.player = new PlayerImpl(PLAYER_START_HP, PLAYER_START_LEVEL, PLAYER_START_AC, startPos);
         currentMap.setPlayer(player);
 
-        this.movementController = new MovementControllerImpl(currentMap);
+        this.movementController = new MovementControllerImpl(currentMap, getRenderer());
 
         renderer.initForMap(currentMap);
         renderer.renderAll(currentMap, player);
@@ -88,7 +88,7 @@ public final class DungeonController {
         player.setPosition(currentMap.getStartingPosition());
         currentMap.setPlayer(player);
 
-        this.movementController = new MovementControllerImpl(currentMap);
+        this.movementController = new MovementControllerImpl(currentMap, getRenderer());
 
         renderer.initForMap(currentMap);
         renderer.renderAll(currentMap, player);
@@ -112,7 +112,7 @@ public final class DungeonController {
         player.setPosition(currentMap.getStartingPosition());
         currentMap.setPlayer(player);
 
-        this.movementController = new MovementControllerImpl(currentMap);
+        this.movementController = new MovementControllerImpl(currentMap, getRenderer());
 
         renderer.initForMap(currentMap);
         renderer.renderAll(currentMap, player);
@@ -130,7 +130,6 @@ public final class DungeonController {
         renderer.renderEntities(currentMap, player);
         renderer.renderItems(currentMap);
         renderer.renderStatusBar(player);
-        renderer.displayMessage("Hai eseguito un turno");
     }
 
     /**
@@ -201,7 +200,7 @@ public final class DungeonController {
         this.currentMap = restoredMap;
         this.player = restoredPlayer;
         this.currentMap.setPlayer(player);
-        this.movementController = new MovementControllerImpl(currentMap);
+        this.movementController = new MovementControllerImpl(currentMap, getRenderer());
 
         renderer.initForMap(currentMap);
         renderer.renderAll(currentMap, player);

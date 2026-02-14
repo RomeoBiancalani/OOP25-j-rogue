@@ -3,6 +3,7 @@ package it.unibo.jrogue.controller;
 import java.util.Objects;
 import java.util.Optional;
 
+import it.unibo.jrogue.boundary.DungeonRenderer;
 import it.unibo.jrogue.commons.Move;
 import it.unibo.jrogue.commons.Position;
 import it.unibo.jrogue.controller.api.MovementController;
@@ -23,6 +24,7 @@ public class MovementControllerImpl implements MovementController {
 
     private final CombatController combatController = new CombatControllerImpl();
 
+    private final DungeonRenderer renderer;
     private final GameMap gameMap;
     private final Player player;
 
@@ -30,11 +32,14 @@ public class MovementControllerImpl implements MovementController {
      * Constructs a MovementController with a GameMap containing all game state.
      *
      * @param gameMap The game map containing player, enemies, items, and terrain.
+     * @param renderer The DungeonRenderer to render resources
      * @throws NullPointerException  if gameMap is null.
+     * @throws NullPointerException  if renderer is null.
      * @throws IllegalStateException if gameMap has no player set.
      */
-    public MovementControllerImpl(final GameMap gameMap) {
+    public MovementControllerImpl(final GameMap gameMap, final DungeonRenderer renderer) {
         this.gameMap = Objects.requireNonNull(gameMap, "gameMap cannot be null");
+        this.renderer = Objects.requireNonNull(renderer, "renderer cannot be null");
         if (gameMap.getPlayer().isEmpty()) {
             throw new IllegalStateException("GameMap must have a player set");
         }
@@ -56,21 +61,31 @@ public class MovementControllerImpl implements MovementController {
                         }
                         if (item instanceof Gold gold) {
                             player.collectGold(gold.getAmount());
+                            
                         } else {
                             player.getInventory().addItem(item);
                         }
+                        renderer.displayMessage("Hai raccolto: " + item.getDescription());
                     });
         } else {
             final Optional<Enemy> target = getOccupiedByEnemy(player, move);
             if (target.isPresent()) {
-                combatController.attack(player, target.get());
+                final int damage = combatController.attack(player, target.get());
+                if (damage <= 0) {
+                    renderer.displayMessage("Hai mancato il nemico");
+                } else {
+                    renderer.displayMessage("Hai colpito il nemico causandogli " + damage + " di danno");
+                }
                 // If player killed the enemy, collect his drop and xp.
                 if (!target.get().isAlive()) {
+                    String message = "Il nemico é morto";
                     final Optional<Item> drop = target.get().getItemDrop();
                     if (drop.isPresent()) {
                         player.getInventory().addItem(drop.get());
+                        message = message + " e ti ha lasciato: " + drop.get().getDescription();
                     }
                     player.collectXP(target.get().getXpDrop());
+                    renderer.displayMessage(message);
                 }
             }
         }
@@ -85,7 +100,12 @@ public class MovementControllerImpl implements MovementController {
                     } else {
                         final Position position = eMove.applyToPosition(e.getPosition());
                         if (isOccupiedByPlayer(position)) {
-                            combatController.attack(e, player);
+                            final int damage = combatController.attack(e, player);
+                            if (damage <= 0) {
+                                renderer.displayMessage("Il nemico ti ha mancato");
+                            } else {
+                                renderer.displayMessage("Il nemico ti ha colpito causandoti " + damage + " di danno");
+                            }
                         }
                     }
                 });

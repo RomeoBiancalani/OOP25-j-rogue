@@ -249,6 +249,11 @@ public final class DungeonRenderer extends StackPane {
         renderStatusBar(player);
     }
 
+    /**
+     * Display the specified message.
+     * 
+     * @param message The message to display.
+     */
     public void displayMessage(String message) {
         this.messageDialog.setMessage(message);
     }

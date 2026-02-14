@@ -1,5 +1,9 @@
 package it.unibo.jrogue.boundary;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
+import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.SequentialTransition;
@@ -24,6 +28,8 @@ public class MessageDialog extends HBox {
 
     private final Label messagLabel = new Label();
     private final SequentialTransition transition;
+    final FadeTransition fadeOut;
+    private final Queue<String> queue = new LinkedList<>();
 
     /**
      * Constructs a new status bar with the default styling.
@@ -37,19 +43,23 @@ public class MessageDialog extends HBox {
         messagLabel.setTextFill(Color.WHITE);
         messagLabel.setFont(Font.font("Consolas", FontWeight.BOLD, FONT_SIZE));
 
-        
-
-        final FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), messagLabel);
+        final FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), messagLabel);
         fadeIn.setFromValue(0.0);
         fadeIn.setToValue(1.0);
 
-        final PauseTransition stayVisible = new PauseTransition(Duration.seconds(2));
+        final PauseTransition stayVisible = new PauseTransition(Duration.seconds(1.5));
 
-        final FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), messagLabel);
+        fadeOut = new FadeTransition(Duration.seconds(0.5), messagLabel);
         fadeOut.setFromValue(1.0);
         fadeOut.setToValue(0.0);
 
         transition = new SequentialTransition(fadeIn, stayVisible, fadeOut);
+
+        transition.setOnFinished(e -> {
+            if (!queue.isEmpty()) {
+                showNextFromQueue();
+            }
+        });
     }
 
     /**
@@ -60,8 +70,24 @@ public class MessageDialog extends HBox {
     public void setMessage(final String message) {
         this.getChildren().clear();
         this.getChildren().add(messagLabel);
-        transition.stop();
-        messagLabel.setText(message);
+        if (transition.getStatus() == Animation.Status.RUNNING) {
+            if (fadeOut.getStatus() == Animation.Status.RUNNING) {
+                queue.add(message);
+            } else {
+                messagLabel.setText(messagLabel.getText() + " || " + message);
+            }
+        } else {
+            messagLabel.setText(message);
+            transition.playFromStart();
+        }
+        transition.playFromStart();
+    }
+
+    /**
+     * Show the next message in the queue message.
+     */
+    private void showNextFromQueue() {
+        messagLabel.setText(queue.poll());
         transition.playFromStart();
     }
 }
