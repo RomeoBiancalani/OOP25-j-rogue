@@ -81,7 +81,11 @@ public class MovementControllerImpl implements MovementController {
                     String message = "Il nemico é morto";
                     final Optional<Item> drop = target.get().getItemDrop();
                     if (drop.isPresent()) {
-                        player.getInventory().addItem(drop.get());
+                        if (drop.get() instanceof Gold gold) {
+                            player.collectGold(gold.getAmount());
+                        } else {
+                            player.getInventory().addItem(drop.get());
+                        }
                         message = message + " e ti ha lasciato: " + drop.get().getDescription();
                     }
                     player.collectXP(target.get().getXpDrop());
