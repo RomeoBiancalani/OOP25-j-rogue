@@ -11,11 +11,11 @@ public interface EnemyFactory {
     /**
      * Creates a bat enemy.
      * 
-     * @param Position The spawn position.
+     * @param position The spawn position.
      * @param level The curren dungeon level.
      * @return a new Bat.
      */
-    Enemy createBat(Position Position, int level);
+    Enemy createBat(Position position, int level);
 
     /**
      * Creates a HobGoblin enemy.
@@ -42,5 +42,5 @@ public interface EnemyFactory {
      * @param level The curren dungeon level.
      * @return An Optional containing a new Enemy, or empty if no enemy is generated.
      */
-    Enemy createRandomEnemy(Position pos, int level);
+    Enemy createRandomEnemy(Position position, int level);
 }

@@ -16,13 +16,19 @@ public class GameOverController implements InputHandler {
 
     /**
      * This controller, handles the GameOver screen of the game.
-     * @param controller
-     * @param gameController
+     *
+      * @param controller which is the BaseController we communicate with
+      *
+      * @param gameController needed to get the gold amount
      */
+
     public GameOverController(final BaseController controller, final GameController gameController) {
         this.controller = controller;
         this.gameController = gameController;
     }
+    /**
+     * Set the final score to be displayed on the GameOver screen.
+     * */
 
     public void setScore() {
         final int score = gameController.getPlayer().getGold();

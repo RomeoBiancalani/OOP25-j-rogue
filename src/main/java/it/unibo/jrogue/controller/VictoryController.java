@@ -6,14 +6,23 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
-public class VictoryController implements InputHandler {
+/**
+ * This class implements the victory screen after achieving victory in the game.
+ * */
+
+public final class VictoryController implements InputHandler {
     private final BaseController controller;
     private final GameController gameController;
     private final VictoryGUI victory = new VictoryGUI();
 
     /**
      * This controller, handles the Victory screen of the game.
+     *
+     * @param controller which is the BaseController we communicate with
+     *
+     * @param gameController needed to get the gold amount
      */
+
     public VictoryController(final BaseController controller, final GameController gameController) {
         this.controller = controller;
         this.gameController = gameController;
@@ -29,9 +38,12 @@ public class VictoryController implements InputHandler {
             controller.backToMainMenu();
         }
     }
+    /**
+     * Set the final score to be displayed on the GameOver screen.
+     * */
 
     public void setScore() {
-        int score = gameController.getPlayer().getGold();
+        final int score = gameController.getPlayer().getGold();
         this.victory.setScoreLabel(score);
     }
 

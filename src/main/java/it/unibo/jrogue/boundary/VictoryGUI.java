@@ -17,7 +17,7 @@ import javafx.scene.control.Label;
 /**
  * This class refers to the GameOver Boundary.
  */
-public class VictoryGUI {
+public final class VictoryGUI {
     private static final String BACKGROUND_PATH = "VictoryImage.png";
     private final VBox rootLayout;
     private final Label scoreLabel;
@@ -34,8 +34,9 @@ public class VictoryGUI {
     /**
      * Initialization of the Victory Background.
      */
-    public void initGraphics() {
+    private void initGraphics() {
         rootLayout.setAlignment(Pos.CENTER);
+        final int FONT_THICKNESS = 30;
         final Image backgroundImage = new Image(getClass().getResourceAsStream("/" + BACKGROUND_PATH));
         final BackgroundImage background = new BackgroundImage(
                 backgroundImage,
@@ -44,13 +45,18 @@ public class VictoryGUI {
                 BackgroundPosition.CENTER,
                 new BackgroundSize(100, 100, true, true, true, true));
         rootLayout.setBackground(new Background(background));
-        scoreLabel.setFont(Font.font("Consolas", FontWeight.BOLD, 30));
+        scoreLabel.setFont(Font.font("Consolas", FontWeight.BOLD, FONT_THICKNESS));
         scoreLabel.setTextFill(Color.GOLD);
         scoreLabel.setEffect(new DropShadow(10, Color.BLACK));
         rootLayout.getChildren().add(scoreLabel);
     }
+    /**
+     * Set the final score to be displayed on the GameOver screen.
+     *
+     * @param score simply the score of that game.
+     * */
 
-    public void setScoreLabel(int score) {
+    public void setScoreLabel(final int score) {
         this.scoreLabel.setText("Score: " + score);
     }
 

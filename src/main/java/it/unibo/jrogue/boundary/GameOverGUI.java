@@ -17,7 +17,7 @@ import javafx.scene.text.FontWeight;
 /**
  * This class refers to the GameOver Boundary.
  */
-public class GameOverGUI {
+public final class GameOverGUI {
     private static final String BACKGROUND_PATH = "GameOver.png";
     private final VBox rootLayout;
     private final Label scoreLabel;
@@ -34,7 +34,8 @@ public class GameOverGUI {
     /**
      * Initialization of the Game over Background.
      */
-    public void initGraphics() {
+    private void initGraphics() {
+        final int FONT_THICKNESS = 30;
         rootLayout.setAlignment(Pos.CENTER);
         final Image backgroundImage = new Image(getClass().getResourceAsStream("/" + BACKGROUND_PATH));
         final BackgroundImage background = new BackgroundImage(
@@ -44,11 +45,16 @@ public class GameOverGUI {
                 BackgroundPosition.CENTER,
                 new BackgroundSize(100, 100, true, true, true, true));
         rootLayout.setBackground(new Background(background));
-        scoreLabel.setFont(Font.font("Consolas", FontWeight.BOLD, 30));
+        scoreLabel.setFont(Font.font("Consolas", FontWeight.BOLD, FONT_THICKNESS));
         scoreLabel.setTextFill(Color.GOLD);
         scoreLabel.setEffect(new DropShadow(10, Color.BLACK));
         rootLayout.getChildren().add(scoreLabel);
     }
+    /**
+     * set the score inside the label.
+     *
+     * @param score simply the score of that game.
+     * */
 
     public void setScoreLabel(final int score) {
         this.scoreLabel.setText("Score: " + score);

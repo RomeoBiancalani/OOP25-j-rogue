@@ -53,7 +53,7 @@ public class Bat extends AbstractEnemy {
 
     /**
      * Construct a new Bat at the specified starting position,
-     * with base stats
+     * with base stats.
      * 
      * @param startPosition The initial position of the bat.
      * @throws NullPointerException if start position is null.
