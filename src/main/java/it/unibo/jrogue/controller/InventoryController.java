@@ -75,7 +75,7 @@ public final class InventoryController implements InputHandler {
             if (index < manager.getSize()) {
                 manager.dropItem(index);
             }
-        } else if (code == KeyCode.Q || code == KeyCode.ESCAPE || code == KeyCode.I) {
+        } else if (code == KeyCode.Q || code == KeyCode.ESCAPE) {
             controller.resumeGame();
         }
 

@@ -65,21 +65,13 @@ public final class GameController implements InputHandler {
         } else if (code == KeyCode.S) {
             dungeonController.executeTurn(Move.DOWN);
             isDead();
-        } else if (code == KeyCode.I) {
+        } else if (code == KeyCode.Q) {
             controller.openInventory();
         } else if (code == KeyCode.E) {
             handleStairs();
         } else if (code == KeyCode.ESCAPE) {
             controller.pauseGame();
-        } 
-        // else if (code == KeyCode.SPACE) {
-        //     // readDialogue(); This method refers to text boxes, when already in a text box
-        //     // continue the dialogue
-        // } else if (code == KeyCode.CONTROL) {
-        //     // turnAcceleration();
-        // } else if (code == KeyCode.SHIFT) {
-        //     // useDistanceWeapon();
-        // }
+        }
         if (getPlayer().hasWon()) {
             controller.victory();
         }
