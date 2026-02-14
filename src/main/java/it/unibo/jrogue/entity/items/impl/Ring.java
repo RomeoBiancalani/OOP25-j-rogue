@@ -89,4 +89,11 @@ public class Ring implements Equipment {
     public void unequip(final Player player) {
         Objects.requireNonNull(player).remove(this);
     }
+
+    /**
+     * Getter for isIdentified.
+     * */
+    public boolean getIsIdentified() {
+        return this.isIdentified;
+    }
 }
