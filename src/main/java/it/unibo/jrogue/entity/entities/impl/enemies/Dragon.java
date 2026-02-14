@@ -1,5 +1,6 @@
 package it.unibo.jrogue.entity.entities.impl.enemies;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import it.unibo.jrogue.commons.Dice;
@@ -23,22 +24,46 @@ public class Dragon extends AbstractEnemy {
     private static final int D_LEVEL = 6;
     private static final int D_AC = 12;
     private static final int D_VISIBILITY = 5;
-    private static final int D_NUM_DICE = 4;
-    private static final int D_SIDES_DICE = 10;
+    private static final int HP_NUM_DICE = 4;
+    private static final int HP_SIDES_DICE = 10;
+    private static final int ATK_NUM_DICE = 3;
+    private static final int ATK_SIDES_DICE = 8;
+    private static final int XP_NUM_DICE = 5;
+    private static final int XP_SIDES_DICE = 8;
 
     /**
-     * Construct a new Dragon at the specified starting position.
-     * Initializes base stats (level, HP, AC, visibility).
+     * Construct a new Dragon at the specified starting position,
+     * with stats scaled by dungeon level.
      * 
-     * @param startPosition The initial position of the hobgoblin.
+     * @param startPosition The initial position of the dragon.
+     * @param level The dungeon level.
+     * @throws NullPointerException if start position is null.
+     */
+    public Dragon(final Position startPosition, final int level) {
+        super(
+            Objects.requireNonNull(startPosition), 
+            level, 
+            Dice.roll(HP_NUM_DICE, HP_SIDES_DICE), 
+            D_AC, 
+            D_VISIBILITY, 
+            new ChasingMovementStrategy()
+        );
+    }
+
+    /**
+     * Construct a new Dragon at the specified starting position,
+     * with base stats.
+     * 
+     * @param startPosition The initial position of the dragon.
+     * @throws NullPointerException if start position is null.
      */
     public Dragon(final Position startPosition) {
         super(
-            startPosition, 
+            Objects.requireNonNull(startPosition), 
             D_LEVEL, 
-            Dice.roll(D_NUM_DICE, D_SIDES_DICE), 
+            Dice.roll(HP_NUM_DICE, HP_SIDES_DICE), 
             D_AC, 
-            D_VISIBILITY,
+            D_VISIBILITY, 
             new ChasingMovementStrategy()
         );
     }
@@ -52,7 +77,7 @@ public class Dragon extends AbstractEnemy {
      */
     @Override
     public int getAttack() {
-        return Dice.roll(3, 8) + getLevel();
+        return Dice.roll(ATK_NUM_DICE, ATK_SIDES_DICE) + getLevel();
     }
 
     /**
@@ -64,7 +89,7 @@ public class Dragon extends AbstractEnemy {
      */
     @Override
     protected int computeXpValue() {
-        return Dice.roll(3, 8);
+        return Dice.roll(XP_NUM_DICE, XP_SIDES_DICE);
     }
 
     /**
