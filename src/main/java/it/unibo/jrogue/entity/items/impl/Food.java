@@ -13,8 +13,13 @@ public class Food implements Consumable {
      * {@inheritDoc}
      */
     @Override
-    public void consume(final Player player) {
+    public boolean consume(final Player player) {
+        if (player.getLifePoint() == player.getMaxLifePoint()) {
+            return false;
+        } else {
             player.heal(HEALING_AMOUNT);
+            return true;
+        }
     }
 
     /**

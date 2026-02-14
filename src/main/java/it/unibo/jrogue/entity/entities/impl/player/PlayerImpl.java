@@ -25,6 +25,9 @@ public class PlayerImpl extends AbstractEntity implements Player {
     private static final int INVENTORY_SIZE = 50;
     private static final int BASE_DAMAGE = 3;
     private static final int XP_TO_LEVEL_UP = 20;
+    private static final int DEFAULT_START_HP = 20;
+    private static final int DEFAULT_START_LEVEL = 1;
+    private static final int DEFAULT_START_AC = 5;
 
     private int xp;
     private int gold;
@@ -34,6 +37,17 @@ public class PlayerImpl extends AbstractEntity implements Player {
     private Optional<Ring> ring;
     private boolean victory;
 
+
+    public PlayerImpl(final Position startPosition) {
+        super(DEFAULT_START_HP, DEFAULT_START_LEVEL, DEFAULT_START_AC, startPosition);
+        inventory = new SimpleInventory(INVENTORY_SIZE);
+        armor = Optional.empty();
+        weapon = Optional.empty();
+        ring = Optional.empty();
+        gold = 0;
+        xp = 0;
+    }
+    
     /**
      * Construct a player with the specified attributes.
      * 

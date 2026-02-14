@@ -8,13 +8,15 @@ import javafx.scene.layout.Pane;
 
 public class VictoryController implements InputHandler {
     private final BaseController controller;
+    private final GameController gameController;
     private final VictoryGUI victory = new VictoryGUI();
 
     /**
      * This controller, handles the Victory screen of the game.
-     */
-    public VictoryController(final BaseController controller) {
+     * */
+    public VictoryController(final BaseController controller, final GameController gameController){
         this.controller = controller;
+        this.gameController = gameController;
     }
 
     /**
@@ -28,11 +30,14 @@ public class VictoryController implements InputHandler {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    public void setScore(){
+        int score = gameController.getPlayer().getGold();
+        this.victory.setScoreLabel(score);
+    }
+
     @Override
-    public Pane getView() {
+    public Pane getView(){
+        setScore();
         return victory.getLayout();
     }
 

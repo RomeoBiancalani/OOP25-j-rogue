@@ -47,8 +47,8 @@ public final class BaseController {
         this.gameController = new GameController(this);
         this.pauseController = new PauseGameController(this);
         this.inventoryController = new InventoryController(this);
-        this.gameOverController = new GameOverController(this);
-        this.victoryController = new VictoryController(this);
+        this.gameOverController = new GameOverController(this, (GameController) gameController);
+        this.victoryController = new VictoryController(this, (GameController) gameController);
         this.currentController = menuController;
     }
 

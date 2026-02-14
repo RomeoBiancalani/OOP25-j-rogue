@@ -14,6 +14,8 @@ public interface Consumable extends Item {
      * Consumes the item.
      * 
      * @param player the player who consumes the item.
+     *
+     * @return true if the item is consumed successfully.
      */
-    void consume(Player player);
+    boolean consume(Player player);
 }

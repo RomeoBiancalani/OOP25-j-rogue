@@ -14,8 +14,13 @@ public class HealthPotion implements Consumable {
      * {@inheritDoc}
      */
     @Override
-    public void consume(final Player player) {
-            player.heal(HEALING_AMOUNT);
+    public boolean consume(final Player player) {
+        if (player.getLifePoint() == player.getMaxLifePoint()){
+            return false;
+        } else {
+        player.heal(HEALING_AMOUNT);
+            return true;
+        }
     }
 
     /**

@@ -157,4 +157,22 @@ public abstract class AbstractEntity implements Entity {
         this.lifePoint += HP_INCREMENT_PER_LEVEL;
     }
 
+    /**
+     * Check if two entities are actually the same enemy.
+     * 
+     * @return true if they are the same
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        AbstractEntity other = (AbstractEntity) obj;
+        return this.hashCode() == other.hashCode();
+    }
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(currentPosition, lifePoint, armorClass, maxLifePoint, level);
+    }
 }

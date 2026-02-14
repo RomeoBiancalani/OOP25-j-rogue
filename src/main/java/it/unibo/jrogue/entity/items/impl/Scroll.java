@@ -16,19 +16,22 @@ public class Scroll implements Consumable {
     * {@inheritDoc}
      */
     @Override
-    public void consume(final Player player) {
+    public boolean consume(final Player player) {
         final Inventory inventory = player.getInventory();
         for (int i = 0; i < inventory.getSize(); i++) {
             final Optional<Item> invItem = inventory.getItem(i);
             if (invItem.isPresent()) {
                 final Item item = invItem.get();
                 if (item instanceof Ring ring) {
+                    if(ring.getIsIdentified()){
+                        continue;
+                    }
                     ring.identify();
-                    return;
+                    return true;
                 }
             }
         }
-
+        return false;
     }
 
     /**
@@ -36,6 +39,6 @@ public class Scroll implements Consumable {
      */
     @Override
     public String getDescription() {
-        return "It may help you discover the first ring effect";
+        return "Use it when you have a ring and something may happen";
     }
 }

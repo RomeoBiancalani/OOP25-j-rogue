@@ -41,10 +41,13 @@ public class InventoryManagerImpl implements InventoryManager {
                     System.out.println("Equipaggiato");
                 }
             }
-            if (item instanceof Consumable) {
-                ((Consumable) item).consume(player);
-                System.out.println("consumato");
-                player.getInventory().removeItem(index);
+            if (item instanceof Consumable consumable) {
+                boolean isConsumed = consumable.consume(player);
+                if(isConsumed){
+                    System.out.println("consumato");
+                    player.getInventory().removeItem(index);
+                } else
+                    System.out.println("Non consumato");
             }
         }
     }
