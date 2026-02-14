@@ -25,9 +25,6 @@ public final class DungeonController {
 
     private static final int MAP_WIDTH = 80;
     private static final int MAP_HEIGHT = 45;
-    private static final int PLAYER_START_HP = 20;
-    private static final int PLAYER_START_LEVEL = 1;
-    private static final int PLAYER_START_AC = 5;
 
     private final long baseSeed;
     private final DungeonRenderer renderer;
@@ -62,7 +59,7 @@ public final class DungeonController {
         generateCurrentLevel();
 
         final Position startPos = currentMap.getStartingPosition();
-        this.player = new PlayerImpl(PLAYER_START_HP, PLAYER_START_LEVEL, PLAYER_START_AC, startPos);
+        this.player = new PlayerImpl(startPos);
         currentMap.setPlayer(player);
 
         this.movementController = new MovementControllerImpl(currentMap, getRenderer());
