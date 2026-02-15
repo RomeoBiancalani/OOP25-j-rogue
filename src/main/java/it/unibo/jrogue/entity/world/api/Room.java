@@ -1,7 +1,6 @@
 package it.unibo.jrogue.entity.world.api;
 
 import it.unibo.jrogue.commons.Position;
-import it.unibo.jrogue.entity.items.api.Item;
 import java.util.List;
 
 /**

@@ -22,7 +22,7 @@ public interface GameViewRenderer {
      * @param player The player to update stats from.
      * @param dungeonLevel the current dungeon level.
      */
-    public void updateStatus(Player player, int dungeonLevel);
+    void updateStatus(Player player, int dungeonLevel);
 
     /**
      * Performs a full render of the game world.

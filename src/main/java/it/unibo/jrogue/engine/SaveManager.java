@@ -194,7 +194,7 @@ public final class SaveManager {
             final List<Position> positions = getFloorPositions(map, room);
             if (!positions.isEmpty()) {
                 final Position pos = positions.get(GameRandom.nextInt(positions.size()));
-                Amulet amulet = (Amulet) new ItemFactoryImpl().createAmulet();
+                final Amulet amulet = (Amulet) new ItemFactoryImpl().createAmulet();
                 map.addItem(pos, amulet);
                 return;
             }

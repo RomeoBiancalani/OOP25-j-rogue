@@ -97,7 +97,6 @@ public final class SimpleRoom implements Room {
             && pos.y() < topLeft.y() + height;
     }
 
-
     @Override
     public void addTrap(final Trap trap) {
         traps.add(trap);
