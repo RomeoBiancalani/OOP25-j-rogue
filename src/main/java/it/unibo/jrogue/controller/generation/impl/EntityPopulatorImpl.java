@@ -64,12 +64,8 @@ public final class EntityPopulatorImpl implements EntityPopulator {
             final List<Position> positions = getFloorPositions(map, room);
             if (!positions.isEmpty()) {
                 final Position pos = positions.get(GameRandom.nextInt(positions.size()));
-
                 final Item amulet = itemFactory.createAmulet();
-
                 map.addItem(pos, amulet);
-                addItemToRoom(room, amulet);
-
                 return;
             }
         }
@@ -133,7 +129,6 @@ public final class EntityPopulatorImpl implements EntityPopulator {
                 final Position pos = pickRandomPosition(positions);
                 final Item item = itemOpt.get();
                 map.addItem(pos, item);
-                addItemToRoom(room, item);
                 positions.remove(pos);
                 itemCount++;
             } else {
@@ -185,7 +180,6 @@ public final class EntityPopulatorImpl implements EntityPopulator {
         };
 
         final SimpleTrap trap = new SimpleTrap(pos, damage);
-        addTrapToRoom(room, trap);
 
         map.setTileAt(pos, Tile.TRAP);
     }
@@ -248,26 +242,6 @@ public final class EntityPopulatorImpl implements EntityPopulator {
     private Position pickRandomPosition(final List<Position> positions) {
         final int index = GameRandom.nextInt(positions.size());
         return positions.remove(index);
-    }
-
-    /**
-     * Adds an item to a room (for room-level tracking).
-     *
-     * @param room the room to add item to
-     * @param item the item to add
-     */
-    private void addItemToRoom(final Room room, final Item item) {
-        room.addItem(item);
-    }
-
-    /**
-     * Adds a trap to a room.
-     *
-     * @param room the room to add trap to
-     * @param trap the trap to add
-     */
-    private void addTrapToRoom(final Room room, final SimpleTrap trap) {
-        room.addTrap(trap);
     }
 
     /**

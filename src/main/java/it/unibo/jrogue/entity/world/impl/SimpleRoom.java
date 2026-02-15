@@ -50,16 +50,6 @@ public final class SimpleRoom implements Room {
     }
 
     @Override
-    public boolean hasItems() {
-        return !items.isEmpty();
-    }
-
-    @Override
-    public List<Item> getItems() {
-        return Collections.unmodifiableList(items);
-    }
-
-    @Override
     public boolean isHidden() {
         return hidden;
     }
@@ -107,10 +97,6 @@ public final class SimpleRoom implements Room {
             && pos.y() < topLeft.y() + height;
     }
 
-    @Override
-    public void addItem(final Item item) {
-        items.add(item);
-    }
 
     @Override
     public void addTrap(final Trap trap) {

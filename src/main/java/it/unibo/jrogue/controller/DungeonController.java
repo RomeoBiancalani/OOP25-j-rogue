@@ -182,7 +182,6 @@ public final class DungeonController {
      *
      * @return the player
      */
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "Player is intentionally shared across the application")
     public Player getPlayer() {
         return player;
     }

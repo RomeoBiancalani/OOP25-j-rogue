@@ -14,15 +14,20 @@ import it.unibo.jrogue.entity.entities.impl.enemies.Dragon;
 import it.unibo.jrogue.entity.entities.impl.enemies.HobGoblin;
 import it.unibo.jrogue.entity.items.api.Inventory;
 import it.unibo.jrogue.entity.items.api.Item;
+import it.unibo.jrogue.entity.GameRandom;
+import it.unibo.jrogue.entity.items.impl.Amulet;
 import it.unibo.jrogue.entity.items.impl.Armor;
 import it.unibo.jrogue.entity.items.impl.Food;
 import it.unibo.jrogue.entity.items.impl.Gold;
 import it.unibo.jrogue.entity.items.impl.HealthPotion;
+import it.unibo.jrogue.entity.items.impl.ItemFactoryImpl;
 import it.unibo.jrogue.entity.items.impl.MeleeWeapon;
 import it.unibo.jrogue.entity.items.impl.Ring;
 import it.unibo.jrogue.entity.items.impl.Scroll;
 import it.unibo.jrogue.entity.world.api.GameMap;
 import it.unibo.jrogue.entity.world.api.Level;
+import it.unibo.jrogue.entity.world.api.Room;
+import it.unibo.jrogue.entity.world.api.Tile;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -30,6 +35,7 @@ import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -54,6 +60,7 @@ public final class SaveManager {
     private static final String ITEM_SCROLL = "scroll";
     private static final String ITEM_WEAPON = "weapon";
     private static final String ITEM_ARMOR = "armor";
+    private static final int AMULET_LEVEL = 10;
 
     private SaveManager() {
     }
@@ -141,6 +148,12 @@ public final class SaveManager {
                 pd.getMaxHp(), pd.getLevel(), pd.getArmorClass(), playerPos
         );
 
+        // Restore current HP (constructor sets HP to maxHp)
+        final int hpDiff = pd.getMaxHp() - pd.getHp();
+        if (hpDiff > 0) {
+            player.damage(hpDiff);
+        }
+
         // Restore inventory
         for (final SaveData.ItemData itemData : pd.getInventoryItems()) {
             final Optional<Item> item = createItemFromData(itemData);
@@ -161,8 +174,45 @@ public final class SaveManager {
             item.ifPresent(i -> map.addItem(iPos, i));
         }
 
+        // Spawn amulet on amulet level
+        if (data.getCurrentLevel() >= AMULET_LEVEL) {
+            spawnAmuletOnMap(map);
+        }
+
         controller.restoreState(data.getCurrentLevel(), player, map);
         return controller;
+    }
+
+    private static void spawnAmuletOnMap(final GameMap map) {
+        final List<Room> rooms = map.getRooms();
+        final List<Room> candidateRooms = new ArrayList<>();
+        for (int i = 1; i < rooms.size(); i++) {
+            candidateRooms.add(rooms.get(i));
+        }
+        Collections.shuffle(candidateRooms);
+        for (final Room room : candidateRooms) {
+            final List<Position> positions = getFloorPositions(map, room);
+            if (!positions.isEmpty()) {
+                final Position pos = positions.get(GameRandom.nextInt(positions.size()));
+                Amulet amulet = (Amulet) new ItemFactoryImpl().createAmulet();
+                map.addItem(pos, amulet);
+                return;
+            }
+        }
+    }
+
+    private static List<Position> getFloorPositions(final GameMap map, final Room room) {
+        final List<Position> positions = new ArrayList<>();
+        final Position topLeft = room.getTopLeft();
+        for (int y = topLeft.y() + 1; y < topLeft.y() + room.getHeight() - 1; y++) {
+            for (int x = topLeft.x() + 1; x < topLeft.x() + room.getWidth() - 1; x++) {
+                final Position pos = new Position(x, y);
+                if (map.getTileAt(pos) == Tile.FLOOR) {
+                    positions.add(pos);
+                }
+            }
+        }
+        return positions;
     }
 
     private static SaveData extractSaveData(final DungeonController dc) {
