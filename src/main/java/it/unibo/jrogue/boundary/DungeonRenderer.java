@@ -47,13 +47,17 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
     private static final String TILE_STAIRS = "stairs";
     private static final String TILE_FLOOR = "tile";
     private static final String WALL_COLOR = "#1a1a2e";
-    private static final double FOG_OPACITY = 0.95;
+    private static final double FOG_OPACITY = 0;
 
     private static final String SPRITE_PLAYER = "entities/player";
     private static final String SPRITE_PLAYER_ARMOR = "entities/player-armored";
     private static final String SPRITE_BAT = "entities/bat";
     private static final String SPRITE_GOBLIN = "entities/goblin";
     private static final String SPRITE_DRAGON = "entities/dragon";
+    private static final String SPRITE_SLEEPING_BAT = "entities/sleeping/sleeping-bat";
+    private static final String SPRITE_SLEEPING_GOBLIN = "entities/sleeping/sleeping-goblin";
+    private static final String SPRITE_SLEEPING_DRAGON = "entities/sleeping/sleeping-dragon";
+
     private static final String SPRITE_GOLD = "items/gold";
     private static final String SPRITE_POTION = "items/potion";
     private static final String SPRITE_FOOD = "items/food";
@@ -68,7 +72,6 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
     private static final String SPRITE_SHOVEL = "weapons/shovel";
     private static final String SPRITE_TRAP_DAMAGE = "traps/trap-damage";
     private static final String SPRITE_TRAP_ROCK = "traps/trap-rock";
-    private static final String SPRITE_TRAP_TELEPORT = "traps/trap-teleport";
 
     private static final String ARMOR_HEAVY_NAME = "Iron armor";
 
@@ -173,7 +176,7 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
                     case WALL -> drawWallFill(gc, px, py);
                     case CORRIDOR -> drawCorridor(gc, map, pos, px, py);
                     case STAIRS_UP -> drawSprite(gc, TILE_STAIRS, px, py);
-                    case TRAP -> drawTrapSprite(gc, px, py);
+                    case TRAP -> drawTrapSprite(gc, map, pos, px, py);
                     case VOID -> { }
                 }
             }
@@ -295,6 +298,9 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
         loadSprite(SPRITE_BAT);
         loadSprite(SPRITE_GOBLIN);
         loadSprite(SPRITE_DRAGON);
+        loadSprite(SPRITE_SLEEPING_BAT);
+        loadSprite(SPRITE_SLEEPING_GOBLIN);
+        loadSprite(SPRITE_SLEEPING_DRAGON);
 
         // Items
         loadSprite(SPRITE_GOLD);
@@ -312,7 +318,6 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
         // Traps
         loadSprite(SPRITE_TRAP_DAMAGE);
         loadSprite(SPRITE_TRAP_ROCK);
-        loadSprite(SPRITE_TRAP_TELEPORT);
     }
 
     private void loadSprite(final String name) {
@@ -401,8 +406,21 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
     }
 
     private void drawTrapSprite(final GraphicsContext gc,
+                                final GameMap map,
+                                final Position pos,
                                 final double px, final double py) {
-        // TODO: insert trap factory
+        map.getTrapAt(pos).ifPresent(trap -> {
+            final String spriteName;
+
+            if (trap instanceof it.unibo.jrogue.entity.world.impl.RockTrap) {
+                spriteName = SPRITE_TRAP_ROCK;
+            } else {
+                spriteName = SPRITE_TRAP_DAMAGE;
+            }
+
+            drawSprite(gc, TILE_FLOOR, px, py);
+            drawSprite(gc, spriteName, px, py);
+        });
     }
 
     private boolean isWallOrVoid(final GameMap map, final int x, final int y) {
@@ -456,10 +474,19 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
 
     private String getEnemySprite(final Enemy enemy) {
         if (enemy instanceof Bat) {
+            if (enemy.isSleeping()) {
+                return SPRITE_SLEEPING_BAT;
+            }
             return SPRITE_BAT;
         } else if (enemy instanceof HobGoblin) {
+            if (enemy.isSleeping()) {
+                return SPRITE_SLEEPING_GOBLIN;
+            }
             return SPRITE_GOBLIN;
         } else if (enemy instanceof Dragon) {
+            if (enemy.isSleeping()) {
+                return SPRITE_SLEEPING_DRAGON;
+            }
             return SPRITE_DRAGON;
         }
         return SPRITE_BAT;

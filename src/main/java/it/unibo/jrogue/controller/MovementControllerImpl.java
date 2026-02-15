@@ -23,6 +23,9 @@ import it.unibo.jrogue.entity.world.api.GameMap;
  */
 public class MovementControllerImpl implements MovementController {
 
+    private static final int ROCK_TRAP_DAMAGE = 3;
+    private static final int SPIKE_TRAP_DAMAGE = 10;
+
     private final CombatController combatController = new CombatControllerImpl();
 
     private final GameViewRenderer renderer;
@@ -68,9 +71,15 @@ public class MovementControllerImpl implements MovementController {
             // Trigger trap if present at the moved position
             gameMap.getTrapAt(player.getPosition())
                     .ifPresent(trap -> {
-                        // TODO: insert trap trigger logic
-                        // trap.trigger(player);
-                        renderer.displayMessage("Sei caduto in una trappola: " + trap.getDescription());
+                        if (trap instanceof it.unibo.jrogue.entity.world.impl.RockTrap) {
+                            player.damage(ROCK_TRAP_DAMAGE);
+                            trap.trigger();
+                            renderer.displayMessage(trap.getDescription());
+                        } else if (trap instanceof it.unibo.jrogue.entity.world.impl.PitOfSpikesTrap) {
+                            player.damage(SPIKE_TRAP_DAMAGE);
+                            trap.trigger();
+                            renderer.displayMessage(trap.getDescription());
+                        }
                     });
             // Pick up item if present at the moved position
             gameMap.getItemAt(player.getPosition())
@@ -107,6 +116,10 @@ public class MovementControllerImpl implements MovementController {
                 } else {
                     renderer.displayMessage("Hai colpito il nemico causandogli " + damage + " di danno");
                     soundManager.play(SoundManager.Sound.ATTACK);
+                }
+                // If the enemy was sleeping, the enemy wake ups
+                if (target.get().isSleeping()) {
+                    target.get().wakeUp();
                 }
                 // If player killed the enemy, collect his drop and xp.
                 if (!target.get().isAlive()) {
