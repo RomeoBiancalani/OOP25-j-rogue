@@ -47,7 +47,7 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
     private static final String TILE_STAIRS = "stairs";
     private static final String TILE_FLOOR = "tile";
     private static final String WALL_COLOR = "#1a1a2e";
-    private static final double FOG_OPACITY = 0.5;
+    private static final double FOG_OPACITY = 0.95;
 
     private static final String SPRITE_PLAYER = "entities/player";
     private static final String SPRITE_PLAYER_ARMOR = "entities/player-armored";
