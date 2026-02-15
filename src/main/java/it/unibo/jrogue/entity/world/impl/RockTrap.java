@@ -9,7 +9,6 @@ import it.unibo.jrogue.entity.world.api.Trap;
 
 public class RockTrap implements Trap {
     private final Position position;
-    private final int damage;
     private boolean active;
 
     /**
@@ -21,7 +20,6 @@ public class RockTrap implements Trap {
     public RockTrap(final Position position) {
         this.position = position;
         this.active = true;
-        this.damage = 3;
     }
 
     /**
@@ -30,7 +28,7 @@ public class RockTrap implements Trap {
     @Override
     public void trigger() {
         if (this.active) {
-            getDamageTrap();
+
             this.active = false;
         }
     }

@@ -9,7 +9,6 @@ import it.unibo.jrogue.entity.world.api.Trap;
 
 public final class PitOfSpikesTrap implements Trap {
     private final Position position;
-    private final int damage;
     private boolean active;
 
     /**
@@ -21,7 +20,6 @@ public final class PitOfSpikesTrap implements Trap {
     public PitOfSpikesTrap(final Position position) {
         this.position = position;
         this.active = true;
-        this.damage = 10;
     }
 
     /**
@@ -30,7 +28,7 @@ public final class PitOfSpikesTrap implements Trap {
     @Override
     public void trigger() {
         if (this.active) {
-            getDamage();
+
             this.active = false;
         }
     }
@@ -57,7 +55,4 @@ public final class PitOfSpikesTrap implements Trap {
      * @return damage of the trap
      */
 
-    public int getDamage() {
-        return damage;
-    }
 }

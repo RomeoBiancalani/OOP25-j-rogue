@@ -14,6 +14,9 @@ import it.unibo.jrogue.entity.world.api.GameMap;
 import it.unibo.jrogue.entity.world.api.Room;
 import it.unibo.jrogue.entity.world.api.Tile;
 import it.unibo.jrogue.entity.world.impl.SimpleTrap;
+import it.unibo.jrogue.entity.world.api.Trap;
+import it.unibo.jrogue.entity.world.api.TrapFactory;
+import it.unibo.jrogue.entity.world.impl.TrapFactoryImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +29,12 @@ import java.util.Optional;
 public final class EntityPopulatorImpl implements EntityPopulator {
 
     private static final int SPIKE_TRAP_DAMAGE = 5;
-    private static final int POISON_TRAP_DAMAGE = 2;
+    private static final int ROCK_TRAP_DAMAGE = 2;
     private static final int TELEPORT_TRAP_DAMAGE = 0;
 
     private final ItemFactory itemFactory;
     private final EnemyFactory enemyFactory;
+    private final TrapFactory trapFactory;
 
     /**
      * Creates a new EntityPopulator.
@@ -38,6 +42,7 @@ public final class EntityPopulatorImpl implements EntityPopulator {
     public EntityPopulatorImpl() {
         this.itemFactory = new ItemFactoryImpl();
         this.enemyFactory = new EnemyFactoryImpl();
+        this.trapFactory = new TrapFactoryImpl();
     }
 
     @Override
@@ -152,41 +157,35 @@ public final class EntityPopulatorImpl implements EntityPopulator {
      * @param config      spawn configuration
      */
     private void spawnTraps(final GameMap map, final Room room,
-            final List<Position> positions,
-            final int levelNumber, final SpawnConfig config) {
+                            final List<Position> positions,
+                            final int levelNumber, final SpawnConfig config) {
+
         if (!rollChance(config.trapRate()) || positions.isEmpty()) {
             return;
         }
 
-        // Collect available trap types based on level
         final List<TrapType> availableTraps = new ArrayList<>();
+
         if (levelNumber >= config.spikeTrapMinLevel()) {
             availableTraps.add(TrapType.SPIKE);
         }
         if (levelNumber >= config.poisonTrapMinLevel()) {
-            availableTraps.add(TrapType.POISON);
+            availableTraps.add(TrapType.ROCK);
         }
         if (levelNumber >= config.teleportTrapMinLevel()) {
             availableTraps.add(TrapType.TELEPORT);
         }
-
         if (availableTraps.isEmpty()) {
             return;
         }
-
-        // Pick random trap type and spawn
         final TrapType type = availableTraps.get(GameRandom.nextInt(availableTraps.size()));
         final Position pos = pickRandomPosition(positions);
-        final int damage = switch (type) {
-            case SPIKE -> SPIKE_TRAP_DAMAGE;
-            // steps
-            case POISON -> POISON_TRAP_DAMAGE;
-            case TELEPORT -> TELEPORT_TRAP_DAMAGE;
+        final Trap trap = switch (type) {
+            case SPIKE -> trapFactory.createPitOfSpikesTrap(pos);
+            case ROCK -> trapFactory.createRockTrap(pos);
+            case TELEPORT -> trapFactory.createTeleportTrap(pos);
         };
-
-        final SimpleTrap trap = new SimpleTrap(pos, damage);
         addTrapToRoom(room, trap);
-
         map.setTileAt(pos, Tile.TRAP);
     }
 
@@ -266,7 +265,7 @@ public final class EntityPopulatorImpl implements EntityPopulator {
      * @param room the room to add trap to
      * @param trap the trap to add
      */
-    private void addTrapToRoom(final Room room, final SimpleTrap trap) {
+    private void addTrapToRoom(final Room room, final Trap trap) {
         room.addTrap(trap);
     }
 
@@ -275,7 +274,7 @@ public final class EntityPopulatorImpl implements EntityPopulator {
      */
     private enum TrapType {
         SPIKE,
-        POISON,
+        ROCK,
         TELEPORT
     }
 }
