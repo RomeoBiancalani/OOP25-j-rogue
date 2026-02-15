@@ -56,10 +56,4 @@ public class RockTrap implements Trap {
     public int getDamageTrap() {
         return damage;
     }
-
-    @Override
-    public String getDescription() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getDescription'");
-    }
 }

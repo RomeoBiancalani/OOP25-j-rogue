@@ -68,7 +68,7 @@ public class MovementControllerImpl implements MovementController {
                 .ifPresent(trap -> {
                     // TODO: insert trap trigger logic
                     // trap.trigger(player);
-                    //renderer.displayMessage("Sei caduto in una trappola: " + trap.getDescription());
+                    renderer.displayMessage("Sei caduto in una trappola: " + trap.getDescription());
                 });
 
             // Pick up item if present at the moved position
