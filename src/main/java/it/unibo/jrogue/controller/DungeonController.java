@@ -3,6 +3,7 @@ package it.unibo.jrogue.controller;
 import java.util.Objects;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.jrogue.boundary.SoundManager;
 import it.unibo.jrogue.boundary.api.GameViewRenderer;
 import it.unibo.jrogue.commons.Move;
 import it.unibo.jrogue.commons.Position;
@@ -31,10 +32,10 @@ public final class DungeonController {
     private final long baseSeed;
     private final GameViewRenderer renderer;
     private final LevelGenerator generator;
+    private final SoundManager soundManager;
 
     private int currentLevel;
     private GameMap currentMap;
-    @SuppressFBWarnings(value = "UwF", justification = "Player is initialized and null-checked before use")
     private Player player;
     @SuppressFBWarnings(value = "UwF", justification = "Initialized when level is generated")
     private MovementControllerImpl movementController;
@@ -47,6 +48,7 @@ public final class DungeonController {
      */
 
     public DungeonController(final long seed, final GameViewRenderer renderer) {
+        this.soundManager = new SoundManager();
         this.baseSeed = seed;
         this.renderer = renderer;
         // DEBUG: this.generator = new PopulatedLevelGenerator(SpawnConfig.debug());
@@ -66,7 +68,7 @@ public final class DungeonController {
         this.player = new PlayerImpl(startPos);
         currentMap.setPlayer(player);
 
-        this.movementController = new MovementControllerImpl(currentMap, getRenderer());
+        this.movementController = new MovementControllerImpl(currentMap, getRenderer(), this.soundManager);
 
         renderer.initForMap(currentMap);
         renderer.renderAll(currentMap, player);
@@ -90,7 +92,7 @@ public final class DungeonController {
         player.setPosition(currentMap.getStartingPosition());
         currentMap.setPlayer(player);
 
-        this.movementController = new MovementControllerImpl(currentMap, getRenderer());
+        this.movementController = new MovementControllerImpl(currentMap, getRenderer(), this.soundManager);
 
         renderer.initForMap(currentMap);
         renderer.renderAll(currentMap, player);
@@ -115,7 +117,7 @@ public final class DungeonController {
         player.setPosition(currentMap.getStartingPosition());
         currentMap.setPlayer(player);
 
-        this.movementController = new MovementControllerImpl(currentMap, getRenderer());
+        this.movementController = new MovementControllerImpl(currentMap, getRenderer(), this.soundManager);
 
         renderer.initForMap(currentMap);
         renderer.renderAll(currentMap, player);
@@ -217,7 +219,7 @@ public final class DungeonController {
         this.currentMap = restoredMap;
         this.player = restoredPlayer;
         this.currentMap.setPlayer(player);
-        this.movementController = new MovementControllerImpl(currentMap, getRenderer());
+        this.movementController = new MovementControllerImpl(currentMap, getRenderer(), this.soundManager);
 
         renderer.initForMap(currentMap);
         renderer.renderAll(currentMap, player);

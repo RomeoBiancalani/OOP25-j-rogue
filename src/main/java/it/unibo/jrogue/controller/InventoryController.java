@@ -9,6 +9,7 @@ import java.util.Map;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.jrogue.boundary.InventoryGUI;
+import it.unibo.jrogue.boundary.SoundManager;
 import it.unibo.jrogue.controller.api.InventoryManager;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -44,7 +45,8 @@ public final class InventoryController implements InputHandler {
      * @param sprites a map with all the sprites saved.
      */
     public void setupPlayer(final Player player, final Map<String, Image> sprites) {
-        this.manager = new InventoryManagerImpl(player);
+        final SoundManager audio = new SoundManager();
+        this.manager = new InventoryManagerImpl(player, audio);
         this.inventoryGUI = new InventoryGUI(manager, sprites);
 
         this.selectedRow = 0;

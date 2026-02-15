@@ -1,7 +1,6 @@
 package it.unibo.jrogue.entity.world.impl;
 
 import it.unibo.jrogue.commons.Position;
-import it.unibo.jrogue.controller.DungeonController;
 import it.unibo.jrogue.entity.GameRandom;
 import it.unibo.jrogue.entity.world.api.Trap;
 import it.unibo.jrogue.entity.world.api.TrapFactory;
@@ -19,6 +18,9 @@ public class TrapFactoryImpl implements TrapFactory {
     private static final int MIN_LEVEL_SPIKES = 4;
     private static final int MIN_LEVEL_TELEPORT = 8;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Optional<Trap> createRandomTrap(final Position position, final int level) {
         final int roll = GameRandom.nextInt(ROLL_MAX);
@@ -41,16 +43,25 @@ public class TrapFactoryImpl implements TrapFactory {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Trap createRockTrap(final Position position) {
         return new RockTrap(position);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Trap createPitOfSpikesTrap(final Position position) {
         return new PitOfSpikesTrap(position);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Trap createTeleportTrap(final Position position) {
         return new TeleportTrap(position);

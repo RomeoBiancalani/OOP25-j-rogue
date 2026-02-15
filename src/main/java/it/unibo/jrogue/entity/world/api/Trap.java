@@ -15,13 +15,14 @@ public interface Trap {
     /**
      * Returns the position of this trap.
      *
-     * @return the trap position
+     * @return the trap position.
      */
     Position getPosition();
 
     /**
      * Get a description of the trap.
+     * 
+     * @return a string with the description.
      * */
-
     String getDescription();
 }

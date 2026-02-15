@@ -22,8 +22,8 @@ public class ItemFactoryImpl implements ItemFactory {
     private static final int BASE_DEF_HEAVY = 3;
     private static final int BASE_DEF_LIGHT = 1;
 
-    private static final int BASE_RING_HEALING = 2;
-    private static final int RING_HEALING_BOUND = 5;
+    private static final int BASE_RING_HEALING = 1;
+    private static final int RING_HEALING_BOUND = 3;
 
     private static final int SCALING_FACTOR = 2;
     private static final int DAMAGE_VARIANCE_BOUND = 3;

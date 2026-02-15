@@ -11,11 +11,12 @@ public class RockTrap implements Trap {
     private final Position position;
     private final int damage;
     private boolean active;
+
     /**
      * Constructor.
      *
      * @param position which is the position in the map
-     * */
+     */
 
     public RockTrap(final Position position) {
         this.position = position;
@@ -42,17 +43,19 @@ public class RockTrap implements Trap {
         return position;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getDescription() {
         return "You tripped over a rock and lost" + getDamageTrap();
     }
 
     /**
-     * Method that provides with the damage of the RockTrap.
-     *
+     * Method that provides with the damage of the trap.
+     * 
      * @return the damage of the trap.
      */
-
     public int getDamageTrap() {
         return damage;
     }

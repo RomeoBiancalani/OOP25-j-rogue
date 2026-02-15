@@ -49,19 +49,28 @@ public final class EntityPopulatorImpl implements EntityPopulator {
             populateRoom(map, rooms.get(i), levelNumber, config);
         }
 
-        if (levelNumber == 10) {
+        if (levelNumber == config.amuletLevel()) {
             spawnAmulet(map, rooms);
         }
     }
 
     private void spawnAmulet(final GameMap map, final List<Room> rooms) {
-        if (rooms.size() > 1) {
-            final Room randomRoom = rooms.get(1 + GameRandom.nextInt(rooms.size() - 1));
-            final List<Position> positions = getFloorPositions(map, randomRoom);
-
+        final List<Room> candidatesRooms = new ArrayList<>();
+        for (int i = 1; i < rooms.size(); i++) {
+            candidatesRooms.add(rooms.get(i));
+        }
+        java.util.Collections.shuffle(candidatesRooms);
+        for (final Room room : candidatesRooms) {
+            final List<Position> positions = getFloorPositions(map, room);
             if (!positions.isEmpty()) {
+                
                 final Position pos = positions.get(GameRandom.nextInt(positions.size()));
-                map.addItem(pos, itemFactory.createAmulet());
+                final Item amulet = itemFactory.createAmulet();
+               
+                map.addItem(pos, amulet);
+                addItemToRoom(room, amulet);
+
+                return;
             }
         }
     }
@@ -86,7 +95,7 @@ public final class EntityPopulatorImpl implements EntityPopulator {
             return;
         }
 
-        spawnLoot(map, room, availablePositions, levelNumber);
+        spawnLoot(map, room, availablePositions, levelNumber, config);
         spawnTraps(map, room, availablePositions, levelNumber, config);
         spawnEnemies(map, availablePositions, levelNumber, config);
     }
@@ -114,20 +123,23 @@ public final class EntityPopulatorImpl implements EntityPopulator {
         return positions;
     }
 
-    private void spawnLoot(final GameMap map, final Room room, final List<Position> positions, final int level) {
-        final int itemsToSpawn = GameRandom.nextInt(4);
+    private void spawnLoot(final GameMap map, final Room room, final List<Position> positions, final int level,
+            final SpawnConfig config) {
+        int itemCount = 0;
+        while (itemCount < config.maxItemsPerRoom() && !positions.isEmpty()) {
 
-        for (int i = 0; i < itemsToSpawn && !positions.isEmpty(); i++) {
-
-            final Position pos = pickRandomPosition(positions);
-
-            final Optional<Item> item = itemFactory.createRandomItem(level);
-            item.ifPresent(it -> {
-                map.addItem(pos, it);
-                addItemToRoom(room, it);
-            });
+            final Optional<Item> itemOpt = itemFactory.createRandomItem(level);
+            if (itemOpt.isPresent()) {
+                final Position pos = pickRandomPosition(positions);
+                final Item item = itemOpt.get();
+                map.addItem(pos, item);
+                addItemToRoom(room, item);
+                positions.remove(pos);
+                itemCount++;
+            } else {
+                break;
+            }
         }
-
     }
 
     /**
@@ -208,8 +220,8 @@ public final class EntityPopulatorImpl implements EntityPopulator {
      * Creates an enemy using weighted random selection.
      * Stronger enemies become more likely at deeper levels.
      *
-     * @param pos    the position for the enemy
-     * @param level  the dungeon level
+     * @param pos   the position for the enemy
+     * @param level the dungeon level
      * @return the created enemy
      */
     private Enemy createWeightedEnemy(final Position pos, final int level) {
