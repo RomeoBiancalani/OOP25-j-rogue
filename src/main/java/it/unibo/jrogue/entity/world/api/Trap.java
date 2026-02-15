@@ -8,13 +8,6 @@ import it.unibo.jrogue.commons.Position;
 public interface Trap {
 
     /**
-     * Checks if the trap is still active.
-     *
-     * @return true if the trap is active
-     */
-    boolean isActive();
-
-    /**
      * Triggers the trap effect.
      */
     void trigger();
@@ -27,16 +20,16 @@ public interface Trap {
     Position getPosition();
 
     /**
-     * Checks if the trap has been discovered by the player.
-     *
-     * @return true if the trap is discovered
-     */
-    boolean isDiscovered();
+     * Get a description of the trap.
+     * */
 
+<<<<<<< HEAD
     /**
      * Marks the trap as discovered.
      */
     void discover();
 
+=======
+>>>>>>> d28a8035303a06537ad51a18f6a3fbf300ec80fc
     String getDescription();
 }

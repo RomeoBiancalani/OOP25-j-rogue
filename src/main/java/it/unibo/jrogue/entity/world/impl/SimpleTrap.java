@@ -11,7 +11,6 @@ public final class SimpleTrap implements Trap {
     private final Position position;
     private final int damage;
     private boolean active;
-    private boolean discovered;
 
     /**
      * Creates a new trap.
@@ -23,12 +22,6 @@ public final class SimpleTrap implements Trap {
         this.position = position;
         this.damage = damage;
         this.active = true;
-        this.discovered = false;
-    }
-
-    @Override
-    public boolean isActive() {
-        return active;
     }
 
     @Override
@@ -44,13 +37,8 @@ public final class SimpleTrap implements Trap {
     }
 
     @Override
-    public boolean isDiscovered() {
-        return discovered;
-    }
-
-    @Override
-    public void discover() {
-        discovered = true;
+    public String getDescription(){
+        return "No eddscription";
     }
 
     /**
@@ -60,11 +48,5 @@ public final class SimpleTrap implements Trap {
      */
     public int getDamage() {
         return damage;
-    }
-
-    @Override
-    public String getDescription() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getDescription'");
     }
 }

@@ -10,7 +10,6 @@ public final class PitOfSpikesTrap implements Trap {
     private final Position position;
     private final int damage;
     private boolean active;
-    private boolean discovered;
     /**
      * Constructor.
      *
@@ -21,18 +20,14 @@ public final class PitOfSpikesTrap implements Trap {
         this.position = position;
         this.active = true;
         this.damage = 10;
-        this.discovered = false;
-    }
-
-    @Override
-    public boolean isActive() {
-        return active;
     }
 
     @Override
     public void trigger() {
-        this.active = false;
-        this.discover();
+        if (this.active) {
+            getDamage();
+            this.active = false;
+        }
     }
 
     @Override
@@ -40,28 +35,20 @@ public final class PitOfSpikesTrap implements Trap {
         return position;
     }
 
-    @Override
-    public boolean isDiscovered() {
-        return discovered;
-    }
 
     @Override
-    public void discover() {
-        this.discovered = true;
+    public String getDescription(){
+        return "You fell on a trap and lost " + getDamage() + "HP";
     }
+
     /**
      * getter for trap damage.
      *
      * @return damage of the trap
      * */
 
+
     public int getDamage() {
         return damage;
-    }
-
-    @Override
-    public String getDescription() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getDescription'");
     }
 }
