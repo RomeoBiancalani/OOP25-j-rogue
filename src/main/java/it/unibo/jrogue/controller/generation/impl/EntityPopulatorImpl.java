@@ -64,12 +64,8 @@ public final class EntityPopulatorImpl implements EntityPopulator {
             final List<Position> positions = getFloorPositions(map, room);
             if (!positions.isEmpty()) {
                 final Position pos = positions.get(GameRandom.nextInt(positions.size()));
-
                 final Item amulet = itemFactory.createAmulet();
-
                 map.addItem(pos, amulet);
-                addItemToRoom(room, amulet);
-
                 return;
             }
         }
@@ -133,7 +129,6 @@ public final class EntityPopulatorImpl implements EntityPopulator {
                 final Position pos = pickRandomPosition(positions);
                 final Item item = itemOpt.get();
                 map.addItem(pos, item);
-                addItemToRoom(room, item);
                 positions.remove(pos);
                 itemCount++;
             } else {

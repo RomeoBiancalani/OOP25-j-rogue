@@ -10,20 +10,6 @@ import java.util.List;
 public interface Room {
 
     /**
-     * Checks if this room contains any items.
-     *
-     * @return true if the room has items
-     */
-    boolean hasItems();
-
-    /**
-     * Returns the list of items in this room.
-     *
-     * @return list of items
-     */
-    List<Item> getItems();
-
-    /**
      * Checks if this is a hidden/secret room.
      *
      * @return true if the room is hidden
@@ -84,13 +70,6 @@ public interface Room {
      * @return true if the position is inside the room
      */
     boolean contains(Position pos);
-
-    /**
-     * Adds an item to this room.
-     *
-     * @param item the item to add
-     */
-    void addItem(Item item);
 
     /**
      * Adds a trap to this room.

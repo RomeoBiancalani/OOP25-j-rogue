@@ -58,7 +58,7 @@ public record SpawnConfig(
 
     // Items
     private static final int DEFAULT_MAX_ITEMS_PER_ROOM = 3;
-    private static final int DEFALUT_AMULET_LEVEL = 10;
+    private static final int DEFAULT_AMULET_LEVEL = 10;
     // Enemies
     private static final double DEFAULT_ENEMY_SPAWN_RATE = 0.30;
     private static final int DEFAULT_MAX_ENEMIES_PER_ROOM = 3;
@@ -93,7 +93,7 @@ public record SpawnConfig(
                 DEFAULT_TELEPORT_TRAP_MIN_LEVEL, DEFAULT_TRAP_RATE,
                 // Items
                 DEFAULT_MAX_ITEMS_PER_ROOM,
-                DEFALUT_AMULET_LEVEL,
+                DEFAULT_AMULET_LEVEL,
                 // Enemies
                 DEFAULT_ENEMY_SPAWN_RATE, DEFAULT_MAX_ENEMIES_PER_ROOM,
                 DEFAULT_HP_SCALING_ALPHA, DEFAULT_DAMAGE_SCALING_BETA,
@@ -114,7 +114,7 @@ public record SpawnConfig(
                 1, 1, 1, DEBUG_TRAP_RATE,
                 // Items
                 DEFAULT_MAX_ITEMS_PER_ROOM,
-                DEFALUT_AMULET_LEVEL,
+                DEFAULT_AMULET_LEVEL,
                 // Enemies
                 DEBUG_ENEMY_SPAWN_RATE, DEFAULT_MAX_ENEMIES_PER_ROOM,
                 DEFAULT_HP_SCALING_ALPHA, DEFAULT_DAMAGE_SCALING_BETA,

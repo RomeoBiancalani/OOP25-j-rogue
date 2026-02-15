@@ -53,6 +53,8 @@ public final class GameController implements InputHandler {
      */
     public void restoreGame(final DungeonController restored) {
         this.dungeonController = restored;
+        final InventoryController ic = (InventoryController) this.controller.getInventoryController();
+        ic.setupPlayer(getPlayer(), getGameSprites());
     }
 
     @Override
