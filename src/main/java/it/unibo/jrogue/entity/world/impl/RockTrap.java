@@ -46,15 +46,7 @@ public class RockTrap implements Trap {
      */
     @Override
     public String getDescription() {
-        return "You tripped over a rock and lost" + getDamageTrap();
+        return "You tripped over a rock ";
     }
 
-    /**
-     * Method that provides with the damage of the trap.
-     * 
-     * @return the damage of the trap.
-     */
-    public int getDamageTrap() {
-        return damage;
-    }
 }

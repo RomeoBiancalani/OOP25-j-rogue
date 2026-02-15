@@ -46,13 +46,6 @@ public final class PitOfSpikesTrap implements Trap {
      */
     @Override
     public String getDescription() {
-        return "You fell on a trap and lost " + getDamage() + "HP";
+        return "You fell on a trap and hurt yourself";
     }
-
-    /**
-     * getter for trap damage.
-     *
-     * @return damage of the trap
-     */
-
 }
