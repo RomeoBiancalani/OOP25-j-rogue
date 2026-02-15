@@ -37,4 +37,6 @@ public interface Trap {
      * Marks the trap as discovered.
      */
     void discover();
+
+    String getDescription();
 }

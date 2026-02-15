@@ -61,4 +61,10 @@ public final class SimpleTrap implements Trap {
     public int getDamage() {
         return damage;
     }
+
+    @Override
+    public String getDescription() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getDescription'");
+    }
 }

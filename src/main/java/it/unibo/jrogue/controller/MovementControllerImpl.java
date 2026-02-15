@@ -3,6 +3,7 @@ package it.unibo.jrogue.controller;
 import java.util.Objects;
 import java.util.Optional;
 
+import it.unibo.jrogue.boundary.SoundManager;
 import it.unibo.jrogue.boundary.api.GameViewRenderer;
 import it.unibo.jrogue.commons.Move;
 import it.unibo.jrogue.commons.Position;
@@ -27,23 +28,31 @@ public class MovementControllerImpl implements MovementController {
     private final GameViewRenderer renderer;
     private final GameMap gameMap;
     private final Player player;
+    private final SoundManager soundManager;
 
     /**
      * Constructs a MovementController with a GameMap containing all game state.
      *
      * @param gameMap  The game map containing player, enemies, items, and terrain.
-     * @param renderer The DungeonRenderer to render resources
+     * 
+     * @param renderer The DungeonRenderer to render resources.
+     * 
+     * @param soundManager the manager for the sounds.
+     * 
      * @throws NullPointerException  if gameMap is null.
+     * 
      * @throws NullPointerException  if renderer is null.
+     * 
      * @throws IllegalStateException if gameMap has no player set.
      */
-    public MovementControllerImpl(final GameMap gameMap, final GameViewRenderer renderer) {
+    public MovementControllerImpl(final GameMap gameMap, final GameViewRenderer renderer, final SoundManager soundManager) {
         this.gameMap = Objects.requireNonNull(gameMap, "gameMap cannot be null");
         this.renderer = Objects.requireNonNull(renderer, "renderer cannot be null");
         if (gameMap.getPlayer().isEmpty()) {
             throw new IllegalStateException("GameMap must have a player set");
         }
         this.player = gameMap.getPlayer().get();
+        this.soundManager = soundManager;
     }
 
     /**
@@ -70,6 +79,7 @@ public class MovementControllerImpl implements MovementController {
                         }
                         if (item instanceof Gold gold) {
                             player.collectGold(gold.getAmount());
+                            soundManager.play(SoundManager.Sound.GOLD);
 
                         } else {
                             player.getInventory().addItem(item);
@@ -84,6 +94,7 @@ public class MovementControllerImpl implements MovementController {
                     renderer.displayMessage("Hai mancato il nemico");
                 } else {
                     renderer.displayMessage("Hai colpito il nemico causandogli " + damage + " di danno");
+                    soundManager.play(SoundManager.Sound.ATTACK);
                 }
                 // If player killed the enemy, collect his drop and xp.
                 if (!target.get().isAlive()) {

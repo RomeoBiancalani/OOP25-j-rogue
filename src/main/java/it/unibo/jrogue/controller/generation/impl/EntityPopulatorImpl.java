@@ -115,7 +115,7 @@ public final class EntityPopulatorImpl implements EntityPopulator {
     }
 
     private void spawnLoot(final GameMap map, final Room room, final List<Position> positions, final int level) {
-        final int itemsToSpawn = GameRandom.nextInt(4);
+        final int itemsToSpawn = GameRandom.nextInt(3);
 
         for (int i = 0; i < itemsToSpawn && !positions.isEmpty(); i++) {
 

@@ -81,4 +81,10 @@ public final class TeleportTrap implements Trap {
         return discovered;
     }
 
+    @Override
+    public String getDescription() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getDescription'");
+    }
+
 }
