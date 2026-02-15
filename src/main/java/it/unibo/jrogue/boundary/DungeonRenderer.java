@@ -66,7 +66,7 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
     private static final String SPRITE_TRAP_DAMAGE = "traps/trap-damage";
     private static final String SPRITE_TRAP_TELEPORT = "traps/trap-teleport";
 
-    private static final String ARMOR_HEAVY_NAME = "Armatura di ferro";
+    private static final String ARMOR_HEAVY_NAME = "Iron armor";
 
     private final int tileSize;
     private final Map<String, Image> spriteCache = new HashMap<>();
