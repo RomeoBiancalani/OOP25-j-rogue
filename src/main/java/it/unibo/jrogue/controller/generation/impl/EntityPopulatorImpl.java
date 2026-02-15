@@ -91,8 +91,8 @@ public final class EntityPopulatorImpl implements EntityPopulator {
             return;
         }
 
-        spawnLoot(map, room, availablePositions, levelNumber, config);
-        spawnTraps(map, room, availablePositions, levelNumber, config);
+        spawnLoot(map, availablePositions, levelNumber, config);
+        spawnTraps(map, availablePositions, levelNumber, config);
         spawnEnemies(map, availablePositions, levelNumber, config);
     }
 
@@ -119,8 +119,7 @@ public final class EntityPopulatorImpl implements EntityPopulator {
         return positions;
     }
 
-    private void spawnLoot(final GameMap map, final Room room, final List<Position> positions, final int level,
-            final SpawnConfig config) {
+    private void spawnLoot(final GameMap map, final List<Position> positions, final int level, final SpawnConfig config) {
         int itemCount = 0;
         while (itemCount < config.maxItemsPerRoom() && !positions.isEmpty()) {
 
@@ -141,13 +140,11 @@ public final class EntityPopulatorImpl implements EntityPopulator {
      * Spawns traps based on level requirements.
      *
      * @param map         the game map
-     * @param room        the room to spawn traps in
      * @param positions   available positions for spawning
      * @param levelNumber the dungeon level
      * @param config      spawn configuration
      */
-    private void spawnTraps(final GameMap map, final Room room,
-                            final List<Position> positions,
+    private void spawnTraps(final GameMap map, final List<Position> positions,
                             final int levelNumber, final SpawnConfig config) {
         if (!rollChance(config.trapRate()) || positions.isEmpty()) {
             return;
