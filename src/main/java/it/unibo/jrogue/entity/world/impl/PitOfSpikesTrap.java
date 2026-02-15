@@ -22,9 +22,8 @@ public final class PitOfSpikesTrap implements Trap {
 
     @Override
     public void trigger() {
-        if (this.active) {
-
-            this.active = false;
+        if (active) {
+            active = false;
         }
     }
 
@@ -33,11 +32,8 @@ public final class PitOfSpikesTrap implements Trap {
         return position;
     }
 
-
     @Override
-    public String getDescription(){
+    public String getDescription() {
         return "You fell on a trap";
     }
-
-
 }

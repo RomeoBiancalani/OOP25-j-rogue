@@ -8,7 +8,7 @@ import it.unibo.jrogue.commons.Position;
 public interface Trap {
 
     /**
-     * Triggers the trap effect.
+     * Triggers the trap effect and disable the trap.
      */
     void trigger();
 
@@ -21,6 +21,8 @@ public interface Trap {
 
     /**
      * Get a description of the trap.
+     *
+     * @return description of the trap
      * */
 
     String getDescription();

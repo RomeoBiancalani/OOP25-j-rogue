@@ -56,11 +56,17 @@ public class MovementControllerImpl implements MovementController {
 
             // Trigger trap if present at the moved position
             gameMap.getTrapAt(player.getPosition())
-                .ifPresent(trap -> {
-                    // TODO: insert trap trigger logic
-                    // trap.trigger(player);
-                    renderer.displayMessage("Sei caduto in una trappola: " + trap.getDescription());
-                });
+                    .ifPresent(trap -> {
+                        if (trap instanceof it.unibo.jrogue.entity.world.impl.RockTrap) {
+                            player.damage(3);
+                            trap.trigger();
+                            renderer.displayMessage(trap.getDescription());
+                        } else if (trap instanceof it.unibo.jrogue.entity.world.impl.PitOfSpikesTrap) {
+                            player.damage(10);
+                            trap.trigger();
+                            renderer.displayMessage(trap.getDescription());
+                        }
+                    });
 
             // Pick up item if present at the moved position
             gameMap.removeItemAt(player.getPosition())

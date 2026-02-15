@@ -39,13 +39,4 @@ public interface TrapFactory {
      */
 
     Trap createPitOfSpikesTrap(Position position);
-
-    /**
-     * Creates a Teleport Trap.
-     *
-     * @param position the position of the trap
-     * @return a new TeleportTrap
-     */
-
-    Trap createTeleportTrap(Position position);
-}
+  }

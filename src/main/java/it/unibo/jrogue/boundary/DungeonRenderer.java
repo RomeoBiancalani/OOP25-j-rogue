@@ -65,7 +65,6 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
     private static final String SPRITE_SHOVEL = "weapons/shovel";
     private static final String SPRITE_TRAP_DAMAGE = "traps/trap-damage";
     private static final String SPRITE_TRAP_ROCK = "traps/trap-rock";
-    private static final String SPRITE_TRAP_TELEPORT = "traps/trap-teleport";
 
     private static final String ARMOR_HEAVY_NAME = "Iron armor";
 
@@ -168,7 +167,7 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
                     case WALL -> drawWallFill(gc, px, py);
                     case CORRIDOR -> drawCorridor(gc, map, pos, px, py);
                     case STAIRS_UP -> drawSprite(gc, TILE_STAIRS, px, py);
-                    case TRAP -> drawTrapSprite(gc, px, py);
+                    case TRAP -> drawTrapSprite(gc, map, pos, px, py);
                     case VOID -> { }
                 }
             }
@@ -303,7 +302,7 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
         // Traps
         loadSprite(SPRITE_TRAP_DAMAGE);
         loadSprite(SPRITE_TRAP_ROCK);
-        loadSprite(SPRITE_TRAP_TELEPORT);
+
     }
 
     private void loadSprite(final String name) {
@@ -392,8 +391,21 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
     }
 
     private void drawTrapSprite(final GraphicsContext gc,
+                                final GameMap map,
+                                final Position pos,
                                 final double px, final double py) {
-        // TODO: insert trap factory
+        map.getTrapAt(pos).ifPresent(trap -> {
+            final String spriteName;
+
+            if (trap instanceof it.unibo.jrogue.entity.world.impl.RockTrap) {
+                spriteName = SPRITE_TRAP_ROCK;
+            } else {
+                spriteName = SPRITE_TRAP_DAMAGE;
+            }
+
+            drawSprite(gc, TILE_FLOOR, px, py);
+            drawSprite(gc, spriteName, px, py);
+        });
     }
 
     private boolean isWallOrVoid(final GameMap map, final int x, final int y) {

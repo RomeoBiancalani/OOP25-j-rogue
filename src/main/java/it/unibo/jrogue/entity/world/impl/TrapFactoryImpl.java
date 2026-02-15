@@ -1,7 +1,6 @@
 package it.unibo.jrogue.entity.world.impl;
 
 import it.unibo.jrogue.commons.Position;
-import it.unibo.jrogue.controller.DungeonController;
 import it.unibo.jrogue.entity.GameRandom;
 import it.unibo.jrogue.entity.world.api.Trap;
 import it.unibo.jrogue.entity.world.api.TrapFactory;
@@ -11,35 +10,11 @@ import java.util.Optional;
 /**
  * Implementation of the TrapFactory.
  */
+public final class TrapFactoryImpl implements TrapFactory {
 
-public class TrapFactoryImpl implements TrapFactory {
+    private static final int CHANCE_ROCK = 70;
     private static final int ROLL_MAX = 100;
-    private static final int CHANCE_ROCK = 50;
-    private static final int CHANCE_SPIKES = 80;
-    private static final int MIN_LEVEL_SPIKES = 4;
-    private static final int MIN_LEVEL_TELEPORT = 8;
-
-    @Override
-    public Optional<Trap> createRandomTrap(final Position position, final int level) {
-        final int roll = GameRandom.nextInt(ROLL_MAX);
-        if (roll < CHANCE_ROCK) {
-            return Optional.of(createRockTrap(position));
-        } else if (roll < CHANCE_SPIKES) {
-            if (level >= MIN_LEVEL_SPIKES) {
-                return Optional.of(createPitOfSpikesTrap(position));
-            } else {
-                return Optional.of(createRockTrap(position));
-            }
-        } else {
-            if (level >= MIN_LEVEL_TELEPORT) {
-                return Optional.of(createTeleportTrap(position));
-            } else if (level >= MIN_LEVEL_SPIKES) {
-                return Optional.of(createPitOfSpikesTrap(position));
-            } else {
-                return Optional.of(createRockTrap(position));
-            }
-        }
-    }
+    private static final int MIN_LEVEL_SPIKES = 6;
 
     @Override
     public Trap createRockTrap(final Position position) {
@@ -52,7 +27,11 @@ public class TrapFactoryImpl implements TrapFactory {
     }
 
     @Override
-    public Trap createTeleportTrap(final Position position) {
-        return new TeleportTrap(position);
+    public Optional<Trap> createRandomTrap(final Position position, final int level) {
+        final int roll = GameRandom.nextInt(ROLL_MAX);
+              if (level >= MIN_LEVEL_SPIKES && roll >= CHANCE_ROCK) {
+            return Optional.of(createPitOfSpikesTrap(position));
+        }
+        return Optional.of(createRockTrap(position));
     }
 }
