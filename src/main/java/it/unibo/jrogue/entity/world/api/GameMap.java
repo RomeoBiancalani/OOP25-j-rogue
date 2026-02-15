@@ -148,6 +148,37 @@ public interface GameMap {
     Optional<Item> removeItemAt(Position pos);
 
     /**
+     * Places a trap at the specified position on the map.
+     *
+     * @param pos  the position where the trap should be placed.
+     * @param trap the trap to place.
+     */
+    void addTrap(Position pos, Trap trap);
+
+    /**
+     * Returns the trap at the specified position, if any.
+     *
+     * @param pos the position to check.
+     * @return an Optional containing the trap if present, empty otherwise.
+     */
+    Optional<Trap> getTrapAt(Position pos);
+
+    /**
+     * Removes and returns the trap at the specified position, if any.
+     *
+     * @param pos the position from which to remove the trap.
+     * @return an Optional containing the removed trap if present, empty otherwise.
+     */
+    Optional<Trap> removeTrapAt(Position pos);
+
+    /**
+     * Returns an unmodifiable view of all traps currently on the map.
+     *
+     * @return a map of positions to their associated traps.
+     */
+    Map<Position, Trap> getTraps();
+
+    /**
      * Adds an entity to this map.
      *
      * @param entity the entity to add

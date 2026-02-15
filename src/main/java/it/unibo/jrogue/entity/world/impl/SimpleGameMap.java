@@ -9,6 +9,7 @@ import it.unibo.jrogue.entity.world.api.GameMap;
 import it.unibo.jrogue.entity.world.api.Hallway;
 import it.unibo.jrogue.entity.world.api.Room;
 import it.unibo.jrogue.entity.world.api.Tile;
+import it.unibo.jrogue.entity.world.api.Trap;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,6 +34,7 @@ public final class SimpleGameMap implements GameMap {
     private final List<Room> rooms;
     private final List<Hallway> hallways;
     private final List<Entity> entities;
+    private final Map<Position, Trap> traps;
     private final Position startingPosition;
     private final Position stairsUp;
     private final Map<Position, Item> itemPositions;
@@ -60,6 +62,7 @@ public final class SimpleGameMap implements GameMap {
         this.rooms = List.copyOf(rooms);
         this.hallways = List.copyOf(hallways);
         this.entities = new ArrayList<>();
+        this.traps = new HashMap<>();
         this.startingPosition = startingPosition;
         this.stairsUp = stairsUp;
         this.itemPositions = new HashMap<>();
@@ -199,12 +202,30 @@ public final class SimpleGameMap implements GameMap {
         return Optional.ofNullable(itemPositions.remove(pos));
     }
 
+    @Override
+    public void addTrap(final Position pos, final Trap trap) {
+        traps.put(pos, trap);
+    }
+
+    @Override
+    public Optional<Trap> getTrapAt(final Position pos) {
+        return Optional.ofNullable(traps.get(pos));
+    }
+
+    @Override
+    public Optional<Trap> removeTrapAt(final Position pos) {
+        return Optional.ofNullable(traps.remove(pos));
+    }
+
+    @Override
+    public Map<Position, Trap> getTraps() {
+        return Collections.unmodifiableMap(traps);
+    }
+
     /**
      * Builds the wall position cache by scanning all tiles.
      */
     private void buildWallCache() {
-        // Understand if wall needs to be rendered or it's just a border (we have
-        // sprite of wall but it's an additional non walkable tile)
         wallCache = new HashSet<>();
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {

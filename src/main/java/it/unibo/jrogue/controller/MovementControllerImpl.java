@@ -53,6 +53,15 @@ public class MovementControllerImpl implements MovementController {
     public void executeTurn(final Move move) {
         if (isValidMove(player, move)) {
             player.doMove(move);
+
+            // Trigger trap if present at the moved position
+            gameMap.getTrapAt(player.getPosition())
+                .ifPresent(trap -> {
+                    // TODO: insert trap trigger logic
+                    // trap.trigger(player);
+                    renderer.displayMessage("Sei caduto in una trappola: " + trap.getDescription());
+                });
+
             // Pick up item if present at the moved position
             gameMap.removeItemAt(player.getPosition())
                     .ifPresent(item -> {

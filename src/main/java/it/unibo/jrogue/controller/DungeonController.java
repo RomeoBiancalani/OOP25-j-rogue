@@ -146,6 +146,17 @@ public final class DungeonController {
     }
 
     /**
+     * Checks if the player is currently standing on a trap.
+     *
+     * @return true if the player is on a trap
+     */
+    public boolean isOnTrap() {
+        Objects.requireNonNull(player, "Player cannot be null");
+        final Tile tile = currentMap.getTileAt(player.getPosition());
+        return tile == Tile.TRAP;
+    }
+
+    /**
      * Returns the current dungeon level number (1-indexed).
      *
      * @return the current level

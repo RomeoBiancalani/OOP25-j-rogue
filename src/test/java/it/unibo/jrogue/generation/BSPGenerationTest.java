@@ -84,18 +84,18 @@ class BSPGenerationTest {
         final GameMap map2 = level2.getMap();
         // Checks rooms (size)
         assertEquals(map1.getRooms().size(), map2.getRooms().size(),
-                "Stesse stanze con stesso seed");
+            "Stesse stanze con stesso seed");
         // Checks startingPos
         assertEquals(map1.getStartingPosition(), map2.getStartingPosition(),
-                "Stessa posizione iniziale con stesso seed");
+            "Stessa posizione iniziale con stesso seed");
         // Checks enemies
         assertEquals(map1.getEnemies(), map2.getEnemies(),
-                "Stessi mostri con stesso seed");
+            "Stessi mostri con stesso seed");
         // Checks Items
         final Map<Position, String> items1 = map1.getItems().entrySet().stream()
-                .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().getDescription()));
+            .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().getDescription()));
         final Map<Position, String> items2 = map2.getItems().entrySet().stream()
-                .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().getDescription()));
+            .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().getDescription()));
         assertEquals(items1, items2, "Stessi items con stesso seed");
     }
 
@@ -112,11 +112,11 @@ class BSPGenerationTest {
         // dovrebbero differire (non garantito al 100% ma altamente probabile)
         final boolean differentRooms = level1.getMap().getRooms().size() != level2.getMap().getRooms().size();
         final boolean differentStart = !level1.getMap().getStartingPosition()
-                .equals(level2.getMap().getStartingPosition());
+            .equals(level2.getMap().getStartingPosition());
         final boolean differentEnemies = level1.getMap().getEnemies().size() != level2.getMap().getEnemies().size();
 
         assertTrue(differentRooms || differentStart || differentEnemies,
-                "Seed diversi producono mappe diverse");
+            "Seed diversi producono mappe diverse");
     }
 
     @Test
