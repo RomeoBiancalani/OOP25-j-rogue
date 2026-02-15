@@ -108,6 +108,10 @@ public class MovementControllerImpl implements MovementController {
                     renderer.displayMessage("Hai colpito il nemico causandogli " + damage + " di danno");
                     soundManager.play(SoundManager.Sound.ATTACK);
                 }
+                // If the enemy was sleeping, the enemy wake ups
+                if (target.get().isSleeping()) {
+                    target.get().wakeUp();
+                }
                 // If player killed the enemy, collect his drop and xp.
                 if (!target.get().isAlive()) {
                     String message = "Il nemico é morto";

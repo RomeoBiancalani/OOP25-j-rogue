@@ -54,6 +54,10 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
     private static final String SPRITE_BAT = "entities/bat";
     private static final String SPRITE_GOBLIN = "entities/goblin";
     private static final String SPRITE_DRAGON = "entities/dragon";
+    private static final String SPRITE_SLEEPING_BAT = "entities/sleeping/sleeping-bat";
+    private static final String SPRITE_SLEEPING_GOBLIN = "entities/sleeping/sleeping-goblin";
+    private static final String SPRITE_SLEEPING_DRAGON = "entities/sleeping/sleeping-dragon";
+
     private static final String SPRITE_GOLD = "items/gold";
     private static final String SPRITE_POTION = "items/potion";
     private static final String SPRITE_FOOD = "items/food";
@@ -295,6 +299,9 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
         loadSprite(SPRITE_BAT);
         loadSprite(SPRITE_GOBLIN);
         loadSprite(SPRITE_DRAGON);
+        loadSprite(SPRITE_SLEEPING_BAT);
+        loadSprite(SPRITE_SLEEPING_GOBLIN);
+        loadSprite(SPRITE_SLEEPING_DRAGON);
 
         // Items
         loadSprite(SPRITE_GOLD);
@@ -456,10 +463,19 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
 
     private String getEnemySprite(final Enemy enemy) {
         if (enemy instanceof Bat) {
+            if (enemy.isSleeping()) {
+                return SPRITE_SLEEPING_BAT;
+            }
             return SPRITE_BAT;
         } else if (enemy instanceof HobGoblin) {
+            if (enemy.isSleeping()) {
+                return SPRITE_SLEEPING_GOBLIN;
+            }
             return SPRITE_GOBLIN;
         } else if (enemy instanceof Dragon) {
+            if (enemy.isSleeping()) {
+                return SPRITE_SLEEPING_DRAGON;
+            }
             return SPRITE_DRAGON;
         }
         return SPRITE_BAT;
