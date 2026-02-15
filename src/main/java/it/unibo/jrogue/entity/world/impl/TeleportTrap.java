@@ -12,7 +12,6 @@ public final class TeleportTrap implements Trap {
 
     private final Position position;
     private boolean active;
-    private boolean discovered;
     /**
      * Constructor.
      *
@@ -22,7 +21,6 @@ public final class TeleportTrap implements Trap {
     public TeleportTrap(final Position position) {
         this.position = position;
         this.active = true;
-        this.discovered = false;
     }
 
     // Nota: per ora facciamo che teleportBack chiama trigger e non viceversa a
