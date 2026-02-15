@@ -214,6 +214,7 @@ public final class BSPLevelGenerator implements LevelGenerator {
 
     private List<Hallway> connectRooms(final BSPNode root) {
         final List<Hallway> hallways = new ArrayList<>();
+        // 
         connectNode(root, hallways);
         return hallways;
     }
@@ -223,6 +224,7 @@ public final class BSPLevelGenerator implements LevelGenerator {
             return node.getRoom().orElse(null);
         }
 
+        // Connect children (recursive)
         Room leftRoom = null;
         Room rightRoom = null;
 
@@ -233,16 +235,66 @@ public final class BSPLevelGenerator implements LevelGenerator {
             rightRoom = connectNode(node.getRightChild().get(), hallways);
         }
 
-        if (leftRoom != null && rightRoom != null) {
-            final Hallway hallway = createHallway(leftRoom, rightRoom);
-            hallways.add(hallway);
+        // Connect left subtree to right subtree using closest room pair each time
+        if (node.getLeftChild().isPresent() && node.getRightChild().isPresent()) {
+            // This is not a optimized algorithm but for small number of nodes is ok
+            final List<Room> leftRooms = collectAllRooms(node.getLeftChild().get());
+            final List<Room> rightRooms = collectAllRooms(node.getRightChild().get());
+
+            if (!leftRooms.isEmpty() && !rightRooms.isEmpty()) {
+                final Room closest0 = findClosestLeft(leftRooms, rightRooms);
+                final Room closest1 = findClosestRight(leftRooms, rightRooms);
+                hallways.add(createHallway(closest0, closest1));
+                return closest0;
+            }
         }
 
-        // Return one room to propagate up the tree
-        if (leftRoom != null && rightRoom != null) {
-            return GameRandom.nextBoolean() ? leftRoom : rightRoom;
-        }
         return leftRoom != null ? leftRoom : rightRoom;
+    }
+
+    private List<Room> collectAllRooms(final BSPNode node) {
+        final List<Room> rooms = new ArrayList<>();
+        if (node.isLeaf()) {
+            node.getRoom().ifPresent(rooms::add);
+        } else {
+            node.getLeftChild().ifPresent(c -> rooms.addAll(collectAllRooms(c)));
+            node.getRightChild().ifPresent(c -> rooms.addAll(collectAllRooms(c)));
+        }
+        return rooms;
+    }
+
+    private Room findClosestLeft(final List<Room> leftRooms, final List<Room> rightRooms) {
+        Room bestLeft = leftRooms.get(0);
+        int bestDist = Integer.MAX_VALUE;
+        for (final Room left : leftRooms) {
+            for (final Room right : rightRooms) {
+                final int dist = manhattanDistance(left.getCenter(), right.getCenter());
+                if (dist < bestDist) {
+                    bestDist = dist;
+                    bestLeft = left;
+                }
+            }
+        }
+        return bestLeft;
+    }
+
+    private Room findClosestRight(final List<Room> leftRooms, final List<Room> rightRooms) {
+        Room bestRight = rightRooms.get(0);
+        int bestDist = Integer.MAX_VALUE;
+        for (final Room left : leftRooms) {
+            for (final Room right : rightRooms) {
+                final int dist = manhattanDistance(left.getCenter(), right.getCenter());
+                if (dist < bestDist) {
+                    bestDist = dist;
+                    bestRight = right;
+                }
+            }
+        }
+        return bestRight;
+    }
+
+    private int manhattanDistance(final Position a, final Position b) {
+        return Math.abs(a.x() - b.x()) + Math.abs(a.y() - b.y());
     }
 
     private Hallway createHallway(final Room room1, final Room room2) {
@@ -252,14 +304,23 @@ public final class BSPLevelGenerator implements LevelGenerator {
 
         // Create L-shaped corridor
         if (GameRandom.nextBoolean()) {
-            // Horizontal first, then vertical
+            // Horizontal
             carveHorizontalLine(path, center1.y(), center1.x(), center2.x());
-            carveVerticalLine(path, center2.x(), center1.y(), center2.y());
+            if (center1.y() != center2.y()) {
+                final int nextY = center2.y() > center1.y() ? center1.y() + 1 : center1.y() - 1;
+                carveVerticalLine(path, center2.x(), nextY, center2.y());
+            }
         } else {
-            // Vertical first, then horizontal
+            // Vertical
             carveVerticalLine(path, center1.x(), center1.y(), center2.y());
-            carveHorizontalLine(path, center2.y(), center1.x(), center2.x());
+            if (center1.x() != center2.x()) {
+                final int nextX = center2.x() > center1.x() ? center1.x() + 1 : center1.x() - 1;
+                carveHorizontalLine(path, center2.y(), nextX, center2.x());
+            }
         }
+
+        // Remove positions inside either room — path should only cover corridor tiles (This fixes the fog of war bug)
+        path.removeIf(pos -> room1.contains(pos) || room2.contains(pos));
 
         return new SimpleHallway(path, List.of(room1, room2));
     }

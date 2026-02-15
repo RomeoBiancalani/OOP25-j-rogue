@@ -17,6 +17,8 @@ import it.unibo.jrogue.entity.items.impl.MeleeWeapon;
 import it.unibo.jrogue.entity.items.impl.Ring;
 import it.unibo.jrogue.entity.items.impl.Scroll;
 import it.unibo.jrogue.entity.world.api.GameMap;
+import it.unibo.jrogue.entity.world.api.Hallway;
+import it.unibo.jrogue.entity.world.api.Room;
 import it.unibo.jrogue.entity.world.api.Tile;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
@@ -45,6 +47,7 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
     private static final String TILE_STAIRS = "stairs";
     private static final String TILE_FLOOR = "tile";
     private static final String WALL_COLOR = "#1a1a2e";
+    private static final double FOG_OPACITY = 0.5;
 
     private static final String SPRITE_PLAYER = "entities/player";
     private static final String SPRITE_PLAYER_ARMOR = "entities/player-armored";
@@ -75,6 +78,7 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
     private Canvas terrainCanvas;
     private Canvas itemCanvas;
     private Canvas entityCanvas;
+    private Canvas fogCanvas;
     private final StatusBarGUI statusBar = new StatusBarGUI();
     private final MessageDialog messageDialog = new MessageDialog();
 
@@ -124,13 +128,14 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
         terrainCanvas = new Canvas(canvasW, canvasH);
         itemCanvas = new Canvas(canvasW, canvasH);
         entityCanvas = new Canvas(canvasW, canvasH);
+        fogCanvas = new Canvas(canvasW, canvasH);
 
         terrainCanvas.getGraphicsContext2D().setImageSmoothing(false);
         itemCanvas.getGraphicsContext2D().setImageSmoothing(false);
         entityCanvas.getGraphicsContext2D().setImageSmoothing(false);
 
         this.getChildren().clear();
-        this.getChildren().addAll(terrainCanvas, statusBar, messageDialog, itemCanvas, entityCanvas);
+        this.getChildren().addAll(terrainCanvas, statusBar, messageDialog, itemCanvas, entityCanvas, fogCanvas);
         setAlignment(statusBar, Pos.BOTTOM_CENTER);
         setAlignment(messageDialog, Pos.TOP_CENTER);
     }
@@ -247,9 +252,11 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
      */
     @Override
     public void renderAll(final GameMap map, final Player player, final int dungeonLevel) {
+        revealAtPlayer(map, player.getPosition());
         renderTerrain(map);
         renderItems(map);
         renderEntities(map, player);
+        renderFog(map);
         updateStatus(player, dungeonLevel);
     }
 
@@ -456,6 +463,52 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
             return SPRITE_DRAGON;
         }
         return SPRITE_BAT;
+    }
+
+    private void revealAtPlayer(final GameMap map, final Position playerPos) {
+        for (final Room room : map.getRooms()) {
+            if (room.isHidden() && room.contains(playerPos)) {
+                room.reveal();
+            }
+        }
+        for (final Hallway hallway : map.getHallways()) {
+            if (hallway.isHidden() && hallway.getPath().contains(playerPos)) {
+                hallway.reveal();
+            }
+        }
+    }
+
+    private void renderFog(final GameMap map) {
+        final GraphicsContext gc = fogCanvas.getGraphicsContext2D();
+        gc.clearRect(0, 0, mapWidth * tileSize, mapHeight * tileSize);
+        gc.setFill(Color.rgb(0, 0, 0, FOG_OPACITY));
+
+        for (int x = 0; x < mapWidth; x++) {
+            for (int y = 0; y < mapHeight; y++) {
+                final Position pos = new Position(x, y);
+                final Tile tile = map.getTileAt(pos);
+                if (tile == Tile.WALL || tile == Tile.VOID) {
+                    continue;
+                }
+                if (!isPositionRevealed(map, pos)) {
+                    gc.fillRect((double) x * tileSize, (double) y * tileSize, tileSize, tileSize);
+                }
+            }
+        }
+    }
+
+    private boolean isPositionRevealed(final GameMap map, final Position pos) {
+        for (final Room room : map.getRooms()) {
+            if (!room.isHidden() && room.contains(pos)) {
+                return true;
+            }
+        }
+        for (final Hallway hallway : map.getHallways()) {
+            if (!hallway.isHidden() && hallway.getPath().contains(pos)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
