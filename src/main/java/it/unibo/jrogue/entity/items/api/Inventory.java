@@ -28,9 +28,9 @@ public interface Inventory {
      * 
      * @param item the item that we want to add.
      * 
-     * @throws IllegalStateException if the inventory is full.
+     * @return true if added, false if full.
      */
-    void addItem(Item item);
+    boolean addItem(Item item);
 
     /**
      * Removes an item from the inventory.

@@ -108,9 +108,6 @@ public class ItemFactoryImpl implements ItemFactory {
     @Override
     public Optional<Item> createRandomItem(final int level) {
         final int roll = GameRandom.nextInt(ROLL_MAX);
-        if (level == 10) {
-            return Optional.of(createAmulet());
-        }
         if (roll < CHANCE_RESOURCE) {
             return Optional.of(createRandomGold());
         } else if (roll < CHANCE_POTION) {

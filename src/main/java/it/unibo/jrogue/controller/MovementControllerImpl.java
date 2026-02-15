@@ -33,9 +33,10 @@ public class MovementControllerImpl implements MovementController {
     /**
      * Constructs a MovementController with a GameMap containing all game state.
      *
-     * @param gameMap  The game map containing player, enemies, items, and terrain.
+     * @param gameMap      The game map containing player, enemies, items, and
+     *                     terrain.
      * 
-     * @param renderer The DungeonRenderer to render resources.
+     * @param renderer     The DungeonRenderer to render resources.
      * 
      * @param soundManager the manager for the sounds.
      * 
@@ -45,7 +46,8 @@ public class MovementControllerImpl implements MovementController {
      * 
      * @throws IllegalStateException if gameMap has no player set.
      */
-    public MovementControllerImpl(final GameMap gameMap, final GameViewRenderer renderer, final SoundManager soundManager) {
+    public MovementControllerImpl(final GameMap gameMap, final GameViewRenderer renderer,
+            final SoundManager soundManager) {
         this.gameMap = Objects.requireNonNull(gameMap, "gameMap cannot be null");
         this.renderer = Objects.requireNonNull(renderer, "renderer cannot be null");
         if (gameMap.getPlayer().isEmpty()) {
@@ -65,26 +67,36 @@ public class MovementControllerImpl implements MovementController {
 
             // Trigger trap if present at the moved position
             gameMap.getTrapAt(player.getPosition())
-                .ifPresent(trap -> {
-                    // TODO: insert trap trigger logic
-                    // trap.trigger(player);
-                    renderer.displayMessage("Sei caduto in una trappola: " + trap.getDescription());
-                });
-
+                    .ifPresent(trap -> {
+                        // TODO: insert trap trigger logic
+                        // trap.trigger(player);
+                        renderer.displayMessage("Sei caduto in una trappola: " + trap.getDescription());
+                    });
             // Pick up item if present at the moved position
-            gameMap.removeItemAt(player.getPosition())
+            gameMap.getItemAt(player.getPosition())
                     .ifPresent(item -> {
+                        boolean pickedUp = false;
                         if (item instanceof Amulet) {
                             player.setVictory(true);
-                        }
-                        if (item instanceof Gold gold) {
+                            pickedUp = true;
+                        } else if (item instanceof Gold gold) {
                             player.collectGold(gold.getAmount());
                             soundManager.play(SoundManager.Sound.GOLD);
+                            pickedUp = true;
 
                         } else {
-                            player.getInventory().addItem(item);
+                            if (!player.getInventory().isFull()) {
+                                player.getInventory().addItem(item);
+                                pickedUp = true;
+                            } else {
+                                renderer.displayMessage(
+                                        "Inventario pieno! Impossibile raccogliere " + item.getDescription());
+                            }
                         }
-                        renderer.displayMessage("Hai raccolto: " + item.getDescription());
+                        if (pickedUp) {
+                            gameMap.removeItemAt(player.getPosition());
+                            renderer.displayMessage("Hai raccolto: " + item.getDescription());
+                        }
                     });
         } else {
             final Optional<Enemy> target = getOccupiedByEnemy(player, move);
