@@ -71,7 +71,7 @@ public final class DungeonController {
         this.movementController = new MovementControllerImpl(currentMap, getRenderer(), this.soundManager);
 
         renderer.initForMap(currentMap);
-        renderer.renderAll(currentMap, player);
+        renderer.renderAll(currentMap, player, currentLevel);
     }
 
     /**
@@ -95,7 +95,7 @@ public final class DungeonController {
         this.movementController = new MovementControllerImpl(currentMap, getRenderer(), this.soundManager);
 
         renderer.initForMap(currentMap);
-        renderer.renderAll(currentMap, player);
+        renderer.renderAll(currentMap, player, currentLevel);
         return true;
     }
 
@@ -120,7 +120,7 @@ public final class DungeonController {
         this.movementController = new MovementControllerImpl(currentMap, getRenderer(), this.soundManager);
 
         renderer.initForMap(currentMap);
-        renderer.renderAll(currentMap, player);
+        renderer.renderAll(currentMap, player, currentLevel);
         return true;
     }
 
@@ -133,7 +133,7 @@ public final class DungeonController {
     public void executeTurn(final Move move) {
         Objects.requireNonNull(movementController, ERR_PLAYER_NULL);
         movementController.executeTurn(move);
-        renderer.renderAll(currentMap, player);
+        renderer.renderAll(currentMap, player, currentLevel);
     }
 
     /**
@@ -222,7 +222,7 @@ public final class DungeonController {
         this.movementController = new MovementControllerImpl(currentMap, getRenderer(), this.soundManager);
 
         renderer.initForMap(currentMap);
-        renderer.renderAll(currentMap, player);
+        renderer.renderAll(currentMap, player, currentLevel);
     }
 
     /**

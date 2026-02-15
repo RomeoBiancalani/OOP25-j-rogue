@@ -16,7 +16,7 @@ import it.unibo.jrogue.entity.entities.impl.enemies.factory.EnemyFactoryImpl;
 /**
  * Test class for EnemyFactory class.
  */
-public class EnemyFactoryTest {
+class EnemyFactoryTest {
 
     private static final Position DEFAULT_POS = new Position(0, 0);
     private EnemyFactory factory;
@@ -59,7 +59,8 @@ public class EnemyFactoryTest {
 
     @Test
     void testLevelRequirements() {
-        for (int i = 0; i < 100; i++) {
+        final int iteration = 200;
+        for (int i = 0; i < iteration; i++) {
             final Enemy enemy = factory.createRandomEnemy(DEFAULT_POS, 1);
             // Only bats should spawn at level 1
             assertEquals("Bat", enemy.getClass().getSimpleName(),
@@ -69,13 +70,13 @@ public class EnemyFactoryTest {
         boolean batFound = false;
         boolean goblinFound = false;
         boolean dragonFound = false;
-        for (int i = 0; i < 200; i++) {
+        for (int i = 0; i < iteration; i++) {
             final Enemy enemy = factory.createRandomEnemy(DEFAULT_POS, 2);
-            if (enemy.getClass().getSimpleName().equals("Bat")) {
+            if ("Bat".equals(enemy.getClass().getSimpleName())) {
                 batFound = true;
-            } else if (enemy.getClass().getSimpleName().equals("HobGoblin")) {
+            } else if ("HobGoblin".equals(enemy.getClass().getSimpleName())) {
                 goblinFound = true;
-            } else if (enemy.getClass().getSimpleName().equals("Dragon")) {
+            } else if ("Dragon".equals(enemy.getClass().getSimpleName())) {
                 dragonFound = true;
             }
         }
@@ -84,9 +85,9 @@ public class EnemyFactoryTest {
         assertFalse(dragonFound, "Dragon shouldn't be able to spawn at level 3");
 
         boolean dFound = false;
-        for (int i = 0; i < 200; i++) {
+        for (int i = 0; i < iteration; i++) {
             final Enemy enemy = factory.createRandomEnemy(DEFAULT_POS, 4);
-            if (enemy.getClass().getSimpleName().equals("Dragon")) {
+            if ("Dragon".equals(enemy.getClass().getSimpleName())) {
                 dFound = true;
                 break;
             }

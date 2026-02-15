@@ -47,7 +47,7 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
     private static final String TILE_STAIRS = "stairs";
     private static final String TILE_FLOOR = "tile";
     private static final String WALL_COLOR = "#1a1a2e";
-    private static final double FOG_OPACITY = 0.5;
+    private static final double FOG_OPACITY = 0.95;
 
     private static final String SPRITE_PLAYER = "entities/player";
     private static final String SPRITE_PLAYER_ARMOR = "entities/player-armored";
@@ -235,10 +235,11 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
      * Call every turn after movement.
      *
      * @param player the player entity
+     * @param dungeonLevel the current dungeon level
      */
     @Override
-    public void updateStatus(final Player player) {
-        this.statusBar.update(player);
+    public void updateStatus(final Player player, final int dungeonLevel) {
+        this.statusBar.update(player, dungeonLevel);
     }
 
     /**
@@ -247,15 +248,16 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
      *
      * @param map    the game map
      * @param player the player entity
+     * @param dungeonLevel the current dungeon level
      */
     @Override
-    public void renderAll(final GameMap map, final Player player) {
+    public void renderAll(final GameMap map, final Player player, final int dungeonLevel) {
         revealAtPlayer(map, player.getPosition());
         renderTerrain(map);
         renderItems(map);
         renderEntities(map, player);
         renderFog(map);
-        updateStatus(player);
+        updateStatus(player, dungeonLevel);
     }
 
     /**
