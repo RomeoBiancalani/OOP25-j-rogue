@@ -31,6 +31,11 @@ public interface Room {
     boolean isHidden();
 
     /**
+     * Marks this room as revealed.
+     */
+    void reveal();
+
+    /**
      * Returns the list of traps in this room.
      *
      * @return list of traps

@@ -14,7 +14,7 @@ public final class SimpleHallway implements Hallway {
 
     private final List<Position> path;
     private final List<Room> connectedRooms;
-    private final boolean hidden;
+    private boolean hidden;
 
     /**
      * Creates a new hallway.
@@ -23,7 +23,7 @@ public final class SimpleHallway implements Hallway {
      * @param connectedRooms the rooms this hallway connects
      */
     public SimpleHallway(final List<Position> path, final List<Room> connectedRooms) {
-        this(path, connectedRooms, false);
+        this(path, connectedRooms, true);
     }
 
     /**
@@ -42,6 +42,11 @@ public final class SimpleHallway implements Hallway {
     @Override
     public boolean isHidden() {
         return hidden;
+    }
+
+    @Override
+    public void reveal() {
+        this.hidden = false;
     }
 
     @Override

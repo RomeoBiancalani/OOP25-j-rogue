@@ -19,7 +19,7 @@ public final class SimpleRoom implements Room {
     private final int height;
     private final List<Item> items;
     private final List<Trap> traps;
-    private final boolean hidden;
+    private boolean hidden;
 
     /**
      * Creates a new room.
@@ -29,7 +29,7 @@ public final class SimpleRoom implements Room {
      * @param height the room height
      */
     public SimpleRoom(final Position topLeft, final int width, final int height) {
-        this(topLeft, width, height, false);
+        this(topLeft, width, height, true);
     }
 
     /**
@@ -62,6 +62,11 @@ public final class SimpleRoom implements Room {
     @Override
     public boolean isHidden() {
         return hidden;
+    }
+
+    @Override
+    public void reveal() {
+        this.hidden = false;
     }
 
     @Override
