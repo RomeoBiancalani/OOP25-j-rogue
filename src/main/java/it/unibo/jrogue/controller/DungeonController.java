@@ -36,7 +36,6 @@ public final class DungeonController {
 
     private int currentLevel;
     private GameMap currentMap;
-    @SuppressFBWarnings(value = "UwF", justification = "Player is initialized and null-checked before use")
     private Player player;
     @SuppressFBWarnings(value = "UwF", justification = "Initialized when level is generated")
     private MovementControllerImpl movementController;

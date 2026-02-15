@@ -18,6 +18,9 @@ public class TrapFactoryImpl implements TrapFactory {
     private static final int MIN_LEVEL_SPIKES = 4;
     private static final int MIN_LEVEL_TELEPORT = 8;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Optional<Trap> createRandomTrap(final Position position, final int level) {
         final int roll = GameRandom.nextInt(ROLL_MAX);
@@ -40,16 +43,25 @@ public class TrapFactoryImpl implements TrapFactory {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Trap createRockTrap(final Position position) {
         return new RockTrap(position);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Trap createPitOfSpikesTrap(final Position position) {
         return new PitOfSpikesTrap(position);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Trap createTeleportTrap(final Position position) {
         return new TeleportTrap(position);
