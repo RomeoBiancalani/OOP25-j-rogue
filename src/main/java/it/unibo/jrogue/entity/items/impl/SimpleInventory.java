@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.stream.IntStream;
 
 import it.unibo.jrogue.entity.items.api.Inventory;
@@ -53,17 +54,21 @@ public class SimpleInventory implements Inventory {
      * 
      */
     @Override
-    public void addItem(final Item item) {
+    public boolean addItem(final Item item) {
         Objects.requireNonNull(item, "Can not add a null item in the invenotry");
 
         if (isFull()) {
-            throw new IllegalStateException("The inventory is full and can not be added more");
-
+            return false;
         }
-        IntStream.range(0, size)
+        final OptionalInt slot = IntStream.range(0, size)
                 .filter(i -> !inventory.containsKey(i))
-                .findFirst()
-                .ifPresent(i -> inventory.put(i, item));
+                .findFirst();
+
+        if (slot.isPresent()) {
+            inventory.put(slot.getAsInt(), item);
+            return true;
+        }
+        return false;
     }
 
     /**

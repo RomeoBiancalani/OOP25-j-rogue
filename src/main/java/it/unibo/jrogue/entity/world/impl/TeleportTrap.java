@@ -12,11 +12,12 @@ public final class TeleportTrap implements Trap {
 
     private final Position position;
     private boolean active;
+
     /**
      * Constructor.
      *
      * @param position which is the position in the map
-     * */
+     */
 
     public TeleportTrap(final Position position) {
         this.position = position;
@@ -29,7 +30,7 @@ public final class TeleportTrap implements Trap {
      * Method to call the generation of the previous level.
      *
      * @param controller is the controller to get back to the previous level
-     * */
+     */
 
     public void teleportBack(final DungeonController controller) {
         if (!this.active) {
@@ -60,7 +61,7 @@ public final class TeleportTrap implements Trap {
 
     @Override
     public String getDescription() {
-           return "You fell on a teleport trap, you got teleported back by one level";
+        return "You fell on a teleport trap, you got teleported back by one level";
     }
 
 }

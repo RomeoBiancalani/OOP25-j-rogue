@@ -47,7 +47,7 @@ public class InventoryGUI {
     private static final int LAYOUT_SPACING = 20;
     private static final int LAYOUT_PADDING = 20;
     private static final int FONT_SIZE_DESC = 18;
-    private static final int WRAP_WIDTH_DESC = 500;
+    private static final int WRAP_WIDTH_DESC = 800;
 
     private final StackPane[][] slotsMatrix;
     private final InventoryManager manager;

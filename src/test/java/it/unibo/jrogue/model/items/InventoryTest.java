@@ -1,6 +1,7 @@
 package it.unibo.jrogue.model.items;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -41,9 +42,9 @@ class InventoryTest {
             inventory.addItem(testItem);
         }
 
-        assertThrows(IllegalStateException.class, () -> {
-            inventory.addItem(testItem);
-        }, "L'inventario è pieno, non si può aggiungere nient'altro");
+        final boolean added = inventory.addItem(testItem);
+        assertFalse(added, "L'inventario è pieno, non si può aggiungere nient'altro");
+        assertEquals(EXPECTED_SIZE, inventory.getSize(), "La dimensione non dovrebbe superare il massimo");
     }
 
     @Test
@@ -68,7 +69,7 @@ class InventoryTest {
         assertThrows(IllegalArgumentException.class, () -> {
             inventory.getItem(100);
         }, "L'indice non deve superare la dimensione dell'inventario");
-}
+    }
 
     @Test
     void testNullItem() {

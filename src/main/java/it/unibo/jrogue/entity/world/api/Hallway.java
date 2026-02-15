@@ -17,6 +17,11 @@ public interface Hallway {
     boolean isHidden();
 
     /**
+     * Marks this hallway as revealed.
+     */
+    void reveal();
+
+    /**
      * Returns all positions that make up this hallway.
      *
      * @return list of positions forming the hallway path

@@ -218,6 +218,11 @@ public final class SimpleGameMap implements GameMap {
     }
 
     @Override
+    public Optional<Item> getItemAt(final Position pos) {
+        return Optional.ofNullable(itemPositions.get(pos));
+    }
+
+    @Override
     public Map<Position, Trap> getTraps() {
         return Collections.unmodifiableMap(traps);
     }
@@ -239,4 +244,5 @@ public final class SimpleGameMap implements GameMap {
     private boolean isInBounds(final Position pos) {
         return pos.x() >= 0 && pos.x() < width && pos.y() >= 0 && pos.y() < height;
     }
+
 }

@@ -20,16 +20,18 @@ public interface GameViewRenderer {
      * Notify the GUI to refresh the player's vital statistic.
      * 
      * @param player The player to update stats from.
+     * @param dungeonLevel the current dungeon level.
      */
-    void updateStatus(Player player);
+    public void updateStatus(Player player, int dungeonLevel);
 
     /**
      * Performs a full render of the game world.
      * 
      * @param map The current gameMap to be rendered.
      * @param player The player istanche.
+     * @param dungeonLevel the current dungeon level
      */
-    void renderAll(GameMap map, Player player);
+    void renderAll(GameMap map, Player player, int dungeonLevel);
 
     /**
      * Initializes the view's graphical resources.

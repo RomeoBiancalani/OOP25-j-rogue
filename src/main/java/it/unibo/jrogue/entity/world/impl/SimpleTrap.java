@@ -11,21 +11,22 @@ public final class SimpleTrap implements Trap {
     private final Position position;
     private final int damage;
     private boolean active;
-    private boolean discovered;
 
     /**
      * Creates a new trap.
      *
      * @param position the trap position
-     * @param damage the damage dealt when triggered
+     * @param damage   the damage dealt when triggered
      */
     public SimpleTrap(final Position position, final int damage) {
         this.position = position;
         this.damage = damage;
         this.active = true;
-        this.discovered = false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void trigger() {
         if (active) {
@@ -33,13 +34,20 @@ public final class SimpleTrap implements Trap {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     */
     @Override
     public Position getPosition() {
         return position;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getDescription(){
+    public String getDescription() {
         return "No eddscription";
     }
 

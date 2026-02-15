@@ -2,6 +2,7 @@ package it.unibo.jrogue.controller;
 
 import java.util.Optional;
 
+import it.unibo.jrogue.boundary.SoundManager;
 import it.unibo.jrogue.controller.api.InventoryManager;
 import it.unibo.jrogue.entity.entities.api.Player;
 import it.unibo.jrogue.entity.items.api.Consumable;
@@ -14,18 +15,22 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  */
 public class InventoryManagerImpl implements InventoryManager {
     private final Player player;
+    private final SoundManager soundManager;
 
     /**
      * Costructor.
      * 
      * @param player the player.
+     * 
+     * @param soundManager the manager for the sounds.
      */
     @SuppressFBWarnings(
         value = "EI_EXPOSE_REP2", 
         justification = "The manager must hold a reference to the live Player entity to modify its state."
     )
-    public InventoryManagerImpl(final Player player) {
+    public InventoryManagerImpl(final Player player, final SoundManager soundManager) {
         this.player = player;
+        this.soundManager = soundManager;
     }
 
     /**
@@ -42,11 +47,13 @@ public class InventoryManagerImpl implements InventoryManager {
                     equipment.unequip(player);
                 } else {
                     equipment.equip(player);
+                    soundManager.play(SoundManager.Sound.EQUIP);
                 }
             }
             if (item instanceof Consumable consumable) {
                 final boolean isConsumed = consumable.consume(player);
                 if (isConsumed) {
+                    soundManager.play(SoundManager.Sound.DRINK);
                     player.getInventory().removeItem(index);
                 }
 

@@ -10,11 +10,12 @@ import it.unibo.jrogue.entity.world.api.Trap;
 public class RockTrap implements Trap {
     private final Position position;
     private boolean active;
+
     /**
      * Constructor.
      *
      * @param position which is the position in the map
-     * */
+     */
 
     public RockTrap(final Position position) {
         this.position = position;
@@ -40,8 +41,20 @@ public class RockTrap implements Trap {
         return position;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getDescription() {
-        return "You tripped over a rock" ;
+        return "You tripped over a rock and lost" + getDamageTrap();
+    }
+
+    /**
+     * Method that provides with the damage of the trap.
+     * 
+     * @return the damage of the trap.
+     */
+    public int getDamageTrap() {
+        return damage;
     }
 }

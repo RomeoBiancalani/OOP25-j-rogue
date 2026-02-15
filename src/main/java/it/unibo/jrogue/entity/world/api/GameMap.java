@@ -134,7 +134,7 @@ public interface GameMap {
     /**
      * Adds an item at the given position.
      *
-     * @param pos the position
+     * @param pos  the position
      * @param item the item to add
      */
     void addItem(Position pos, Item item);
@@ -162,6 +162,14 @@ public interface GameMap {
      * @return an Optional containing the trap if present, empty otherwise.
      */
     Optional<Trap> getTrapAt(Position pos);
+
+    /**
+     * Returns the item at the given position without removing it.
+     *
+     * @param pos the position to query.
+     * @return the item at that position, or empty if none.
+     */
+    Optional<Item> getItemAt(Position pos);
 
     /**
      * Removes and returns the trap at the specified position, if any.
@@ -196,7 +204,7 @@ public interface GameMap {
     /**
      * Sets a tile at the given position.
      *
-     * @param pos the position
+     * @param pos  the position
      * @param tile the new tile
      */
     void setTileAt(Position pos, Tile tile);
