@@ -69,7 +69,7 @@ public final class InventoryController implements InputHandler {
             selectedCol--;
         } else if (code == KeyCode.D && selectedCol < InventoryGUI.GRID_COLS - 1) {
             selectedCol++;
-        } else if (code == KeyCode.ENTER) {
+        } else if (code == KeyCode.E) {
             final int index = (selectedRow * InventoryGUI.GRID_COLS) + selectedCol;
             if (index < manager.getSize()) {
                 manager.useItem(index);

@@ -3,7 +3,7 @@ package it.unibo.jrogue.entity.world.impl;
 import it.unibo.jrogue.commons.Position;
 import it.unibo.jrogue.entity.world.api.Trap;
 import it.unibo.jrogue.controller.DungeonController;
-//TODO implementare nella generazione.
+
 /**
  * Class that implements the teleport trap.
  */
@@ -45,16 +45,11 @@ public final class TeleportTrap implements Trap {
      * {@inheritDoc}
      */
     @Override
-    public boolean isActive() {
-        return active;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void trigger() {
-        this.active = false;
+        if (this.active) {
+
+            this.active = false;
+        }
     }
 
     /**
@@ -65,20 +60,9 @@ public final class TeleportTrap implements Trap {
         return position;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public void discover() {
-        discovered = true;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isDiscovered() {
-        return discovered;
+    public String getDescription() {
+           return "You fell on a teleport trap, you got teleported back by one level";
     }
 
 }

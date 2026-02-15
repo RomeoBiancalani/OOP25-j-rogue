@@ -27,11 +27,6 @@ public final class SimpleTrap implements Trap {
     }
 
     @Override
-    public boolean isActive() {
-        return active;
-    }
-
-    @Override
     public void trigger() {
         if (active) {
             active = false;
@@ -44,13 +39,8 @@ public final class SimpleTrap implements Trap {
     }
 
     @Override
-    public boolean isDiscovered() {
-        return discovered;
-    }
-
-    @Override
-    public void discover() {
-        discovered = true;
+    public String getDescription(){
+        return "No eddscription";
     }
 
     /**

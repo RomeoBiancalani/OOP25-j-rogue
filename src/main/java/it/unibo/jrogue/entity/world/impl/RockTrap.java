@@ -11,7 +11,6 @@ public class RockTrap implements Trap {
     private final Position position;
     private final int damage;
     private boolean active;
-    private boolean discovered;
     /**
      * Constructor.
      *
@@ -22,15 +21,6 @@ public class RockTrap implements Trap {
         this.position = position;
         this.active = true;
         this.damage = 3;
-        this.discovered = false;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isActive() {
-        return active;
     }
 
     /**
@@ -38,8 +28,10 @@ public class RockTrap implements Trap {
      */
     @Override
     public void trigger() {
-        this.active = false;
-        this.discover();
+        if (this.active) {
+            getDamageTrap();
+            this.active = false;
+        }
     }
 
     /**
@@ -50,20 +42,9 @@ public class RockTrap implements Trap {
         return position;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public boolean isDiscovered() {
-        return discovered;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void discover() {
-        this.discovered = true;
+    public String getDescription() {
+        return "You tripped over a rock and lost" + getDamageTrap();
     }
 
     /**
@@ -71,7 +52,8 @@ public class RockTrap implements Trap {
      *
      * @return the damage of the trap.
      */
-    public int getDamage() {
+
+    public int getDamageTrap() {
         return damage;
     }
 }
