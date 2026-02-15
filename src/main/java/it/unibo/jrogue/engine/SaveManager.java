@@ -25,6 +25,7 @@ import it.unibo.jrogue.entity.items.impl.MeleeWeapon;
 import it.unibo.jrogue.entity.items.impl.Ring;
 import it.unibo.jrogue.entity.items.impl.Scroll;
 import it.unibo.jrogue.entity.world.api.GameMap;
+import it.unibo.jrogue.entity.world.api.Hallway;
 import it.unibo.jrogue.entity.world.api.Level;
 import it.unibo.jrogue.entity.world.api.Room;
 import it.unibo.jrogue.entity.world.api.Tile;
@@ -141,6 +142,26 @@ public final class SaveManager {
         final Level level = structureGen.generate(config);
         final GameMap map = level.getMap();
 
+        // Restore fog of war (revealed rooms and hallways)
+        final List<Integer> revealedRooms = data.getRevealedRoomIndices();
+        if (revealedRooms != null) {
+            final List<Room> rooms = map.getRooms();
+            for (final int idx : revealedRooms) {
+                if (idx < rooms.size()) {
+                    rooms.get(idx).reveal();
+                }
+            }
+        }
+        final List<Integer> revealedHallways = data.getRevealedHallwayIndices();
+        if (revealedHallways != null) {
+            final List<Hallway> hallways = map.getHallways();
+            for (final int idx : revealedHallways) {
+                if (idx < hallways.size()) {
+                    hallways.get(idx).reveal();
+                }
+            }
+        }
+
         // Restore player
         final SaveData.PlayerData pd = data.getPlayerData();
         final Position playerPos = new Position(pd.getPosX(), pd.getPosY());
@@ -251,7 +272,24 @@ public final class SaveManager {
             items.add(itemData);
         }
 
-        return new SaveData(dc.getBaseSeed(), dc.getCurrentLevel(), playerData, enemies, items);
+        // Extract revealed rooms and hallways (fog of war state)
+        final List<Integer> revealedRoomIndices = new ArrayList<>();
+        final List<Room> rooms = map.getRooms();
+        for (int i = 0; i < rooms.size(); i++) {
+            if (!rooms.get(i).isHidden()) {
+                revealedRoomIndices.add(i);
+            }
+        }
+        final List<Integer> revealedHallwayIndices = new ArrayList<>();
+        final List<Hallway> hallways = map.getHallways();
+        for (int i = 0; i < hallways.size(); i++) {
+            if (!hallways.get(i).isHidden()) {
+                revealedHallwayIndices.add(i);
+            }
+        }
+
+        return new SaveData(dc.getBaseSeed(), dc.getCurrentLevel(), playerData, enemies, items,
+                revealedRoomIndices, revealedHallwayIndices);
     }
 
     private static List<SaveData.ItemData> extractInventoryItems(final Inventory inventory) {

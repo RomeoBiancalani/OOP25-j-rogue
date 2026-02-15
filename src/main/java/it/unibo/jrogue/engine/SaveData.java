@@ -19,25 +19,33 @@ public final class SaveData implements Serializable {
     private final PlayerData playerData;
     private final List<EnemyData> enemies;
     private final List<ItemData> items;
+    private final List<Integer> revealedRoomIndices;
+    private final List<Integer> revealedHallwayIndices;
 
     /**
      * Creates a new SaveData.
      *
-     * @param seed         the base seed for level generation
-     * @param currentLevel the current dungeon level
-     * @param playerData   the player's saved state
-     * @param enemies      the list of enemy states
-     * @param items        the list of item states on the map
+     * @param seed                    the base seed for level generation
+     * @param currentLevel            the current dungeon level
+     * @param playerData              the player's saved state
+     * @param enemies                 the list of enemy states
+     * @param items                   the list of item states on the map
+     * @param revealedRoomIndices     indices of revealed rooms
+     * @param revealedHallwayIndices  indices of revealed hallways
      */
     public SaveData(final long seed, final int currentLevel,
             final PlayerData playerData,
             final List<EnemyData> enemies,
-            final List<ItemData> items) {
+            final List<ItemData> items,
+            final List<Integer> revealedRoomIndices,
+            final List<Integer> revealedHallwayIndices) {
         this.baseSeed = seed;
         this.currentLevel = currentLevel;
         this.playerData = playerData;
         this.enemies = new ArrayList<>(enemies);
         this.items = new ArrayList<>(items);
+        this.revealedRoomIndices = new ArrayList<>(revealedRoomIndices);
+        this.revealedHallwayIndices = new ArrayList<>(revealedHallwayIndices);
     }
 
     /**
@@ -83,6 +91,24 @@ public final class SaveData implements Serializable {
      */
     public List<ItemData> getItems() {
         return new ArrayList<>(items);
+    }
+
+    /**
+     * Returns the indices of revealed rooms, or null for old saves.
+     *
+     * @return list of revealed room indices, or null
+     */
+    public List<Integer> getRevealedRoomIndices() {
+        return revealedRoomIndices == null ? null : new ArrayList<>(revealedRoomIndices);
+    }
+
+    /**
+     * Returns the indices of revealed hallways, or null for old saves.
+     *
+     * @return list of revealed hallway indices, or null
+     */
+    public List<Integer> getRevealedHallwayIndices() {
+        return revealedHallwayIndices == null ? null : new ArrayList<>(revealedHallwayIndices);
     }
 
     /**
