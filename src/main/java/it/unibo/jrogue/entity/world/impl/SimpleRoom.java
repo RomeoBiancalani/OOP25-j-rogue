@@ -1,7 +1,6 @@
 package it.unibo.jrogue.entity.world.impl;
 
 import it.unibo.jrogue.commons.Position;
-import it.unibo.jrogue.entity.items.api.Item;
 import it.unibo.jrogue.entity.world.api.Room;
 import it.unibo.jrogue.entity.world.api.Trap;
 
@@ -17,7 +16,6 @@ public final class SimpleRoom implements Room {
     private final Position topLeft;
     private final int width;
     private final int height;
-    private final List<Item> items;
     private final List<Trap> traps;
     private boolean hidden;
 
@@ -45,7 +43,6 @@ public final class SimpleRoom implements Room {
         this.width = width;
         this.height = height;
         this.hidden = hidden;
-        this.items = new ArrayList<>();
         this.traps = new ArrayList<>();
     }
 
