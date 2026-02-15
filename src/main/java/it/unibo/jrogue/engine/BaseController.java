@@ -1,5 +1,6 @@
 package it.unibo.jrogue.engine;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -40,6 +41,11 @@ public final class BaseController {
      *
      * @param entity which is the game entity.
      */
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP2",
+            justification = "GameState needs to be changed during runtime."
+    )
+
     public BaseController(final GameState entity) {
         this.entity = entity;
         this.menuController = new MenuController(this);
@@ -59,6 +65,10 @@ public final class BaseController {
      *
      * @param container which is the Pane utilized for scaling graphics.
      */
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP2",
+            justification = "stage and container must be stored inside."
+    )
 
     public void setup(final Stage stage, final ScalableContentPane container) {
         this.primaryStage = stage;
@@ -83,7 +93,10 @@ public final class BaseController {
      *
      * @param newView which is the new Pane that must be viewed.
      */
-
+    @SuppressFBWarnings(
+            value = "UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR",
+            justification = "scalingContainer is initialized in the setup()"
+    )
     public void changeView(final Pane newView) {
         scalingContainer.setContent(newView);
     }
@@ -104,7 +117,10 @@ public final class BaseController {
      *
      * @return !isFull which is the opposite of the previous status.
      */
-
+    @SuppressFBWarnings(
+            value = "UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR",
+            justification = "primaryStage is initialized in the setup()"
+    )
     public boolean toggleFullscreen() {
         final boolean isFull = primaryStage.isFullScreen();
         primaryStage.setFullScreen(!isFull);
@@ -222,6 +238,11 @@ public final class BaseController {
      * 
      * @return the InventoryController.
      */
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP",
+            justification = "Must return the InventoryController."
+    )
+
     public InputHandler getInventoryController() {
         return this.inventoryController;
     }

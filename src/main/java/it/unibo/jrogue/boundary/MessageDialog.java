@@ -87,7 +87,7 @@ public class MessageDialog extends HBox {
             String lastMessage = queue.poll();
             while (!queue.isEmpty()) {
                 lastMessage = queue.poll();
-            };
+            }
             messagLabel.setText(lastMessage);
         } else {
             messagLabel.setText(queue.poll());

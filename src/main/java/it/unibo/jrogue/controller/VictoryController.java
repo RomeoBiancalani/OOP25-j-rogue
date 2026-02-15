@@ -1,5 +1,6 @@
 package it.unibo.jrogue.controller;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.jrogue.boundary.VictoryGUI;
 import it.unibo.jrogue.engine.BaseController;
 import javafx.scene.input.KeyCode;
@@ -22,7 +23,10 @@ public final class VictoryController implements InputHandler {
      *
      * @param gameController needed to get the gold amount
      */
-
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP2",
+            justification = "Controller must be the same, i can't give a copy."
+    )
     public VictoryController(final BaseController controller, final GameController gameController) {
         this.controller = controller;
         this.gameController = gameController;

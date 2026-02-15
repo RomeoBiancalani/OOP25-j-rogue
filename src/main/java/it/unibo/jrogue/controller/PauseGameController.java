@@ -1,5 +1,6 @@
 package it.unibo.jrogue.controller;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.jrogue.engine.BaseController;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -21,7 +22,10 @@ public final class PauseGameController implements InputHandler {
      *
      * @param controller which is the BaseController we communicate with
      */
-
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP2",
+            justification = "Controller must be the same, i can't give a copy."
+    )
     public PauseGameController(final BaseController controller) {
         this.controller = controller;
         this.pauseView = new PauseGameGUI();
@@ -104,5 +108,15 @@ public final class PauseGameController implements InputHandler {
     @Override
     public Pane getView() {
         return this.pauseView.getLayout();
+    }
+
+    /**
+     * Getter of the index to use in MenuTest.
+     *
+     * @return currentIndex
+     * */
+
+    public int getCurrentIndex() {
+        return this.currentIndex;
     }
 }

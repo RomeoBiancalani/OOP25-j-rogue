@@ -1,5 +1,6 @@
 package it.unibo.jrogue.boundary;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -70,6 +71,10 @@ public final class OptionsGUI implements MenuGUI {
         updateSelection(0);
     }
 
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP",
+            justification = "The return of the real Layout is needed."
+    )
     @Override
     public VBox getLayout() {
         return rootLayout;

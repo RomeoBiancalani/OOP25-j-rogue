@@ -1,5 +1,6 @@
 package it.unibo.jrogue.engine;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.transform.Scale;
@@ -31,7 +32,10 @@ public final class ScalableContentPane extends StackPane {
      * Set the new Pane to display.
      *
      * @param newContent which is the Pane that we force to scale its graphics*/
-
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP2",
+            justification = "The Pane is needed to be stored directly ."
+    )
     public void setContent(final Pane newContent) {
         this.getChildren().clear();
         this.contentPane = newContent;

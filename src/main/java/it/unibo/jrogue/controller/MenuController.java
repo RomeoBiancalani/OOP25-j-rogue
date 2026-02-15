@@ -5,6 +5,7 @@ import it.unibo.jrogue.engine.BaseController;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Controller that handles the Main menu and Options menu, it may change considering how hardcoded it is right now.
@@ -20,7 +21,10 @@ public final class MenuController implements InputHandler {
      *
      * @param controller which is the BaseController we communicate with
      */
-
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP2",
+            justification = "Controller must be the same, i can't give a copy."
+    )
     public MenuController(final BaseController controller) {
         this.controller = controller;
         this.menuView = new MainMenuGUI();
@@ -95,5 +99,15 @@ public final class MenuController implements InputHandler {
     @Override
     public Pane getView() {
         return menuView.getLayout();
+    }
+
+    /**
+     * Getter of the index to use in MenuTest.
+     *
+     * @return currentIndex
+     * */
+
+    public int getCurrentIndex() {
+        return this.currentIndex;
     }
 }

@@ -1,5 +1,6 @@
 package it.unibo.jrogue.boundary;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javafx.geometry.Pos;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -36,7 +37,7 @@ public final class VictoryGUI {
      */
     private void initGraphics() {
         rootLayout.setAlignment(Pos.CENTER);
-        final int FONT_THICKNESS = 30;
+        final int fontThickness = 30;
         final Image backgroundImage = new Image(getClass().getResourceAsStream("/" + BACKGROUND_PATH));
         final BackgroundImage background = new BackgroundImage(
                 backgroundImage,
@@ -45,7 +46,7 @@ public final class VictoryGUI {
                 BackgroundPosition.CENTER,
                 new BackgroundSize(100, 100, true, true, true, true));
         rootLayout.setBackground(new Background(background));
-        scoreLabel.setFont(Font.font("Consolas", FontWeight.BOLD, FONT_THICKNESS));
+        scoreLabel.setFont(Font.font("Consolas", FontWeight.BOLD, fontThickness));
         scoreLabel.setTextFill(Color.GOLD);
         scoreLabel.setEffect(new DropShadow(10, Color.BLACK));
         rootLayout.getChildren().add(scoreLabel);
@@ -65,7 +66,10 @@ public final class VictoryGUI {
      *
      * @return rootLayout which contain the GUI elements.
      */
-
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP",
+            justification = "The return of the real Layout is needed."
+    )
     public VBox getLayout() {
         return rootLayout;
     }

@@ -1,5 +1,6 @@
 package it.unibo.jrogue.controller;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.jrogue.boundary.OptionsGUI;
 import it.unibo.jrogue.engine.BaseController;
 import javafx.scene.input.KeyCode;
@@ -21,6 +22,10 @@ public final class OptionsController implements InputHandler {
      *
      * @param controller which is the BaseController
      */
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP2",
+            justification = "BaseController is needed to switch between them.")
+
     public OptionsController(final BaseController controller) {
         this.controller = controller;
         this.optionsView = new OptionsGUI();
@@ -90,4 +95,5 @@ public final class OptionsController implements InputHandler {
     public Pane getView() {
         return optionsView.getLayout();
     }
+
 }

@@ -44,7 +44,7 @@ public final class DungeonController {
      * @param seed the base seed for level generation
      * @param renderer the dungeon renderer
      */
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "Renderer is shared between instances by design")
+
     public DungeonController(final long seed, final GameViewRenderer renderer) {
         this.baseSeed = seed;
         this.renderer = renderer;

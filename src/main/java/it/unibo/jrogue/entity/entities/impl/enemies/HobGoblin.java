@@ -56,7 +56,6 @@ public class HobGoblin extends AbstractEnemy {
      * with sbase stats.
      * 
      * @param startPosition The initial position of the hobgoblin.
-     * @param level The current dungeon level-
      * @throws NullPointerException if start position is null.
      */
     public HobGoblin(final Position startPosition) {

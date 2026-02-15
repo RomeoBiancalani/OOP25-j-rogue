@@ -1,5 +1,6 @@
 package it.unibo.jrogue.controller;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.jrogue.boundary.GameOverGUI;
 import it.unibo.jrogue.engine.BaseController;
 import javafx.scene.input.KeyCode;
@@ -17,11 +18,14 @@ public class GameOverController implements InputHandler {
     /**
      * This controller, handles the GameOver screen of the game.
      *
-      * @param controller which is the BaseController we communicate with
-      *
-      * @param gameController needed to get the gold amount
-     */
-
+     * @param controller which is the BaseController we communicate with
+     *
+     * @param gameController needed to get the gold amount
+     * */
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP2",
+            justification = "Controller must be the same, i can't give a copy."
+    )
     public GameOverController(final BaseController controller, final GameController gameController) {
         this.controller = controller;
         this.gameController = gameController;

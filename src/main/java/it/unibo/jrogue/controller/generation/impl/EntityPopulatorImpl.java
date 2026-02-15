@@ -211,7 +211,6 @@ public final class EntityPopulatorImpl implements EntityPopulator {
      *
      * @param pos    the position for the enemy
      * @param level  the dungeon level
-     * @param config spawn configuration
      * @return the created enemy
      */
     private Enemy createWeightedEnemy(final Position pos, final int level) {

@@ -2,6 +2,7 @@ package it.unibo.jrogue.controller;
 
 import java.util.Map;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.jrogue.boundary.DungeonRenderer;
 import it.unibo.jrogue.commons.Move;
 import it.unibo.jrogue.engine.BaseController;
@@ -25,6 +26,10 @@ public final class GameController implements InputHandler {
      *
      * @param controller which is the BaseController we communicate with
      */
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP2",
+            justification = "Controller must be the same, i can't give a copy."
+    )
     public GameController(final BaseController controller) {
         this.controller = controller;
         this.renderer = new DungeonRenderer();
@@ -110,9 +115,19 @@ public final class GameController implements InputHandler {
      *
      * @return the dungeon renderer
      */
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP",
+            justification = "Must return render for it to be displayed."
+    )
+
     public DungeonRenderer getRenderer() {
         return this.renderer;
     }
+
+    @SuppressFBWarnings(
+            value = "EI_EXPOSE_REP",
+            justification = "Must return render for it to be displayed."
+    )
 
     @Override
     public Pane getView() {
