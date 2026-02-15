@@ -30,7 +30,7 @@ final class MenuTest {
     }
 
     @Test
-    void testMenuLogic() throws NoSuchFieldException, IllegalAccessException {
+    void testMenuLogic() {
         assertEquals(0, menuController.getCurrentIndex());
         simulateKeyPress(menuController, KeyCode.S);
         assertEquals(1, menuController.getCurrentIndex());
@@ -39,7 +39,7 @@ final class MenuTest {
     }
 
     @Test
-    void testMenuBounds() throws NoSuchFieldException, IllegalAccessException {
+    void testMenuBounds() {
         simulateKeyPress(menuController, KeyCode.W);
         assertEquals(0, menuController.getCurrentIndex());
         for (int i = 0; i < 10; i++) {
@@ -49,7 +49,7 @@ final class MenuTest {
     }
 
     @Test
-    void testPauseLogic() throws NoSuchFieldException, IllegalAccessException {
+    void testPauseLogic() {
         simulateKeyPress(pauseController, KeyCode.S);
         simulateKeyPress(pauseController, KeyCode.S);
         assertEquals(2, pauseController.getCurrentIndex());
