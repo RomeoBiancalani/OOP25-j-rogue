@@ -73,7 +73,7 @@ class InventoryTest {
     @Test
     void testNullItem() {
         final Inventory inventory = new SimpleInventory(EXPECTED_SIZE);
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(NullPointerException.class, () -> {
             inventory.addItem(null);
         }, "Non si dovrebbero poter aggiungere item nulli");
     }

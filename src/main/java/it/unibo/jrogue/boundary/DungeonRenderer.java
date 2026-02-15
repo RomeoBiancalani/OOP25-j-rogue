@@ -167,7 +167,7 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
                     case WALL -> drawWallFill(gc, px, py);
                     case CORRIDOR -> drawCorridor(gc, map, pos, px, py);
                     case STAIRS_UP -> drawSprite(gc, TILE_STAIRS, px, py);
-                    // TODO: Trap is hidden by default, need to handle show and hide
+                    // Trap is hidden by default, need to handle show and hide
                     case TRAP -> drawTrapSprite(gc, px, py);
                     case VOID -> { }
                 }
@@ -392,7 +392,7 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
 
     private void drawTrapSprite(final GraphicsContext gc,
                                 final double px, final double py) {
-        // TODO: Check if trap is hidden
+        //  Check if trap is hidden
         drawSprite(gc, SPRITE_TRAP_DAMAGE, px, py);
     }
 

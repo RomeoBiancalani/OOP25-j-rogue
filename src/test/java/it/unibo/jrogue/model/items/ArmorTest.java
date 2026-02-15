@@ -32,26 +32,26 @@ class ArmorTest {
         final Armor armor = new Armor("Armatura", EXPECTED_DEF);
         final String desc = armor.getDescription();
 
-        assertTrue(desc.contains("Armatura"), "La descrizione deve contenere il nome");
-        assertTrue(desc.contains("10"), "La descrizione deve contenere il valore di difesa");
+        assertTrue(desc.contains("Armatura"), "The description must contain the name of the armor");
+        assertTrue(desc.contains(String.valueOf(EXPECTED_DEF)), "The description must contain the protection of the armor");
     }
 
     @Test
     void testIllegalCreation() {
         // Test difesa negativa.
         assertThrows(IllegalArgumentException.class, () -> {
-            new Armor("Armatura test", -EXPECTED_DEF);
-        }, "Non si deve poter creare un'armatura con difesa negativa");
+            new Armor("Armor test", -EXPECTED_DEF);
+        }, "The armor's protection must be positive");
 
-        // test nome null.
+        // test null name.
         assertThrows(IllegalArgumentException.class, () -> {
             new Armor(null, EXPECTED_DEF);
-        }, "Non si deve poter creare un'armatura con nome null");
+        }, "The armor's name can not be null");
 
         // test armatura senza nome.
         assertThrows(IllegalArgumentException.class, () -> {
             new Armor("", EXPECTED_DEF);
-        }, "Non si deve poter creare un'armatura senza nome");
+        }, "The armor must have a name");
     }
 
     @Test
@@ -60,7 +60,7 @@ class ArmorTest {
         final Player player = new PlayerImpl(100, 1, 0, new Position(0, 0));
 
         armor.equip(player);
-        assertEquals(EXPECTED_DEF, player.getArmorClass(), "La difesa del player deve aumentare");
+        assertEquals(EXPECTED_DEF, player.getArmorClass(), "The defence of the player must increase");
     }
 
 }

@@ -23,10 +23,10 @@ public class Ring implements Equipment {
      */
     public Ring(final String name, final int healingFactor) {
         if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("L'anello deve avere un nome valido");
+            throw new IllegalArgumentException("The ring needs a valid name");
         }
         if (healingFactor < 0) {
-            throw new IllegalArgumentException("L'anello non può curare in negativo");
+            throw new IllegalArgumentException("The healing factor of the ring can not be negative");
         }
         this.name = name;
         this.healingFactor = healingFactor;
@@ -39,9 +39,9 @@ public class Ring implements Equipment {
     @Override
     public String getDescription() {
         if (!isIdentified) {
-            return "Anello misterioso";
+            return "Mysterious ring";
         }
-        return name + " (Guarigione: + " + healingFactor + ")";
+        return name + " (Healing: + " + healingFactor + ")";
     }
 
     /**
@@ -50,7 +50,7 @@ public class Ring implements Equipment {
      * @return the name of the ring.
      */
     public String getName() {
-        return isIdentified ? this.name : "Anello misterioso";
+        return isIdentified ? this.name : "Mysterious ring";
     }
 
     /**

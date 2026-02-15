@@ -30,8 +30,8 @@ public final class InventoryController implements InputHandler {
      *
      * @param controller which is the BaseController we communicate with.
      */
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP2",
-                        justification = "InventoryController needs a reference to the main BaseController to switch scenes.")
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", 
+    justification = "InventoryController needs a reference to the main BaseController to switch scenes.")
     public InventoryController(final BaseController controller) {
         this.controller = controller;
     }
@@ -51,6 +51,10 @@ public final class InventoryController implements InputHandler {
         this.selectedCol = 0;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     */
     @Override
     public void handleInput(final KeyEvent event) {
         if (this.manager == null || this.inventoryGUI == null) {
@@ -82,6 +86,9 @@ public final class InventoryController implements InputHandler {
         inventoryGUI.updateView(selectedRow, selectedCol);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Pane getView() {
         if (this.inventoryGUI == null) {

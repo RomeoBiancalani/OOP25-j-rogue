@@ -27,6 +27,7 @@ public final class DungeonController {
     private static final int MAP_WIDTH = 80;
     private static final int MAP_HEIGHT = 45;
 
+    private static final String ERR_PLAYER_NULL = "player cannot be null";
     private final long baseSeed;
     private final GameViewRenderer renderer;
     private final LevelGenerator generator;
@@ -41,7 +42,7 @@ public final class DungeonController {
     /**
      * Creates a DungeonController with the given seed and renderer.
      *
-     * @param seed the base seed for level generation
+     * @param seed     the base seed for level generation
      * @param renderer the dungeon renderer
      */
 
@@ -78,7 +79,7 @@ public final class DungeonController {
      * @return true if advanced successfully, false if already at max level
      */
     public boolean nextLevel() {
-        Objects.requireNonNull(player, "Player cannot be null");
+        Objects.requireNonNull(player, ERR_PLAYER_NULL);
         if (currentLevel >= MAX_LEVEL) {
             return false;
         }
@@ -103,7 +104,7 @@ public final class DungeonController {
      * @return true if advanced successfully, false if at first level
      */
     public boolean previousLevel() {
-        Objects.requireNonNull(player, "Player cannot be null");
+        Objects.requireNonNull(player, ERR_PLAYER_NULL);
         if (currentLevel == 1) {
             return false;
         }
@@ -128,7 +129,7 @@ public final class DungeonController {
      * @param move the player's movement direction
      */
     public void executeTurn(final Move move) {
-        Objects.requireNonNull(movementController, "Movement controller cannot be null");
+        Objects.requireNonNull(movementController, ERR_PLAYER_NULL);
         movementController.executeTurn(move);
         renderer.renderAll(currentMap, player);
     }
@@ -195,9 +196,9 @@ public final class DungeonController {
      * Restores the dungeon controller from saved state.
      * Used by the save/load system to recreate a game in progress.
      *
-     * @param level the level to restore to
+     * @param level          the level to restore to
      * @param restoredPlayer the restored player
-     * @param restoredMap the restored game map
+     * @param restoredMap    the restored game map
      */
     @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "Player and GameMap are intentionally shared")
     public void restoreState(final int level, final Player restoredPlayer, final GameMap restoredMap) {
@@ -218,8 +219,7 @@ public final class DungeonController {
     private void generateCurrentLevel() {
         final long levelSeed = baseSeed + currentLevel;
         final GenerationConfig config = GenerationConfig.withDefaults(
-                MAP_WIDTH, MAP_HEIGHT, currentLevel, levelSeed
-        );
+                MAP_WIDTH, MAP_HEIGHT, currentLevel, levelSeed);
         final Level level = generator.generate(config);
         this.currentMap = level.getMap();
     }

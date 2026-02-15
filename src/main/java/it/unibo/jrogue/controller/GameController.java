@@ -146,7 +146,7 @@ public final class GameController implements InputHandler {
     private void handleStairs() {
         if (dungeonController.isOnStairs()) {
             if (dungeonController.getCurrentLevel() >= DungeonController.MAX_LEVEL) {
-                // TODO: Game is finished, display finish screen
+                // Game is finished, display finish screen
                 controller.backToMainMenu();
             } else {
                 dungeonController.nextLevel();

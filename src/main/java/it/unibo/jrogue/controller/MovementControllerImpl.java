@@ -103,14 +103,12 @@ public class MovementControllerImpl implements MovementController {
                         e.doMove(eMove);
                     } else {
                         final Position position = eMove.applyToPosition(e.getPosition());
-                        if (isOccupiedByPlayer(position)) {
-                            if (player.isAlive()) {
-                                final int damage = combatController.attack(e, player);
-                                if (damage <= 0) {
-                                    renderer.displayMessage("Il nemico ti ha mancato");
-                                } else {
-                                    renderer.displayMessage("Il nemico ti ha colpito causandoti " + damage + " di danno");
-                                }
+                        if (isOccupiedByPlayer(position) && player.isAlive()) {
+                            final int damage = combatController.attack(e, player);
+                            if (damage <= 0) {
+                                renderer.displayMessage("Il nemico ti ha mancato");
+                            } else {
+                                renderer.displayMessage("Il nemico ti ha colpito causandoti " + damage + " di danno");
                             }
                         }
                     }

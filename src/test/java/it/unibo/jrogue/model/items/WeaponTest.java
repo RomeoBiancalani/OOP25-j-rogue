@@ -32,52 +32,51 @@ class WeaponTest {
     @Test
     void testMeleeWeaponCreation() {
 
-        final String expectedName = "spada";
+        final String expectedName = "sword";
         final MeleeWeapon weapon = new MeleeWeapon(expectedName, EXPECTED_ATT);
 
-        assertEquals(EXPECTED_ATT, weapon.getBonus(), "L'attacco dovrebbe essere 10");
-        assertEquals(expectedName, weapon.getName(), "Il nome dovrebbe essere 'spada' ");
+        assertEquals(EXPECTED_ATT, weapon.getBonus(), "The attack should be 10");
+        assertEquals(expectedName, weapon.getName(), "The name of the sword should be :'sword' ");
     }
 
     @Test
     void testDescriptionFormat() {
-        final MeleeWeapon weapon = new MeleeWeapon("ascia", EXPECTED_ATT);
+        final MeleeWeapon weapon = new MeleeWeapon("shovel", EXPECTED_ATT);
         final String desc = weapon.getDescription();
 
-        assertTrue(desc.contains("ascia"), "La descrizione dovrebbe contenere il nome");
-        assertTrue(desc.contains("10"), "La descrizione dovrebbe contenere l'attacco dell'arma");
+        assertTrue(desc.contains("shovel"), "The description should contain the name of the weapon");
+        assertTrue(desc.contains("10"), "The description should contain the attack of the weapon");
     }
 
     @Test
     void testIllegalCreation() {
         // test negative attack.
         assertThrows(IllegalArgumentException.class, () -> {
-            new MeleeWeapon("spadona", -1);
-        }, "Non si deve poter creare un arma con attacco negativo");
+            new MeleeWeapon("spear", -1);
+        }, "The weapon's attack must be positive");
 
         // test null name.
         assertThrows(IllegalArgumentException.class, () -> {
             new MeleeWeapon(null, EXPECTED_ATT);
-        }, "Non si deve poter creare un arma con nome null");
+        }, "The weapon's name can not be null");
 
         // test weapon without name.
         assertThrows(IllegalArgumentException.class, () -> {
             new MeleeWeapon("", EXPECTED_ATT);
-        }, "Non si deve poter creare un arma senza nome");
+        }, "The weapon must have a name");
     }
 
-    //In this test we can not determine with accuracy the damage of the player
-    //with an equipped weapon because the base damage of the Player is random
-    //so we simply test if the weapon is equipped.
+    //In this test we can not determine with precision the damage of the player
+    //with an equipped weapon because the damage of the player is Random.
     @Test
     void testEquip() {
-        final MeleeWeapon weapon = new MeleeWeapon("spada", EXPECTED_ATT);
+        final MeleeWeapon weapon = new MeleeWeapon("sword", EXPECTED_ATT);
 
         weapon.equip(player);
 
         final int randomDamage = player.getAttack();
 
-        assertTrue(randomDamage > 0, "il player armato deve fare danni positivi");
+        assertTrue(randomDamage > 0, "The player with an equipped weapon must have positive damage");
 
     }
 }

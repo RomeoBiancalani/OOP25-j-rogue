@@ -15,7 +15,7 @@ public final class Gold implements Resources {
      */
     public Gold(final int amount) {
         if (amount <= 0) {
-            throw new IllegalArgumentException("la quantità dell'oro non può essere negativa o 0");
+            throw new IllegalArgumentException("The amount of gold can not be negative or 0");
         }
         this.amount = amount;
     }
@@ -25,7 +25,7 @@ public final class Gold implements Resources {
      */
     @Override
     public String getDescription() {
-        return "Sacchetto di monete d'oro ( " + amount + ")";
+        return "A  sack with some gold :( " + amount + ")";
     }
 
     /**

@@ -17,17 +17,17 @@ class GoldTest {
     @Test
     void testGoldCreation() {
         final Gold gold = new Gold(AMOUNT);
-        assertEquals(AMOUNT, gold.getAmount(), "La quantità dovrebbe essere 50");
-        assertTrue(gold.getDescription().contains("50"));
+        assertEquals(AMOUNT, gold.getAmount(), "The quantity expected is " + AMOUNT);
+        assertTrue(gold.getDescription().contains(String.valueOf(AMOUNT)));
     }
 
     @Test
     void testIllegalCreation() {
         assertThrows(IllegalArgumentException.class, () -> {
             new Gold(-1);
-        }, "La quantità dell'oro non può essere negativa");
+        }, "The amount of gold must be positive");
         assertThrows(IllegalArgumentException.class, () -> {
             new Gold(0);
-        }, "La quantità dell'oro non può essere uguale a 0");
+        }, "The amount of gold can not be 0");
     }
 }

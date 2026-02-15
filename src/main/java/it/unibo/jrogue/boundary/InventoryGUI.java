@@ -79,7 +79,7 @@ public class InventoryGUI {
         gridPane.setHgap(GRID_GAP);
         gridPane.setVgap(GRID_GAP);
 
-        this.description = new Text("inventario vuoto");
+        this.description = new Text("Empty inventory");
         this.description.setFill(COLOR_TEXT);
         this.description.setFont(Font.font("Verdana", FONT_SIZE_DESC));
         this.description.setWrappingWidth(WRAP_WIDTH_DESC);
@@ -95,10 +95,6 @@ public class InventoryGUI {
      * Initialize the grid layout.
      */
     private void initializeLayout() {
-        /*
-         * gridPane.setStyle("-fx-background-color: #000000; -fx-padding: 20;
-         * -fx-alignment: center;");
-         */
         gridPane.setGridLinesVisible(true);
 
         for (int r = 0; r < GRID_ROWS; r++) {
@@ -175,7 +171,7 @@ public class InventoryGUI {
                         badge.setFont(Font.font("Verdana", FontWeight.BOLD, 10));
                         badge.setTextFill(Color.WHITE);
                         badge.setStyle("-fx-background-color: blue; -fx-padding: 2; -fx-background-radius: 3;");
-                        StackPane.setAlignment(badge, Pos.TOP_RIGHT); // Angolo in alto a destra
+                        StackPane.setAlignment(badge, Pos.TOP_RIGHT);
                         slot.getChildren().add(badge);
 
                     }

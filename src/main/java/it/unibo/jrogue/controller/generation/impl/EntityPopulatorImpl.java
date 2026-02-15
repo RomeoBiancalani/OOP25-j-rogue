@@ -167,7 +167,6 @@ public final class EntityPopulatorImpl implements EntityPopulator {
         final Position pos = pickRandomPosition(positions);
         final int damage = switch (type) {
             case SPIKE -> SPIKE_TRAP_DAMAGE;
-            // TODO: Let's understand if we want to implement poison that lasts for multiple
             // steps
             case POISON -> POISON_TRAP_DAMAGE;
             case TELEPORT -> TELEPORT_TRAP_DAMAGE;

@@ -2,7 +2,9 @@ package it.unibo.jrogue.entity.items.impl;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 import it.unibo.jrogue.entity.items.api.Inventory;
 import it.unibo.jrogue.entity.items.api.Item;
@@ -11,7 +13,7 @@ import it.unibo.jrogue.entity.items.api.Item;
  * Implementation of the Inventory.
  */
 public class SimpleInventory implements Inventory {
-
+    private static final int MAX_ALLOWED_SIZE = 100;
     private final Map<Integer, Item> inventory = new HashMap<>();
     private final int size;
 
@@ -21,8 +23,8 @@ public class SimpleInventory implements Inventory {
      * @param size size of the Inventory.
      */
     public SimpleInventory(final int size) {
-        if (size <= 0 || size >= 100) {
-            throw new IllegalArgumentException("L'inventario deve avere dimensione positiva");
+        if (size <= 0 || size >= MAX_ALLOWED_SIZE) {
+            throw new IllegalArgumentException("The inventory size must be between 1 and " + MAX_ALLOWED_SIZE);
         }
         this.size = size;
     }
@@ -41,7 +43,7 @@ public class SimpleInventory implements Inventory {
     @Override
     public Optional<Item> getItem(final int index) {
         if (index < 0 || index >= size) {
-            throw new IllegalArgumentException("L'indice va fuori dai limiti dell'inventario");
+            throw new IllegalArgumentException("The index can not go outside the inventory limits");
         }
         return Optional.ofNullable(inventory.get(index));
     }
@@ -52,20 +54,16 @@ public class SimpleInventory implements Inventory {
      */
     @Override
     public void addItem(final Item item) {
-        if (item == null) {
-            throw new IllegalArgumentException("L'oggetto non può essere null");
-        }
+        Objects.requireNonNull(item, "Can not add a null item in the invenotry");
 
         if (isFull()) {
-            throw new IllegalStateException("L'inventario è pieno non si può aggiungere altro");
+            throw new IllegalStateException("The inventory is full and can not be added more");
 
         }
-        for (int i = 0; i < size; i++) {
-            if (!inventory.containsKey(i)) {
-                inventory.put(i, item);
-                return;
-            }
-        }
+        IntStream.range(0, size)
+                .filter(i -> !inventory.containsKey(i))
+                .findFirst()
+                .ifPresent(i -> inventory.put(i, item));
     }
 
     /**
@@ -81,9 +79,7 @@ public class SimpleInventory implements Inventory {
      */
     @Override
     public void removeItem(final int index) {
-        if (inventory.containsKey(index)) {
-            inventory.remove(index);
-        }
+        inventory.remove(index);
     }
 
 }

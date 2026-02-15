@@ -49,14 +49,6 @@ public class ItemFactoryImpl implements ItemFactory {
     private static final int ARMOR_SELECTION = 70;
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Item createStartingWeapon() {
-        return new MeleeWeapon("Spada iniziale", BASE_DAMAGE_SWORD);
-    }
-
-    /**
      * Calculates the damage of the item generated
      * taking in consideration: level the player
      * currently is, baseDamage of the weapon
@@ -109,10 +101,10 @@ public class ItemFactoryImpl implements ItemFactory {
 
         if (armorDice < ARMOR_SELECTION) {
             final int def = calculateProtection(BASE_DEF_LIGHT, level, false);
-            return new Armor("Armatura di cuoio", def);
+            return new Armor("Leather armor", def);
         } else {
             final int def = calculateProtection(BASE_DEF_HEAVY, level, true);
-            return new Armor("Armatura di ferro", def);
+            return new Armor("Iron armor", def);
         }
     }
 
@@ -130,11 +122,11 @@ public class ItemFactoryImpl implements ItemFactory {
         } else if (roll < CHANCE_POTION) {
             return Optional.of(createHealthPotion());
         } else if (roll < CHANCE_DAGGER) {
-            return Optional.of(createWeapon("Pugnale", level));
+            return Optional.of(createWeapon("Dagger", level));
         } else if (roll < CHANCE_SWORD) {
-            return Optional.of(createWeapon("Spada", level));
+            return Optional.of(createWeapon("Sword", level));
         } else if (roll < CHANCE_SHOVEL) {
-            return Optional.of(createWeapon("Pala", level));
+            return Optional.of(createWeapon("Shovel", level));
         } else if (roll < CHANCE_ARMOR) {
             return Optional.of(createRandomArmor(level));
         } else if (roll < CHANCE_RING) {

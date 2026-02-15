@@ -13,7 +13,6 @@ import it.unibo.jrogue.entity.items.impl.MeleeWeapon;
 import it.unibo.jrogue.entity.items.impl.Ring;
 import it.unibo.jrogue.entity.items.impl.Scroll;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -25,7 +24,6 @@ import org.junit.jupiter.api.BeforeEach;
  * Test for ItemFactory.
  */
 class ItemFactoryTest {
-    private static final int EXPECTED_DMG = 6;
     private static final int LEVEL10 = 10;
     private static final int LEVEL1 = 1;
     private static final int ARMOR_COUNT = 20;
@@ -37,18 +35,6 @@ class ItemFactoryTest {
     @BeforeEach
     void prepare() {
         this.factory = new ItemFactoryImpl();
-    }
-
-    @Test
-    void testCreateStartingWeapon() {
-        final Item item = factory.createStartingWeapon();
-        assertNotNull(item, "L'arma iniziale deve esistere");
-
-        assertTrue(item instanceof MeleeWeapon, "L'oggetto iniziale deve essere un'arma");
-
-        final MeleeWeapon weapon = (MeleeWeapon) item;
-        assertEquals("Spada iniziale", weapon.getName(), "Il nome della prima arma dovrebbe essere 'Spada iniziale'");
-        assertEquals(EXPECTED_DMG, weapon.getBonus(), "Il danno base della spada iniziale dovrebbe essere 6");
     }
 
     @Test

@@ -95,11 +95,8 @@ public class InventoryManagerImpl implements InventoryManager {
 
             if (item instanceof Equipment && isEquipped(index)) {
                 player.remove((Equipment) item);
-                // System.out.println("L'oggetto viene disequipaggiato automaticamente");
             }
-
             player.getInventory().removeItem(index);
-            // System.out.println("Oggetto buttato");
         }
 
     }

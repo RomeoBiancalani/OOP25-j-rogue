@@ -14,13 +14,13 @@ import it.unibo.jrogue.entity.items.impl.Ring;
  */
 class RingTest {
 
-    private static final String EXPECTED_RING_NAME = "Anello curativo";
+    private static final String EXPECTED_RING_NAME = "Healing ring";
     private static final int EXPECTED_HEALING = 10;
 
     @Test
     void testCreation() {
         final Ring ring = new Ring(EXPECTED_RING_NAME, EXPECTED_HEALING);
-        assertEquals(EXPECTED_HEALING, ring.getBonus(), "La quantità di cura dell'anello deve essere 10");
+        assertEquals(EXPECTED_HEALING, ring.getBonus(), "The expected healing factor of the ring should be 10");
     }
 
     @Test
@@ -28,8 +28,8 @@ class RingTest {
         final Ring ring = new Ring(EXPECTED_RING_NAME, EXPECTED_HEALING);
 
         assertNotEquals(EXPECTED_RING_NAME, ring.getName());
-        assertEquals("Anello misterioso", ring.getName());
-        assertTrue(ring.getDescription().contains("misterioso"));
+        assertEquals("Mysterious ring", ring.getName());
+        assertTrue(ring.getDescription().contains("Mysterious"));
 
         ring.identify();
 
@@ -42,14 +42,14 @@ class RingTest {
     void testIllegalArguments() {
         assertThrows(IllegalArgumentException.class, () -> {
             new Ring(null, EXPECTED_HEALING);
-        }, "Il nome dell'anello non può essere null");
+        }, "The ring name can not be null");
 
         assertThrows(IllegalArgumentException.class, () -> {
             new Ring("", EXPECTED_HEALING);
 
-        }, "L'anello deve avere un nome");
+        }, "The ring must have a name");
         assertThrows(IllegalArgumentException.class, () -> {
             new Ring(EXPECTED_RING_NAME, -1);
-        }, "L'anello deve avere il fattore curativo maggiore di 0");
+        }, "The healing factor of the ring must be positive");
     }
 }
