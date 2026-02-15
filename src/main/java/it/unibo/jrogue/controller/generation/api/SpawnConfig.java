@@ -18,6 +18,7 @@ package it.unibo.jrogue.controller.generation.api;
  *                             default)
  * @param maxEnemiesPerRoom    maximum enemies per room (3 default)
  * @param maxItemsPerRoom      maximun items per room (3 default)
+ * @param amuletLevel          level where the amulet is (10 default)
  * @param hpScalingAlpha       HP scaling coefficient (0.4 default)
  * @param damageScalingBeta    damage scaling coefficient (1.2 default)
  * @param xpScalingLambda      XP gain scaling coefficient (0.5 default)
@@ -35,6 +36,7 @@ public record SpawnConfig(
 
         // Items
         int maxItemsPerRoom,
+        int amuletLevel,
 
         // Enemies
         double enemySpawnRate,
@@ -54,8 +56,9 @@ public record SpawnConfig(
     private static final int DEFAULT_TELEPORT_TRAP_MIN_LEVEL = 8;
     private static final double DEFAULT_TRAP_RATE = 0.15;
 
-    //Items
+    // Items
     private static final int DEFAULT_MAX_ITEMS_PER_ROOM = 3;
+    private static final int DEFALUT_AMULET_LEVEL = 10;
     // Enemies
     private static final double DEFAULT_ENEMY_SPAWN_RATE = 0.30;
     private static final int DEFAULT_MAX_ENEMIES_PER_ROOM = 3;
@@ -88,8 +91,9 @@ public record SpawnConfig(
                 // Traps
                 DEFAULT_SPIKE_TRAP_MIN_LEVEL, DEFAULT_POISON_TRAP_MIN_LEVEL,
                 DEFAULT_TELEPORT_TRAP_MIN_LEVEL, DEFAULT_TRAP_RATE,
-                //Items
+                // Items
                 DEFAULT_MAX_ITEMS_PER_ROOM,
+                DEFALUT_AMULET_LEVEL,
                 // Enemies
                 DEFAULT_ENEMY_SPAWN_RATE, DEFAULT_MAX_ENEMIES_PER_ROOM,
                 DEFAULT_HP_SCALING_ALPHA, DEFAULT_DAMAGE_SCALING_BETA,
@@ -108,8 +112,9 @@ public record SpawnConfig(
         return new SpawnConfig(
                 // Traps from level 1
                 1, 1, 1, DEBUG_TRAP_RATE,
-                //Items
+                // Items
                 DEFAULT_MAX_ITEMS_PER_ROOM,
+                DEFALUT_AMULET_LEVEL,
                 // Enemies
                 DEBUG_ENEMY_SPAWN_RATE, DEFAULT_MAX_ENEMIES_PER_ROOM,
                 DEFAULT_HP_SCALING_ALPHA, DEFAULT_DAMAGE_SCALING_BETA,

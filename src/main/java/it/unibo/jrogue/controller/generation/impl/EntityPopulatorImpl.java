@@ -49,19 +49,28 @@ public final class EntityPopulatorImpl implements EntityPopulator {
             populateRoom(map, rooms.get(i), levelNumber, config);
         }
 
-        if (levelNumber == 10) {
+        if (levelNumber == config.amuletLevel()) {
             spawnAmulet(map, rooms);
         }
     }
 
     private void spawnAmulet(final GameMap map, final List<Room> rooms) {
-        if (rooms.size() > 1) {
-            final Room randomRoom = rooms.get(1 + GameRandom.nextInt(rooms.size() - 1));
-            final List<Position> positions = getFloorPositions(map, randomRoom);
-
+        final List<Room> candidatesRooms = new ArrayList<>();
+        for (int i = 1; i < rooms.size(); i++) {
+            candidatesRooms.add(rooms.get(i));
+        }
+        java.util.Collections.shuffle(candidatesRooms);
+        for (final Room room : candidatesRooms) {
+            final List<Position> positions = getFloorPositions(map, room);
             if (!positions.isEmpty()) {
+                
                 final Position pos = positions.get(GameRandom.nextInt(positions.size()));
-                map.addItem(pos, itemFactory.createAmulet());
+                final Item amulet = itemFactory.createAmulet();
+               
+                map.addItem(pos, amulet);
+                addItemToRoom(room, amulet);
+
+                return;
             }
         }
     }

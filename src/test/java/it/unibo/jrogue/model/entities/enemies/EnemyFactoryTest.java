@@ -14,13 +14,16 @@ import it.unibo.jrogue.entity.entities.impl.enemies.factory.EnemyFactory;
 import it.unibo.jrogue.entity.entities.impl.enemies.factory.EnemyFactoryImpl;
 
 /**
- * Test class for EnemyFactory class
+ * Test class for EnemyFactory class.
  */
 public class EnemyFactoryTest {
 
     private static final Position DEFAULT_POS = new Position(0, 0);
     private EnemyFactory factory;
 
+    /**
+     * Method done before any test.
+     */
     @BeforeEach
     void setUp() {
         this.factory = new EnemyFactoryImpl();
@@ -41,26 +44,26 @@ public class EnemyFactoryTest {
         final Enemy weakBat = factory.createBat(DEFAULT_POS, level1);
         final Enemy strongBat = factory.createBat(DEFAULT_POS, level10);
         assertTrue(strongBat.getArmorClass() >= weakBat.getArmorClass(),
-                    "Higher level bat should have more or equals AC");
+                "Higher level bat should have more or equals AC");
 
         final Enemy weakGoblin = factory.createHobGoblin(DEFAULT_POS, level1);
         final Enemy strongGoblin = factory.createHobGoblin(DEFAULT_POS, level10);
         assertTrue(strongGoblin.getArmorClass() >= weakGoblin.getArmorClass(),
-                    "Higher level goblin should have more or equals AC");
+                "Higher level goblin should have more or equals AC");
 
         final Enemy weakDragon = factory.createDragon(DEFAULT_POS, level1);
         final Enemy strongDragon = factory.createDragon(DEFAULT_POS, level10);
         assertTrue(strongDragon.getArmorClass() >= weakDragon.getArmorClass(),
-                    "Higher level dragon should have more or equals AC");
+                "Higher level dragon should have more or equals AC");
     }
 
     @Test
     void testLevelRequirements() {
-        for(int i = 0; i < 100; i++) {
+        for (int i = 0; i < 100; i++) {
             final Enemy enemy = factory.createRandomEnemy(DEFAULT_POS, 1);
             // Only bats should spawn at level 1
             assertEquals("Bat", enemy.getClass().getSimpleName(),
-                        "Only bat should spawn at level 1");
+                    "Only bat should spawn at level 1");
         }
 
         boolean batFound = false;
