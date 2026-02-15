@@ -1,0 +1,248 @@
+package it.unibo.jrogue.entity.world.impl;
+
+import it.unibo.jrogue.commons.Position;
+import it.unibo.jrogue.entity.entities.api.Enemy;
+import it.unibo.jrogue.entity.entities.api.Entity;
+import it.unibo.jrogue.entity.entities.api.Player;
+import it.unibo.jrogue.entity.items.api.Item;
+import it.unibo.jrogue.entity.world.api.GameMap;
+import it.unibo.jrogue.entity.world.api.Hallway;
+import it.unibo.jrogue.entity.world.api.Room;
+import it.unibo.jrogue.entity.world.api.Tile;
+import it.unibo.jrogue.entity.world.api.Trap;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+/**
+ * Simple implementation of a dungeon map.
+ */
+public final class SimpleGameMap implements GameMap {
+
+    private final Tile[][] tiles;
+    private final int width;
+    private final int height;
+    private final List<Room> rooms;
+    private final List<Hallway> hallways;
+    private final List<Entity> entities;
+    private final Map<Position, Trap> traps;
+    private final Position startingPosition;
+    private final Position stairsUp;
+    private final Map<Position, Item> itemPositions;
+    private Player player;
+    private Set<Position> wallCache;
+
+    /**
+     * Creates a new game map.
+     *
+     * @param tiles            the 2D tile array [y][x]
+     * @param rooms            the rooms in this map
+     * @param hallways         the hallways connecting rooms
+     * @param startingPosition the player starting position
+     * @param stairsUp         the position of stairs to next level
+     */
+    public SimpleGameMap(
+            final Tile[][] tiles,
+            final List<Room> rooms,
+            final List<Hallway> hallways,
+            final Position startingPosition,
+            final Position stairsUp) {
+        this.height = tiles.length;
+        this.width = tiles.length > 0 ? tiles[0].length : 0;
+        this.tiles = copyTiles(tiles);
+        this.rooms = List.copyOf(rooms);
+        this.hallways = List.copyOf(hallways);
+        this.entities = new ArrayList<>();
+        this.traps = new HashMap<>();
+        this.startingPosition = startingPosition;
+        this.stairsUp = stairsUp;
+        this.itemPositions = new HashMap<>();
+    }
+
+    private Tile[][] copyTiles(final Tile[][] original) {
+        final Tile[][] copy = new Tile[original.length][];
+        for (int i = 0; i < original.length; i++) {
+            copy[i] = original[i].clone();
+        }
+        return copy;
+    }
+
+    @Override
+    public boolean hasEnemies() {
+        return entities.stream().anyMatch(e -> e instanceof Enemy);
+    }
+
+    @Override
+    public boolean isWalkable(final Position pos) {
+        if (!isInBounds(pos)) {
+            return false;
+        }
+        final Tile tile = getTileAt(pos);
+        return tile == Tile.FLOOR
+                || tile == Tile.CORRIDOR
+                || tile == Tile.STAIRS_UP
+                || tile == Tile.TRAP;
+    }
+
+    @Override
+    public int getWidth() {
+        return width;
+    }
+
+    @Override
+    public int getHeight() {
+        return height;
+    }
+
+    @Override
+    public Tile getTileAt(final Position pos) {
+        if (!isInBounds(pos)) {
+            return Tile.VOID;
+        }
+        return tiles[pos.y()][pos.x()];
+    }
+
+    @Override
+    public List<Room> getRooms() {
+        return Collections.unmodifiableList(rooms);
+    }
+
+    @Override
+    public List<Hallway> getHallways() {
+        return Collections.unmodifiableList(hallways);
+    }
+
+    @Override
+    public List<Entity> getEntities() {
+        return Collections.unmodifiableList(entities);
+    }
+
+    @Override
+    public Position getStartingPosition() {
+        return startingPosition;
+    }
+
+    @Override
+    public Optional<Position> getStairsUp() {
+        return Optional.ofNullable(stairsUp);
+    }
+
+    @Override
+    public Optional<Entity> getEntityAt(final Position pos) {
+        return entities.stream()
+                .filter(e -> e.getPosition().equals(pos))
+                .findFirst();
+    }
+
+    @Override
+    public void addEntity(final Entity entity) {
+        entities.add(entity);
+    }
+
+    @Override
+    public boolean removeEntity(final Entity entity) {
+        return entities.remove(entity);
+    }
+
+    @Override
+    public void setTileAt(final Position pos, final Tile tile) {
+        if (isInBounds(pos)) {
+            tiles[pos.y()][pos.x()] = tile;
+        }
+    }
+
+    @Override
+    public Optional<Player> getPlayer() {
+        return Optional.ofNullable(player);
+    }
+
+    @Override
+    public List<Enemy> getEnemies() {
+        return entities.stream()
+                .filter(e -> e instanceof Enemy)
+                .map(e -> (Enemy) e)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Map<Position, Item> getItems() {
+        return Collections.unmodifiableMap(itemPositions);
+    }
+
+    @Override
+    public Set<Position> getWallPositions() {
+        if (wallCache == null) {
+            buildWallCache();
+        }
+        return Collections.unmodifiableSet(wallCache);
+    }
+
+    @Override
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "Player is intentionally shared across the game")
+    public void setPlayer(final Player player) {
+        this.player = player;
+    }
+
+    @Override
+    public void addItem(final Position pos, final Item item) {
+        itemPositions.put(pos, item);
+    }
+
+    @Override
+    public Optional<Item> removeItemAt(final Position pos) {
+        return Optional.ofNullable(itemPositions.remove(pos));
+    }
+
+    @Override
+    public void addTrap(final Position pos, final Trap trap) {
+        traps.put(pos, trap);
+    }
+
+    @Override
+    public Optional<Trap> getTrapAt(final Position pos) {
+        return Optional.ofNullable(traps.get(pos));
+    }
+
+    @Override
+    public Optional<Trap> removeTrapAt(final Position pos) {
+        return Optional.ofNullable(traps.remove(pos));
+    }
+
+    @Override
+    public Optional<Item> getItemAt(final Position pos) {
+        return Optional.ofNullable(itemPositions.get(pos));
+    }
+
+    @Override
+    public Map<Position, Trap> getTraps() {
+        return Collections.unmodifiableMap(traps);
+    }
+
+    /**
+     * Builds the wall position cache by scanning all tiles.
+     */
+    private void buildWallCache() {
+        wallCache = new HashSet<>();
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                if (tiles[y][x] == Tile.WALL) {
+                    wallCache.add(new Position(x, y));
+                }
+            }
+        }
+    }
+
+    private boolean isInBounds(final Position pos) {
+        return pos.x() >= 0 && pos.x() < width && pos.y() >= 0 && pos.y() < height;
+    }
+
+}

@@ -26,7 +26,7 @@ java {
     }
 }
 
-val javaFXModules = listOf("base", "controls", "fxml", "swing", "graphics")
+val javaFXModules = listOf("base", "controls", "fxml", "swing", "graphics", "media")
 
 val supportedPlatforms = listOf("linux", "mac", "win") // All required for OOP
 
@@ -57,11 +57,14 @@ dependencies {
 tasks.withType<Test> {
     // Enables JUnit 5 Jupiter module
     useJUnitPlatform()
+    testLogging {
+        events("passed", "failed", "skipped")
+    }
 }
 
 val main: String by project
 
 application {
     // Define the main class for the application
-    mainClass.set(main)
+    mainClass.set("it.unibo.jrogue.main.Main")
 }
