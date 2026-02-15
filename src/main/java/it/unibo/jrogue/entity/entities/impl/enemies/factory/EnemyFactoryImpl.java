@@ -11,8 +11,8 @@ import it.unibo.jrogue.entity.entities.impl.enemies.HobGoblin;
  * Factory for enemies that manages scaling and level.
  */
 public class EnemyFactoryImpl implements EnemyFactory {
-    private static final int CHANCHE_BAT = 45;
-    private static final int CHANCHE_GOBLIN = 50;
+    private static final int CHANCHE_BAT = 40;
+    private static final int CHANCHE_GOBLIN = 55;
     private static final int ROLL_MAX = 100;
 
     private static final int HG_MIN_LEVEL = 2;
@@ -48,10 +48,10 @@ public class EnemyFactoryImpl implements EnemyFactory {
     @Override
     public Enemy createRandomEnemy(final Position position, final int level) {
         final int roll = GameRandom.nextInt(ROLL_MAX);
-        if (level >= DRAGON_MIN_LEVEL && roll >= CHANCHE_GOBLIN) {
+        if (level >= DRAGON_MIN_LEVEL && roll >= CHANCHE_BAT) {
             return createDragon(position, level);
         }
-        if (level >= HG_MIN_LEVEL && roll >= CHANCHE_BAT) {
+        if (level >= HG_MIN_LEVEL && roll >= CHANCHE_GOBLIN) {
             return createHobGoblin(position, level);
         }
         return createBat(position, level);
