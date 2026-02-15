@@ -31,7 +31,8 @@ public class StatusBarGUI extends HBox {
     private static final int XP_TO_LEVEL_UP = 20;
 
     private final Label hpLabel = new Label();
-    private final Label levelLabel = new Label();
+    private final Label playerLevelLabel = new Label();
+    private final Label dungeonLevelLabel = new Label();
     private final Label xpLabel = new Label();
     private final Label goldLabel = new Label();
 
@@ -53,7 +54,8 @@ public class StatusBarGUI extends HBox {
         styleLabel(hpLabel, Color.BLACK);
         styleLabel(xpLabel, Color.BLACK);
         styleLabel(goldLabel, Color.GOLD);
-        styleLabel(levelLabel, Color.WHITE);
+        styleLabel(playerLevelLabel, Color.WHITE);
+        styleLabel(dungeonLevelLabel, Color.GREEN);
 
         styleBar(hpBar, "red");
         styleBar(xpBar, "deepskyblue");
@@ -85,13 +87,15 @@ public class StatusBarGUI extends HBox {
      * Updates the text of the label based on the current state of the player.
      * 
      * @param player The player whose statistics will be displayed.
+     * @param dungeonLevel The actual level of the dungeon.
      * @throws NullPointerExceptions if the provided player is null.
      */
-    public void update(final Player player) {
+    public void update(final Player player, final int dungeonLevel) {
         Objects.requireNonNull(player, "Player must be not null");
 
         goldLabel.setText("Gold: " + player.getGold());
-        levelLabel.setText("Level: " + player.getLevel());
+        playerLevelLabel.setText("Player-Level: " + player.getLevel());
+        dungeonLevelLabel.setText("Dungeon-Level: " + dungeonLevel);
 
         final double hpPercent = (double) player.getLifePoint() / player.getMaxLifePoint();
         hpBar.setProgress(hpPercent);
@@ -102,6 +106,6 @@ public class StatusBarGUI extends HBox {
         xpLabel.setText("XP: " + player.getXP() + "/20");
 
         this.getChildren().clear();
-        this.getChildren().addAll(hpStack, xpStack, goldLabel, levelLabel);
+        this.getChildren().addAll(hpStack, xpStack, goldLabel, playerLevelLabel, dungeonLevelLabel);
     }
 }

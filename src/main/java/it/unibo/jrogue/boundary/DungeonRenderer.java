@@ -230,10 +230,11 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
      * Call every turn after movement.
      *
      * @param player the player entity
+     * @param dungeonLevel the current dungeon level
      */
     @Override
-    public void updateStatus(final Player player) {
-        this.statusBar.update(player);
+    public void updateStatus(final Player player, final int dungeonLevel) {
+        this.statusBar.update(player, dungeonLevel);
     }
 
     /**
@@ -242,13 +243,14 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
      *
      * @param map    the game map
      * @param player the player entity
+     * @param dungeonLevel the current dungeon level
      */
     @Override
-    public void renderAll(final GameMap map, final Player player) {
+    public void renderAll(final GameMap map, final Player player, final int dungeonLevel) {
         renderTerrain(map);
         renderItems(map);
         renderEntities(map, player);
-        updateStatus(player);
+        updateStatus(player, dungeonLevel);
     }
 
     /**

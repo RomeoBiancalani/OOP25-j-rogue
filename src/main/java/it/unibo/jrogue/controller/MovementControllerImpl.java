@@ -103,7 +103,7 @@ public class MovementControllerImpl implements MovementController {
                     if (drop.isPresent()) {
                         if (drop.get() instanceof Gold gold) {
                             player.collectGold(gold.getAmount());
-                        } else {
+                        } else if (!(drop.get() instanceof Amulet)) {
                             player.getInventory().addItem(drop.get());
                         }
                         message = message + " e ti ha lasciato: " + drop.get().getDescription();

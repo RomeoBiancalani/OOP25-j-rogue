@@ -63,10 +63,10 @@ public final class EntityPopulatorImpl implements EntityPopulator {
         for (final Room room : candidatesRooms) {
             final List<Position> positions = getFloorPositions(map, room);
             if (!positions.isEmpty()) {
-                
+
                 final Position pos = positions.get(GameRandom.nextInt(positions.size()));
                 final Item amulet = itemFactory.createAmulet();
-               
+
                 map.addItem(pos, amulet);
                 addItemToRoom(room, amulet);
 
