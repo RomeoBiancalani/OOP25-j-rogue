@@ -180,7 +180,7 @@ public class InventoryGUI {
                     if (itemInSlot.isPresent()) {
                         updateDescription(itemInSlot.get());
                     } else {
-                        description.setText("slot vuoto");
+                        description.setText("empty slot");
                     }
                 }
 

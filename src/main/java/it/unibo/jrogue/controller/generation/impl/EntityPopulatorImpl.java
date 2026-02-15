@@ -49,7 +49,7 @@ public final class EntityPopulatorImpl implements EntityPopulator {
             populateRoom(map, rooms.get(i), levelNumber, config);
         }
 
-        if (levelNumber == 1) {
+        if (levelNumber == 10) {
             spawnAmulet(map, rooms);
         }
     }

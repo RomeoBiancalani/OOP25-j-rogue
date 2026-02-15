@@ -430,9 +430,9 @@ public final class DungeonRenderer extends StackPane implements GameViewRenderer
 
     private static String getWeaponSprite(final MeleeWeapon weapon) {
         final String weaponName = weapon.getName();
-        if (weaponName.contains("Pugnale")) {
+        if (weaponName.contains("Dagger")) {
             return SPRITE_DAGGER;
-        } else if (weaponName.contains("Spada")) {
+        } else if (weaponName.contains("Sword")) {
             return SPRITE_SWORD;
         }
         return SPRITE_SHOVEL;

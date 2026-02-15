@@ -29,12 +29,6 @@ public class ItemFactoryImpl implements ItemFactory {
     private static final int DAMAGE_VARIANCE_BOUND = 3;
     private static final int PROTECTION_VARIANCE_BOUND = 2;
 
-    /*
-     * private static final int SPIKE_TRAP_DAMAGE = 5;
-     * private static final int POISON_TRAP_DAMAGE = 2;
-     * private static final int TELEPORT_TRAP_DAMAGE = 0;
-     */
-
     private static final int ROLL_MAX = 100;
     private static final int CHANCE_RESOURCE = 20;
     private static final int CHANCE_POTION = 30;
@@ -130,7 +124,7 @@ public class ItemFactoryImpl implements ItemFactory {
         } else if (roll < CHANCE_ARMOR) {
             return Optional.of(createRandomArmor(level));
         } else if (roll < CHANCE_RING) {
-            return Optional.of(createRandomArmor(level));
+            return Optional.of(createRandomRing());
         } else if (roll < CHANGE_FOOD) {
             return Optional.of(createFood());
         } else if (roll < CHANGE_SCROLL) {
@@ -190,9 +184,9 @@ public class ItemFactoryImpl implements ItemFactory {
     public Item createWeapon(final String name, final int level) {
         int baseDmg = BASE_DAMAGE_SWORD;
         final String lowerName = name.toLowerCase(Locale.ROOT);
-        if (lowerName.contains("pugnale") || lowerName.contains("dagger")) {
+        if (lowerName.contains("dagger")) {
             baseDmg = BASE_DAMAGE_DAGGER;
-        } else if (lowerName.contains("pala") || lowerName.contains("shovel")) {
+        } else if (lowerName.contains("shovel")) {
             baseDmg = BASE_DAMAGE_SHOVEL;
         }
         final int finalDmg = calculateDamage(baseDmg, level);
